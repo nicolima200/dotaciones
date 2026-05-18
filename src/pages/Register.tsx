@@ -29,7 +29,15 @@ export const Register: React.FC = () => {
       
       navigate('/');
     } catch (err: any) {
-      setError('Error al registrar usuario: ' + err.message);
+      if (err.code === 'auth/email-already-in-use') {
+        setError('Este email ya está registrado. Por favor, iniciá sesión.');
+      } else if (err.code === 'auth/weak-password') {
+        setError('La contraseña debe tener al menos 6 caracteres.');
+      } else if (err.code === 'auth/invalid-email') {
+        setError('El formato del email no es válido.');
+      } else {
+        setError('Error al crear la cuenta. Intenta nuevamente.');
+      }
     } finally {
       setLoading(false);
     }
