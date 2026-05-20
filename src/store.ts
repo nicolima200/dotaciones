@@ -4011,7 +4011,7 @@ export function useStore() {
       };
       snapshot.docs.forEach(docSnap => {
         const item = { id: docSnap.id, ...docSnap.data() } as any;
-        if (item.type && newInfra[item.type as keyof Infrastructure]) {
+        if (item.type && newInfra[item.type as keyof Infrastructure] && !item.isDeleted) {
           const type = item.type as keyof Infrastructure;
           const { type: _, ...itemWithoutType } = item;
           newInfra[type].push(itemWithoutType as InfrastructureItem);
@@ -4177,9 +4177,25 @@ export function useStore() {
     }
   };
 
+  const softRemoveInfra = async (type: keyof Infrastructure, id: string) => {
+    try {
+      const batch = writeBatch(db);
+      batch.update(doc(db, 'infrastructure', id), { isDeleted: true });
+      
+      const schedulesToRemove = state.schedules.filter(sch => sch.targetId === id);
+      schedulesToRemove.forEach(sch => {
+        batch.delete(doc(db, 'schedules', sch.id));
+      });
+      
+      await batch.commit();
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
   const loadState = (newState: AppState) => {
     console.warn("loadState is deprecated with decoupled DB");
   };
 
-  return { state, addAgent, updateAgent, removeAgent, softRemoveAgent, addInfra, removeInfra, updateInfra, assignAgent, removeSchedule, clearRoleSchedules, restoreSchedules, loadState };
+  return { state, addAgent, updateAgent, removeAgent, softRemoveAgent, softRemoveInfra, addInfra, removeInfra, updateInfra, assignAgent, removeSchedule, clearRoleSchedules, restoreSchedules, loadState };
 }

@@ -26,6 +26,7 @@ export interface InfrastructureItem {
   horario?: string;
   ubicacion?: string;
   description?: string;
+  isDeleted?: boolean;
 }
 
 export interface Infrastructure {
