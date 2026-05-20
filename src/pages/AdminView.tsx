@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { collection, getDocs, doc, updateDoc, setDoc } from 'firebase/firestore';
 import { db } from '../firebase';
-import { ShieldCheck, Users, Database } from 'lucide-react';
+import { ShieldCheck, Users, Database, ArrowLeft, Download } from 'lucide-react';
 import { UserRole } from '../context/AuthContext';
 import { defaultState } from '../store';
+import { useNavigate } from 'react-router-dom';
 
 interface UserData {
   id: string;
@@ -15,18 +16,22 @@ interface UserData {
 export const AdminView: React.FC = () => {
   const [users, setUsers] = useState<UserData[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [migrating, setMigrating] = useState(false);
+  const navigate = useNavigate();
 
   const fetchUsers = async () => {
     try {
+      setError(null);
       const querySnapshot = await getDocs(collection(db, 'users'));
       const usersData: UserData[] = [];
       querySnapshot.forEach((doc) => {
         usersData.push({ id: doc.id, ...doc.data() } as UserData);
       });
       setUsers(usersData);
-    } catch (error) {
-      console.error("Error fetching users:", error);
+    } catch (err: any) {
+      console.error("Error fetching users:", err);
+      setError(err.message || String(err));
     } finally {
       setLoading(false);
     }
@@ -48,15 +53,35 @@ export const AdminView: React.FC = () => {
     }
   };
 
-  const handleMigration = async () => {
-    if (!window.confirm("¿Estás seguro de migrar los datos locales a Firebase? Esto sobrescribirá los datos actuales en la base de datos.")) return;
+  const handleDownloadBackup = async () => {
     setMigrating(true);
     try {
-      await setDoc(doc(db, 'state', 'main'), defaultState);
-      alert("Datos migrados exitosamente a Firebase.");
+      const agentsSnap = await getDocs(collection(db, 'agents'));
+      const infraSnap = await getDocs(collection(db, 'infrastructure'));
+      const schSnap = await getDocs(collection(db, 'schedules'));
+
+      const backupData = {
+        timestamp: new Date().toISOString(),
+        agents: agentsSnap.docs.map(d => d.data()),
+        infrastructure: infraSnap.docs.map(d => d.data()),
+        schedules: schSnap.docs.map(d => d.data())
+      };
+
+      const blob = new Blob([JSON.stringify(backupData, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      
+      const dateStr = new Date().toISOString().split('T')[0];
+      link.download = `antigravity_backup_${dateStr}.json`;
+      
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
     } catch (e) {
       console.error(e);
-      alert("Error al migrar los datos.");
+      alert("Error al generar el backup: " + (e as Error).message);
     } finally {
       setMigrating(false);
     }
@@ -68,24 +93,43 @@ export const AdminView: React.FC = () => {
 
   return (
     <div className="p-6 max-w-6xl mx-auto">
-      <div className="flex items-center justify-between mb-8">
+      <button 
+        onClick={() => navigate('/')} 
+        className="flex items-center gap-2 text-slate-400 hover:text-white transition-colors mb-6 text-sm font-medium"
+      >
+        <ArrowLeft size={16} /> Volver al Panel Principal
+      </button>
+
+      {error && (
+        <div className="bg-red-500/10 border border-red-500/30 text-red-400 p-4 rounded-xl mb-6 flex flex-col gap-2">
+          <div className="font-bold flex items-center gap-2">
+            ⚠️ Error de Firebase / Permisos
+          </div>
+          <p className="text-sm opacity-90">{error}</p>
+          <p className="text-xs text-slate-400">Verificá que tu cuenta de usuario tenga el rol 'admin' configurado correctamente en la base de datos de Firestore.</p>
+        </div>
+      )}
+
+      <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 mb-8">
         <div className="flex items-center gap-3">
           <div className="w-12 h-12 bg-purple-500/20 rounded-xl flex items-center justify-center">
             <ShieldCheck className="w-6 h-6 text-purple-400" />
           </div>
           <div>
             <h1 className="text-2xl font-bold text-white">Panel de Administración</h1>
-            <p className="text-slate-400">Gestioná los accesos y roles de los usuarios del sistema</p>
+            <p className="text-slate-400">Gestioná los accesos y bases de datos</p>
           </div>
         </div>
-        <button 
-          onClick={handleMigration} 
-          disabled={migrating}
-          className="bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white px-4 py-2 rounded-lg flex items-center gap-2"
-        >
-          <Database size={18} />
-          {migrating ? 'Migrando...' : 'Subir Datos a Firebase'}
-        </button>
+        <div className="flex flex-wrap items-center gap-2">
+          <button 
+            onClick={handleDownloadBackup} 
+            disabled={migrating}
+            className="bg-emerald-600 hover:bg-emerald-700 disabled:opacity-50 text-white px-3 py-2 rounded-lg flex items-center gap-2 text-sm"
+          >
+            <Download size={16} />
+            {migrating ? 'Descargando...' : 'Descargar Backup'}
+          </button>
+        </div>
       </div>
 
       <div className="bg-slate-800 rounded-xl border border-slate-700 overflow-hidden">
@@ -117,12 +161,12 @@ export const AdminView: React.FC = () => {
                       user.role === 'pending' ? 'bg-yellow-500/20 text-yellow-400' :
                       'bg-blue-500/20 text-blue-400'
                     }`}>
-                      {user.role.toUpperCase()}
+                      {(user.role || 'pending').toUpperCase()}
                     </span>
                   </td>
                   <td className="px-6 py-4 text-right">
                     <select
-                      value={user.role}
+                      value={user.role || 'pending'}
                       onChange={(e) => handleRoleChange(user.id, e.target.value as UserRole)}
                       className="bg-slate-900 border border-slate-600 text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                     >

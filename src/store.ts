@@ -3976,33 +3976,59 @@ export const defaultState: AppState = {
   ]
 };
 
+import { collection, updateDoc, deleteDoc, writeBatch, getDocs } from 'firebase/firestore';
+
 export function useStore() {
-  const [state, setLocalState] = useState<AppState>(defaultState);
+  const [state, setLocalState] = useState<AppState>({
+    agents: [],
+    infrastructure: {
+      garitas: [],
+      moviles: [],
+      motos: [],
+      qths: [],
+      ordenes: [],
+      comisiones: []
+    },
+    schedules: []
+  });
 
   useEffect(() => {
-    const unsub = onSnapshot(doc(db, 'state', 'main'), (snapshot) => {
-      if (snapshot.exists()) {
-        const data = snapshot.data() as AppState;
-        setLocalState({
-          ...data,
-          infrastructure: {
-            ...defaultState.infrastructure,
-            ...data.infrastructure,
-            comisiones: data.infrastructure?.comisiones || defaultState.infrastructure.comisiones
-          }
-        });
-      }
+    const unsubAgents = onSnapshot(collection(db, 'agents'), (snapshot) => {
+      const agents = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Agent));
+      setLocalState(s => ({ ...s, agents }));
     });
-    return unsub;
-  }, []);
 
-  const setState = (updater: any) => {
-    setLocalState((s) => {
-      const next = typeof updater === 'function' ? updater(s) : updater;
-      setDoc(doc(db, 'state', 'main'), next).catch(console.error);
-      return next;
+    const unsubInfra = onSnapshot(collection(db, 'infrastructure'), (snapshot) => {
+      const newInfra: Infrastructure = {
+        garitas: [],
+        moviles: [],
+        motos: [],
+        qths: [],
+        ordenes: [],
+        comisiones: []
+      };
+      snapshot.docs.forEach(docSnap => {
+        const item = { id: docSnap.id, ...docSnap.data() } as any;
+        if (item.type && newInfra[item.type as keyof Infrastructure]) {
+          const type = item.type as keyof Infrastructure;
+          const { type: _, ...itemWithoutType } = item;
+          newInfra[type].push(itemWithoutType as InfrastructureItem);
+        }
+      });
+      setLocalState(s => ({ ...s, infrastructure: newInfra }));
     });
-  };
+
+    const unsubSchedules = onSnapshot(collection(db, 'schedules'), (snapshot) => {
+      const schedules = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Schedule));
+      setLocalState(s => ({ ...s, schedules }));
+    });
+
+    return () => {
+      unsubAgents();
+      unsubInfra();
+      unsubSchedules();
+    };
+  }, []);
 
   const addAgent = (
     name: string, 
@@ -4016,123 +4042,125 @@ export function useStore() {
     hasDAEO?: boolean,
     daeoExpiration?: string
   ) => {
-    setState(s => ({ ...s, agents: [...s.agents, { 
-      id: Date.now().toString(), 
-      name, telefono, legajo, turno: turno || 1,
+    const id = Date.now().toString();
+    const newAgent = { 
+      id, name, telefono, legajo, turno: turno || 1,
       hasLicense, licenseType, licenseCategory, licenseExpiration,
       hasDAEO, daeoExpiration
-    }] }));
+    };
+    setDoc(doc(db, 'agents', id), newAgent).catch(console.error);
   };
 
   const updateAgent = (id: string, updates: Partial<Agent>) => {
-    setState(s => ({
-      ...s,
-      agents: s.agents.map(a => a.id === id ? { ...a, ...updates } : a)
-    }));
+    updateDoc(doc(db, 'agents', id), updates).catch(console.error);
   };
 
-  const removeAgent = (id: string) => {
-    setState(s => ({
-      ...s,
-      agents: s.agents.filter(a => a.id !== id),
-      schedules: s.schedules.filter(sch => sch.agentId !== id)
-    }));
+  const removeAgent = async (id: string) => {
+    try {
+      const batch = writeBatch(db);
+      batch.delete(doc(db, 'agents', id));
+      
+      const schedulesToRemove = state.schedules.filter(sch => sch.agentId === id);
+      schedulesToRemove.forEach(sch => {
+        batch.delete(doc(db, 'schedules', sch.id));
+      });
+      
+      await batch.commit();
+    } catch (e) {
+      console.error(e);
+    }
   };
 
   const addInfra = (type: keyof Infrastructure, item: Omit<InfrastructureItem, 'id'>) => {
-    setState(s => ({
-      ...s,
-      infrastructure: {
-        ...s.infrastructure,
-        [type]: [...(s.infrastructure[type] || []), { ...item, id: Date.now().toString() }]
-      }
-    }));
+    const id = Date.now().toString();
+    setDoc(doc(db, 'infrastructure', id), { ...item, type, id }).catch(console.error);
   };
   
-  const removeInfra = (type: keyof Infrastructure, id: string) => {
-    setState(s => ({
-      ...s,
-      infrastructure: {
-        ...s.infrastructure,
-        [type]: (s.infrastructure[type] || []).filter(i => i.id !== id)
-      },
-      schedules: s.schedules.filter(sch => sch.targetId !== id)
-    }));
+  const removeInfra = async (type: keyof Infrastructure, id: string) => {
+    try {
+      const batch = writeBatch(db);
+      batch.delete(doc(db, 'infrastructure', id));
+      
+      const schedulesToRemove = state.schedules.filter(sch => sch.targetId === id);
+      schedulesToRemove.forEach(sch => {
+        batch.delete(doc(db, 'schedules', sch.id));
+      });
+      
+      await batch.commit();
+    } catch (e) {
+      console.error(e);
+    }
   };
 
   const updateInfra = (type: keyof Infrastructure, id: string, updates: Partial<InfrastructureItem>) => {
-    setState(s => ({
-      ...s,
-      infrastructure: {
-        ...s.infrastructure,
-        [type]: (s.infrastructure[type] || []).map(i => i.id === id ? { ...i, ...updates } : i)
-      }
-    }));
+    updateDoc(doc(db, 'infrastructure', id), updates).catch(console.error);
   };
 
   const assignAgent = (agentId: string, shift: Shift, role: RoleType, targetId?: string, startTime?: string, endTime?: string, scheduleIdToMove?: string) => {
-    setState(s => {
-      let newSchedules = [...s.schedules];
-      
-      let defStart = '09:00';
-      let defEnd = '21:00';
-      if (shift === 'turno2' || shift === 'turno4') { defStart = '21:00'; defEnd = '09:00'; }
+    let defStart = '09:00';
+    let defEnd = '21:00';
+    if (shift === 'turno2' || shift === 'turno4') { defStart = '21:00'; defEnd = '09:00'; }
 
-      const st = startTime || defStart;
-      const et = endTime || defEnd;
-      const isStandard = (st === '09:00' && et === '21:00') || (st === '21:00' && et === '09:00');
+    const st = startTime || defStart;
+    const et = endTime || defEnd;
+    const isStandard = (st === '09:00' && et === '21:00') || (st === '21:00' && et === '09:00');
 
-      if (scheduleIdToMove) {
-        // If moving a specific schedule, remove it
-        newSchedules = newSchedules.filter(sch => sch.id !== scheduleIdToMove);
-      } else if (isStandard) {
-        // If assigning a standard schedule, remove other standard schedules for this agent in this shift
-        newSchedules = newSchedules.filter(sch => {
-          if (sch.agentId !== agentId || sch.shift !== shift) return true;
-          const schIsStandard = (sch.startTime === '09:00' && sch.endTime === '21:00') || (sch.startTime === '21:00' && sch.endTime === '09:00');
-          return !schIsStandard; // Keep special schedules, remove standard ones
-        });
+    const batch = writeBatch(db);
+
+    if (scheduleIdToMove) {
+      batch.delete(doc(db, 'schedules', scheduleIdToMove));
+    } else if (isStandard) {
+      const stdSchedules = state.schedules.filter(sch => {
+        if (sch.agentId !== agentId || sch.shift !== shift) return false;
+        return (sch.startTime === '09:00' && sch.endTime === '21:00') || (sch.startTime === '21:00' && sch.endTime === '09:00');
+      });
+      stdSchedules.forEach(sch => {
+        batch.delete(doc(db, 'schedules', sch.id));
+      });
+    }
+
+    if (role !== 'disponible') {
+      const newSchId = Date.now().toString();
+      const newSch: any = {
+        id: newSchId,
+        agentId,
+        role,
+        shift,
+        startTime: st,
+        endTime: et
+      };
+      if (targetId !== undefined && targetId !== null && targetId !== '') {
+        newSch.targetId = targetId;
       }
-
-      if (role !== 'disponible') {
-        const newSch: Schedule = {
-          id: Date.now().toString(),
-          agentId,
-          role,
-          shift,
-          startTime: st,
-          endTime: et
-        };
-        if (targetId !== undefined && targetId !== null && targetId !== '') {
-          newSch.targetId = targetId;
-        }
-        newSchedules.push(newSch);
-      }
-
-      return { ...s, schedules: newSchedules };
-    });
+      batch.set(doc(db, 'schedules', newSchId), newSch);
+    }
+    
+    batch.commit().catch(console.error);
   };
 
   const removeSchedule = (id: string) => {
-    setState(s => ({ ...s, schedules: s.schedules.filter(sch => sch.id !== id) }));
+    deleteDoc(doc(db, 'schedules', id)).catch(console.error);
   };
 
   const clearRoleSchedules = (role: RoleType, shift: Shift) => {
-    setState(s => ({
-      ...s,
-      schedules: s.schedules.filter(sch => !(sch.role === role && sch.shift === shift))
-    }));
+    const batch = writeBatch(db);
+    const schedulesToRemove = state.schedules.filter(sch => sch.role === role && sch.shift === shift);
+    schedulesToRemove.forEach(sch => {
+      batch.delete(doc(db, 'schedules', sch.id));
+    });
+    batch.commit().catch(console.error);
   };
 
   const restoreSchedules = (schedules: Schedule[]) => {
-    setState(s => ({
-      ...s,
-      schedules: [...s.schedules, ...schedules]
-    }));
+    const batch = writeBatch(db);
+    schedules.forEach(sch => {
+      batch.set(doc(db, 'schedules', sch.id), sch);
+    });
+    batch.commit().catch(console.error);
   };
 
   const loadState = (newState: AppState) => {
-    setState(newState);
+    console.warn("loadState is deprecated with decoupled DB");
   };
 
   return { state, addAgent, updateAgent, removeAgent, addInfra, removeInfra, updateInfra, assignAgent, removeSchedule, clearRoleSchedules, restoreSchedules, loadState };

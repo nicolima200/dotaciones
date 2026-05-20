@@ -19,6 +19,7 @@ export interface Agent {
 export interface InfrastructureItem {
   id: string;
   name: string;
+  turno?: 1 | 2 | 3 | 4;
   ro?: string;
   numero?: string;
   horario?: string;

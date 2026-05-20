@@ -182,6 +182,9 @@ function Dashboard() {
   const assignedAgentIds = currentSchedules.map(s => s.agentId);
 
   const shiftAgents = state.agents.filter(a => ('turno' + (a.turno || 1)) === currentShift);
+  
+  const currentShiftNum = Number(currentShift.replace('turno', ''));
+  const filterByShift = (items: InfrastructureItem[] | undefined) => (items || []).filter(i => !i.turno || i.turno === currentShiftNum);
 
   const updateSearchHighlight = (agentId: string) => {
     document.querySelectorAll('.agent-card.search-highlight').forEach(el => {
@@ -376,12 +379,12 @@ Ayte. de guardia: ${getAgentName('ayte_guardia')}
 `;
 
     const rolesToInclude = [
-      { id: 'garita', title: 'MÓDULOS', items: state.infrastructure.garitas },
-      { id: 'movil', title: 'MÓVILES', items: state.infrastructure.moviles },
-      { id: 'motorizada', title: 'MOTOS', items: state.infrastructure.motos },
-      { id: 'caminante', title: 'CAMINANTES', items: state.infrastructure.qths },
-      { id: 'orden_servicio', title: 'ÓRDENES DE SERVICIO', items: state.infrastructure.ordenes || [] },
-      { id: 'comision', title: 'COMISIONES', items: state.infrastructure.comisiones || [] }
+      { id: 'garita', title: 'MÓDULOS', items: filterByShift(state.infrastructure.garitas) },
+      { id: 'movil', title: 'MÓVILES', items: filterByShift(state.infrastructure.moviles) },
+      { id: 'motorizada', title: 'MOTOS', items: filterByShift(state.infrastructure.motos) },
+      { id: 'caminante', title: 'CAMINANTES', items: filterByShift(state.infrastructure.qths) },
+      { id: 'orden_servicio', title: 'ÓRDENES DE SERVICIO', items: filterByShift(state.infrastructure.ordenes) },
+      { id: 'comision', title: 'COMISIONES', items: filterByShift(state.infrastructure.comisiones) }
     ];
 
     rolesToInclude.forEach(roleGroup => {
@@ -474,12 +477,12 @@ Ayte. de guardia: ${getAgentName('ayte_guardia')}</div>
     `;
 
     const rolesToInclude = [
-      { id: 'garita', title: 'MÓDULOS', items: state.infrastructure.garitas },
-      { id: 'movil', title: 'MÓVILES', items: state.infrastructure.moviles },
-      { id: 'motorizada', title: 'MOTOS', items: state.infrastructure.motos },
-      { id: 'caminante', title: 'CAMINANTES', items: state.infrastructure.qths },
-      { id: 'orden_servicio', title: 'ÓRDENES DE SERVICIO', items: state.infrastructure.ordenes || [] },
-      { id: 'comision', title: 'COMISIONES', items: state.infrastructure.comisiones || [] }
+      { id: 'garita', title: 'MÓDULOS', items: filterByShift(state.infrastructure.garitas) },
+      { id: 'movil', title: 'MÓVILES', items: filterByShift(state.infrastructure.moviles) },
+      { id: 'motorizada', title: 'MOTOS', items: filterByShift(state.infrastructure.motos) },
+      { id: 'caminante', title: 'CAMINANTES', items: filterByShift(state.infrastructure.qths) },
+      { id: 'orden_servicio', title: 'ÓRDENES DE SERVICIO', items: filterByShift(state.infrastructure.ordenes) },
+      { id: 'comision', title: 'COMISIONES', items: filterByShift(state.infrastructure.comisiones) }
     ];
 
     rolesToInclude.forEach(roleGroup => {
@@ -864,7 +867,7 @@ Ayte. de guardia: ${getAgentName('ayte_guardia')}</div>
                   </div>
                 </div>
                 <div className="board-section-content">
-                  {[...state.infrastructure.garitas].sort((a, b) => {
+                  {[...filterByShift(state.infrastructure.garitas)].sort((a, b) => {
                     const occA = currentSchedules.some(s => s.role === 'garita' && s.targetId === a.id);
                     const occB = currentSchedules.some(s => s.role === 'garita' && s.targetId === b.id);
                     if (occA !== occB) return occA ? -1 : 1;
@@ -921,7 +924,7 @@ Ayte. de guardia: ${getAgentName('ayte_guardia')}</div>
                   </div>
                 </div>
                 <div className="board-section-content">
-                  {[...state.infrastructure.qths].sort((a, b) => {
+                  {[...filterByShift(state.infrastructure.qths)].sort((a, b) => {
                     const occA = currentSchedules.some(s => s.role === 'caminante' && s.targetId === a.id);
                     const occB = currentSchedules.some(s => s.role === 'caminante' && s.targetId === b.id);
                     if (occA !== occB) return occA ? -1 : 1;
@@ -978,7 +981,7 @@ Ayte. de guardia: ${getAgentName('ayte_guardia')}</div>
                   </div>
                 </div>
                 <div className="board-section-content">
-                  {[...state.infrastructure.moviles].sort((a, b) => {
+                  {[...filterByShift(state.infrastructure.moviles)].sort((a, b) => {
                     const occA = currentSchedules.some(s => s.role === 'movil' && s.targetId === a.id);
                     const occB = currentSchedules.some(s => s.role === 'movil' && s.targetId === b.id);
                     if (occA !== occB) return occA ? -1 : 1;
@@ -1042,7 +1045,7 @@ Ayte. de guardia: ${getAgentName('ayte_guardia')}</div>
                   </div>
                 </div>
                 <div className="board-section-content">
-                  {[...state.infrastructure.motos].sort((a, b) => {
+                  {[...filterByShift(state.infrastructure.motos)].sort((a, b) => {
                     const occA = currentSchedules.some(s => s.role === 'motorizada' && s.targetId === a.id);
                     const occB = currentSchedules.some(s => s.role === 'motorizada' && s.targetId === b.id);
                     if (occA !== occB) return occA ? -1 : 1;
@@ -1190,7 +1193,7 @@ Ayte. de guardia: ${getAgentName('ayte_guardia')}</div>
                   </div>
                 </div>
                 <div className="board-section-content">
-                  {[...(state.infrastructure.ordenes || [])].sort((a, b) => {
+                  {[...filterByShift(state.infrastructure.ordenes)].sort((a, b) => {
                     const occA = currentSchedules.some(s => s.role === 'orden_servicio' && s.targetId === a.id);
                     const occB = currentSchedules.some(s => s.role === 'orden_servicio' && s.targetId === b.id);
                     if (occA !== occB) return occA ? -1 : 1;
@@ -1257,7 +1260,7 @@ Ayte. de guardia: ${getAgentName('ayte_guardia')}</div>
                   </div>
                 </div>
                 <div className="board-section-content">
-                  {[...(state.infrastructure.comisiones || [])].sort((a, b) => {
+                  {[...filterByShift(state.infrastructure.comisiones)].sort((a, b) => {
                     const occA = currentSchedules.some(s => s.role === 'comision' && s.targetId === a.id);
                     const occB = currentSchedules.some(s => s.role === 'comision' && s.targetId === b.id);
                     if (occA !== occB) return occA ? -1 : 1;
@@ -1421,6 +1424,7 @@ Ayte. de guardia: ${getAgentName('ayte_guardia')}</div>
             removeInfra={removeInfra}
             updateAgent={updateAgent}
             updateInfra={updateInfra}
+            userRole={userRole}
           />
         )
       }
@@ -1869,9 +1873,23 @@ function ScheduleModal({ onClose, state, assignAgent, removeSchedule, getInfraNa
   );
 }
 
-function SettingsModal({ onClose, state, addAgent, removeAgent, addInfra, removeInfra, updateAgent, updateInfra }: any) {
+function SettingsModal({ onClose, state, addAgent, removeAgent, addInfra, removeInfra, updateAgent, updateInfra, userRole }: any) {
   const [activeTab, setActiveTab] = useState('personal');
   const [editingId, setEditingId] = useState<string | null>(null);
+  const [resourceSearchQuery, setResourceSearchQuery] = useState('');
+
+  const isAdmin = userRole === 'admin';
+  const userShiftNum = !isAdmin && userRole ? Number(userRole.replace('turno', '')) : null;
+
+  const [newAgentShift, setNewAgentShift] = useState<1 | 2 | 3 | 4>(1);
+  const [newInfraShift, setNewInfraShift] = useState<1 | 2 | 3 | 4>(1);
+
+  useEffect(() => {
+    if (userShiftNum && !editingId) {
+      setNewAgentShift(userShiftNum as 1 | 2 | 3 | 4);
+      setNewInfraShift(userShiftNum as 1 | 2 | 3 | 4);
+    }
+  }, [userShiftNum, editingId]);
 
   const [newAgentName, setNewAgentName] = useState('');
   const [newAgentPhone, setNewAgentPhone] = useState('');
@@ -1883,7 +1901,6 @@ function SettingsModal({ onClose, state, addAgent, removeAgent, addInfra, remove
   const [newOSHorario, setNewOSHorario] = useState('');
   const [newOSUbicacion, setNewOSUbicacion] = useState('');
 
-  const [newAgentShift, setNewAgentShift] = useState<1 | 2 | 3 | 4>(1);
   const [newAgentHasLicense, setNewAgentHasLicense] = useState(false);
   const [newAgentLicenseType, setNewAgentLicenseType] = useState<'auto' | 'moto' | 'ambas'>('auto');
   const [newAgentLicenseCategory, setNewAgentLicenseCategory] = useState<'comun' | 'profesional'>('comun');
@@ -1933,6 +1950,7 @@ function SettingsModal({ onClose, state, addAgent, removeAgent, addInfra, remove
     setNewInfraName(i.name.replace(/^OS /, ''));
     setNewInfraDescription(i.description || '');
     setNewInfraRO(i.ro || '');
+    setNewInfraShift(i.turno || userShiftNum || 1);
     setNewOSNumero(i.numero || '');
     setNewOSHorario(i.horario || '');
     setNewOSUbicacion(i.ubicacion || '');
@@ -1976,7 +1994,7 @@ function SettingsModal({ onClose, state, addAgent, removeAgent, addInfra, remove
     e.preventDefault();
     if (type === 'ordenes') {
       if (newOSNumero.trim() && newOSUbicacion.trim()) {
-        const payload = { name: `OS ${newOSNumero.trim()}`, numero: newOSNumero.trim(), horario: newOSHorario.trim(), ubicacion: newOSUbicacion.trim(), description: newInfraDescription.trim() };
+        const payload = { name: `OS ${newOSNumero.trim()}`, numero: newOSNumero.trim(), horario: newOSHorario.trim(), ubicacion: newOSUbicacion.trim(), description: newInfraDescription.trim(), turno: newInfraShift };
         if (editingId) {
           updateInfra(type, editingId, payload);
         } else {
@@ -1986,7 +2004,7 @@ function SettingsModal({ onClose, state, addAgent, removeAgent, addInfra, remove
       }
     } else {
       if (newInfraName.trim()) {
-        const payload = { name: newInfraName.trim(), ro: newInfraRO.trim(), description: newInfraDescription.trim() };
+        const payload = { name: newInfraName.trim(), ro: newInfraRO.trim(), description: newInfraDescription.trim(), turno: newInfraShift };
         if (editingId) {
           updateInfra(type, editingId, payload);
         } else {
@@ -2006,13 +2024,13 @@ function SettingsModal({ onClose, state, addAgent, removeAgent, addInfra, remove
         </div>
 
         <div className="flex border-b border-slate-800 bg-slate-900/50 overflow-x-auto relative z-[1000] shrink-0 scrollbar-hide">
-          <button onClick={() => { setActiveTab('personal'); cancelEdit(); }} className={`whitespace-nowrap px-4 py-3 text-sm font-medium transition-colors ${activeTab === 'personal' ? 'text-yellow-500 border-b-2 border-yellow-500 bg-slate-800/50' : 'text-slate-400 hover:text-white hover:bg-slate-800/30'}`}>Personal</button>
-          <button onClick={() => { setActiveTab('garitas'); cancelEdit(); }} className={`whitespace-nowrap px-4 py-3 text-sm font-medium transition-colors ${activeTab === 'garitas' ? 'text-yellow-500 border-b-2 border-yellow-500 bg-slate-800/50' : 'text-slate-400 hover:text-white hover:bg-slate-800/30'}`}>Módulos</button>
-          <button onClick={() => { setActiveTab('qths'); cancelEdit(); }} className={`whitespace-nowrap px-4 py-3 text-sm font-medium transition-colors ${activeTab === 'qths' ? 'text-yellow-500 border-b-2 border-yellow-500 bg-slate-800/50' : 'text-slate-400 hover:text-white hover:bg-slate-800/30'}`}>QTH</button>
-          <button onClick={() => { setActiveTab('moviles'); cancelEdit(); }} className={`whitespace-nowrap px-4 py-3 text-sm font-medium transition-colors ${activeTab === 'moviles' ? 'text-yellow-500 border-b-2 border-yellow-500 bg-slate-800/50' : 'text-slate-400 hover:text-white hover:bg-slate-800/30'}`}>Móviles</button>
-          <button onClick={() => { setActiveTab('motos'); cancelEdit(); }} className={`whitespace-nowrap px-4 py-3 text-sm font-medium transition-colors ${activeTab === 'motos' ? 'text-yellow-500 border-b-2 border-yellow-500 bg-slate-800/50' : 'text-slate-400 hover:text-white hover:bg-slate-800/30'}`}>Motos</button>
-          <button onClick={() => { setActiveTab('ordenes'); cancelEdit(); }} className={`whitespace-nowrap px-4 py-3 text-sm font-medium transition-colors ${activeTab === 'ordenes' ? 'text-yellow-500 border-b-2 border-yellow-500 bg-slate-800/50' : 'text-slate-400 hover:text-white hover:bg-slate-800/30'}`}>Órdenes</button>
-          <button onClick={() => { setActiveTab('comisiones'); cancelEdit(); }} className={`whitespace-nowrap px-4 py-3 text-sm font-medium transition-colors ${activeTab === 'comisiones' ? 'text-yellow-500 border-b-2 border-yellow-500 bg-slate-800/50' : 'text-slate-400 hover:text-white hover:bg-slate-800/30'}`}>Comisiones</button>
+          <button onClick={() => { setActiveTab('personal'); cancelEdit(); setResourceSearchQuery(''); }} className={`whitespace-nowrap px-4 py-3 text-sm font-medium transition-colors ${activeTab === 'personal' ? 'text-yellow-500 border-b-2 border-yellow-500 bg-slate-800/50' : 'text-slate-400 hover:text-white hover:bg-slate-800/30'}`}>Personal</button>
+          <button onClick={() => { setActiveTab('garitas'); cancelEdit(); setResourceSearchQuery(''); }} className={`whitespace-nowrap px-4 py-3 text-sm font-medium transition-colors ${activeTab === 'garitas' ? 'text-yellow-500 border-b-2 border-yellow-500 bg-slate-800/50' : 'text-slate-400 hover:text-white hover:bg-slate-800/30'}`}>Módulos</button>
+          <button onClick={() => { setActiveTab('qths'); cancelEdit(); setResourceSearchQuery(''); }} className={`whitespace-nowrap px-4 py-3 text-sm font-medium transition-colors ${activeTab === 'qths' ? 'text-yellow-500 border-b-2 border-yellow-500 bg-slate-800/50' : 'text-slate-400 hover:text-white hover:bg-slate-800/30'}`}>QTH</button>
+          <button onClick={() => { setActiveTab('moviles'); cancelEdit(); setResourceSearchQuery(''); }} className={`whitespace-nowrap px-4 py-3 text-sm font-medium transition-colors ${activeTab === 'moviles' ? 'text-yellow-500 border-b-2 border-yellow-500 bg-slate-800/50' : 'text-slate-400 hover:text-white hover:bg-slate-800/30'}`}>Móviles</button>
+          <button onClick={() => { setActiveTab('motos'); cancelEdit(); setResourceSearchQuery(''); }} className={`whitespace-nowrap px-4 py-3 text-sm font-medium transition-colors ${activeTab === 'motos' ? 'text-yellow-500 border-b-2 border-yellow-500 bg-slate-800/50' : 'text-slate-400 hover:text-white hover:bg-slate-800/30'}`}>Motos</button>
+          <button onClick={() => { setActiveTab('ordenes'); cancelEdit(); setResourceSearchQuery(''); }} className={`whitespace-nowrap px-4 py-3 text-sm font-medium transition-colors ${activeTab === 'ordenes' ? 'text-yellow-500 border-b-2 border-yellow-500 bg-slate-800/50' : 'text-slate-400 hover:text-white hover:bg-slate-800/30'}`}>Órdenes</button>
+          <button onClick={() => { setActiveTab('comisiones'); cancelEdit(); setResourceSearchQuery(''); }} className={`whitespace-nowrap px-4 py-3 text-sm font-medium transition-colors ${activeTab === 'comisiones' ? 'text-yellow-500 border-b-2 border-yellow-500 bg-slate-800/50' : 'text-slate-400 hover:text-white hover:bg-slate-800/30'}`}>Comisiones</button>
         </div>
 
         <div className="p-6 overflow-y-auto flex-1">
@@ -2024,7 +2042,7 @@ function SettingsModal({ onClose, state, addAgent, removeAgent, addInfra, remove
                   <input type="text" value={newAgentName} onChange={e => setNewAgentName(e.target.value)} placeholder="Nombre (Ej: Oficial Pérez)" className="bg-slate-800 border border-slate-700 rounded p-2 text-white text-sm" required />
                   <input type="text" value={newAgentLegajo} onChange={e => setNewAgentLegajo(e.target.value.replace(/\D/g, ''))} placeholder="Legajo (Opcional)" className="bg-slate-800 border border-slate-700 rounded p-2 text-white text-sm" />
                   <input type="text" value={newAgentPhone} onChange={e => setNewAgentPhone(e.target.value.replace(/[^\d\s\-+]/g, ''))} placeholder="Teléfono (Opcional)" className="bg-slate-800 border border-slate-700 rounded p-2 text-white text-sm" />
-                  <select value={newAgentShift} onChange={e => setNewAgentShift(Number(e.target.value) as 1 | 2 | 3 | 4)} className="bg-slate-800 border border-slate-700 rounded p-2 text-white text-sm">
+                  <select value={newAgentShift} onChange={e => setNewAgentShift(Number(e.target.value) as 1 | 2 | 3 | 4)} className={`bg-slate-800 border border-slate-700 rounded p-2 text-white text-sm ${!isAdmin ? 'opacity-50 cursor-not-allowed' : ''}`} disabled={!isAdmin}>
                     <option value={1}>Turno 1</option>
                     <option value={2}>Turno 2</option>
                     <option value={3}>Turno 3</option>
@@ -2078,18 +2096,30 @@ function SettingsModal({ onClose, state, addAgent, removeAgent, addInfra, remove
                   <button type="submit" className="bg-yellow-600 hover:bg-yellow-500 text-slate-900 px-4 py-2 rounded font-bold transition-colors w-full sm:w-auto">{editingId ? 'Guardar Cambios' : 'Agregar Efectivo'}</button>
                 </div>
               </form>
-              <div className="flex justify-between items-center mb-4">
+              <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 gap-2">
                 <h4 className="text-sm font-bold text-slate-300">Lista de Efectivos</h4>
-                <select value={agentFilterShift} onChange={e => setAgentFilterShift(e.target.value === 'all' ? 'all' : Number(e.target.value) as any)} className="bg-slate-800 border border-slate-700 rounded p-1 text-white text-xs">
-                  <option value="all">Todos los turnos</option>
-                  <option value={1}>Turno 1</option>
-                  <option value={2}>Turno 2</option>
-                  <option value={3}>Turno 3</option>
-                  <option value={4}>Turno 4</option>
-                </select>
+                <div className="flex gap-2 w-full sm:w-auto">
+                  <input 
+                    type="text" 
+                    placeholder="Buscar efectivo..." 
+                    value={resourceSearchQuery} 
+                    onChange={e => setResourceSearchQuery(e.target.value)} 
+                    className="bg-slate-800 border border-slate-700 rounded p-1 text-white text-xs flex-1 sm:w-48" 
+                  />
+                  <select value={agentFilterShift} onChange={e => setAgentFilterShift(e.target.value === 'all' ? 'all' : Number(e.target.value) as any)} className="bg-slate-800 border border-slate-700 rounded p-1 text-white text-xs shrink-0">
+                    <option value="all">Todos los turnos</option>
+                    <option value={1}>Turno 1</option>
+                    <option value={2}>Turno 2</option>
+                    <option value={3}>Turno 3</option>
+                    <option value={4}>Turno 4</option>
+                  </select>
+                </div>
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                {state.agents.filter((a: Agent) => agentFilterShift === 'all' || (a.turno || 1) === agentFilterShift).map((a: Agent) => (
+                {state.agents.filter((a: Agent) => 
+                  (agentFilterShift === 'all' || (a.turno || 1) === agentFilterShift) && 
+                  (a.name.toLowerCase().includes(resourceSearchQuery.toLowerCase()) || (a.legajo || '').includes(resourceSearchQuery))
+                ).map((a: Agent) => (
                   <div key={a.id} className="bg-slate-800 p-3 rounded flex justify-between items-center border border-slate-700">
                     <div>
                       <div className="text-slate-200 font-medium">{a.name}</div>
@@ -2102,8 +2132,12 @@ function SettingsModal({ onClose, state, addAgent, removeAgent, addInfra, remove
                       </div>
                     </div>
                     <div className="flex">
-                      <button onClick={() => handleEditAgent(a)} className="text-slate-500 hover:text-blue-500 p-2"><Edit2 size={16} /></button>
-                      <button onClick={() => removeAgent(a.id)} className="text-slate-500 hover:text-red-500 p-2"><Trash2 size={16} /></button>
+                      {(isAdmin || userShiftNum === (a.turno || 1)) && (
+                        <>
+                          <button onClick={() => handleEditAgent(a)} className="text-slate-500 hover:text-blue-500 p-2"><Edit2 size={16} /></button>
+                          <button onClick={() => removeAgent(a.id)} className="text-slate-500 hover:text-red-500 p-2"><Trash2 size={16} /></button>
+                        </>
+                      )}
                     </div>
                   </div>
                 ))}
@@ -2115,25 +2149,48 @@ function SettingsModal({ onClose, state, addAgent, removeAgent, addInfra, remove
             <div>
               <form onSubmit={(e) => handleAddInfra(e, activeTab)} className="flex flex-col gap-3 mb-6 bg-slate-800/50 p-4 rounded-lg border border-slate-700">
                 <h4 className="text-sm font-bold text-slate-300">{editingId ? 'Editar' : 'Agregar'} {activeTab === 'garitas' ? 'Módulo' : activeTab === 'qths' ? 'QTH' : 'Comisión'}</h4>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                   <input type="text" value={newInfraName} onChange={e => setNewInfraName(e.target.value)} placeholder={`Nombre d${activeTab === 'garitas' ? 'el módulo' : activeTab === 'qths' ? 'e la intersección' : 'e la comisión'}`} className="bg-slate-800 border border-slate-700 rounded p-2 text-white text-sm" required />
                   <input type="text" value={newInfraDescription} onChange={e => setNewInfraDescription(e.target.value)} placeholder="Descripción (Opcional)" className="bg-slate-800 border border-slate-700 rounded p-2 text-white text-sm" />
+                  <select value={newInfraShift} onChange={e => setNewInfraShift(Number(e.target.value) as 1 | 2 | 3 | 4)} className={`bg-slate-800 border border-slate-700 rounded p-2 text-white text-sm ${!isAdmin ? 'opacity-50 cursor-not-allowed' : ''}`} disabled={!isAdmin}>
+                    <option value={1}>Turno 1</option>
+                    <option value={2}>Turno 2</option>
+                    <option value={3}>Turno 3</option>
+                    <option value={4}>Turno 4</option>
+                  </select>
                 </div>
                 <div className="flex justify-end gap-2 mt-1 w-full">
                   {editingId && <button type="button" onClick={cancelEdit} className="bg-slate-700 hover:bg-slate-600 text-white px-4 py-2 rounded font-bold transition-colors w-full sm:w-auto">Cancelar</button>}
                   <button type="submit" className="bg-yellow-600 hover:bg-yellow-500 text-slate-900 px-4 py-2 rounded font-bold transition-colors w-full sm:w-auto">{editingId ? 'Guardar Cambios' : 'Agregar'}</button>
                 </div>
               </form>
+              <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 gap-2">
+                <h4 className="text-sm font-bold text-slate-300">Lista de {activeTab === 'garitas' ? 'Módulos' : activeTab === 'qths' ? 'QTHs' : 'Comisiones'}</h4>
+                <input 
+                  type="text" 
+                  placeholder="Buscar..." 
+                  value={resourceSearchQuery} 
+                  onChange={e => setResourceSearchQuery(e.target.value)} 
+                  className="bg-slate-800 border border-slate-700 rounded p-1 text-white text-xs w-full sm:w-48" 
+                />
+              </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                {(state.infrastructure[activeTab as keyof Infrastructure] || []).map((i: InfrastructureItem) => (
+                {(state.infrastructure[activeTab as keyof Infrastructure] || []).filter((i: InfrastructureItem) => 
+                  i.name.toLowerCase().includes(resourceSearchQuery.toLowerCase()) || 
+                  (i.description || '').toLowerCase().includes(resourceSearchQuery.toLowerCase())
+                ).map((i: InfrastructureItem) => (
                   <div key={i.id} className="bg-slate-800 p-3 rounded flex justify-between items-center border border-slate-700">
                     <div>
                       <div className="text-slate-200 font-medium">{i.name}</div>
                       {i.description && <div className="text-xs text-slate-500">{i.description}</div>}
                     </div>
                     <div className="flex">
-                      <button type="button" onClick={() => handleEditInfra(i)} className="text-slate-500 hover:text-blue-500 p-2"><Edit2 size={16} /></button>
-                      <button type="button" onClick={() => removeInfra(activeTab, i.id)} className="text-slate-500 hover:text-red-500 p-2"><Trash2 size={16} /></button>
+                      {(isAdmin || i.turno === userShiftNum) && (
+                        <>
+                          <button type="button" onClick={() => handleEditInfra(i)} className="text-slate-500 hover:text-blue-500 p-2"><Edit2 size={16} /></button>
+                          <button type="button" onClick={() => removeInfra(activeTab, i.id)} className="text-slate-500 hover:text-red-500 p-2"><Trash2 size={16} /></button>
+                        </>
+                      )}
                     </div>
                   </div>
                 ))}
@@ -2145,18 +2202,38 @@ function SettingsModal({ onClose, state, addAgent, removeAgent, addInfra, remove
             <div>
               <form onSubmit={(e) => handleAddInfra(e, activeTab)} className="flex flex-col gap-3 mb-6 bg-slate-800/50 p-4 rounded-lg border border-slate-700">
                 <h4 className="text-sm font-bold text-slate-300">{editingId ? 'Editar' : 'Agregar'} {activeTab === 'moviles' ? 'Móvil' : 'Moto'}</h4>
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                <div className="grid grid-cols-1 sm:grid-cols-4 gap-3">
                   <input type="text" value={newInfraName} onChange={e => setNewInfraName(e.target.value)} placeholder="Nombre (Ej: Móvil 01)" className="bg-slate-800 border border-slate-700 rounded p-2 text-white text-sm" required />
                   <input type="text" value={newInfraRO} onChange={e => setNewInfraRO(e.target.value)} placeholder="RO (Ej: RO-123)" className="bg-slate-800 border border-slate-700 rounded p-2 text-white text-sm" />
                   <input type="text" value={newInfraDescription} onChange={e => setNewInfraDescription(e.target.value)} placeholder="Descripción (Opcional)" className="bg-slate-800 border border-slate-700 rounded p-2 text-white text-sm" />
+                  <select value={newInfraShift} onChange={e => setNewInfraShift(Number(e.target.value) as 1 | 2 | 3 | 4)} className={`bg-slate-800 border border-slate-700 rounded p-2 text-white text-sm ${!isAdmin ? 'opacity-50 cursor-not-allowed' : ''}`} disabled={!isAdmin}>
+                    <option value={1}>Turno 1</option>
+                    <option value={2}>Turno 2</option>
+                    <option value={3}>Turno 3</option>
+                    <option value={4}>Turno 4</option>
+                  </select>
                 </div>
                 <div className="flex justify-end gap-2 mt-1 w-full">
                   {editingId && <button type="button" onClick={cancelEdit} className="bg-slate-700 hover:bg-slate-600 text-white px-4 py-2 rounded font-bold transition-colors w-full sm:w-auto">Cancelar</button>}
                   <button type="submit" className="bg-yellow-600 hover:bg-yellow-500 text-slate-900 px-4 py-2 rounded font-bold transition-colors w-full sm:w-auto">{editingId ? 'Guardar Cambios' : 'Agregar'}</button>
                 </div>
               </form>
+              <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 gap-2">
+                <h4 className="text-sm font-bold text-slate-300">Lista de {activeTab === 'moviles' ? 'Móviles' : 'Motos'}</h4>
+                <input 
+                  type="text" 
+                  placeholder="Buscar..." 
+                  value={resourceSearchQuery} 
+                  onChange={e => setResourceSearchQuery(e.target.value)} 
+                  className="bg-slate-800 border border-slate-700 rounded p-1 text-white text-xs w-full sm:w-48" 
+                />
+              </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                {state.infrastructure[activeTab as keyof Infrastructure].map((i: InfrastructureItem) => (
+                {(state.infrastructure[activeTab as keyof Infrastructure] || []).filter((i: InfrastructureItem) => 
+                  i.name.toLowerCase().includes(resourceSearchQuery.toLowerCase()) || 
+                  (i.description || '').toLowerCase().includes(resourceSearchQuery.toLowerCase()) ||
+                  (i.ro || '').toLowerCase().includes(resourceSearchQuery.toLowerCase())
+                ).map((i: InfrastructureItem) => (
                   <div key={i.id} className="bg-slate-800 p-3 rounded flex justify-between items-center border border-slate-700">
                     <div>
                       <div className="flex items-center gap-2 mb-1">
@@ -2166,8 +2243,12 @@ function SettingsModal({ onClose, state, addAgent, removeAgent, addInfra, remove
                       {i.description && <div className="text-xs text-slate-500">{i.description}</div>}
                     </div>
                     <div className="flex">
-                      <button type="button" onClick={() => handleEditInfra(i)} className="text-slate-500 hover:text-blue-500 p-2"><Edit2 size={16} /></button>
-                      <button type="button" onClick={() => removeInfra(activeTab, i.id)} className="text-slate-500 hover:text-red-500 p-2"><Trash2 size={16} /></button>
+                      {(isAdmin || i.turno === userShiftNum) && (
+                        <>
+                          <button type="button" onClick={() => handleEditInfra(i)} className="text-slate-500 hover:text-blue-500 p-2"><Edit2 size={16} /></button>
+                          <button type="button" onClick={() => removeInfra(activeTab, i.id)} className="text-slate-500 hover:text-red-500 p-2"><Trash2 size={16} /></button>
+                        </>
+                      )}
                     </div>
                   </div>
                 ))}
@@ -2179,19 +2260,40 @@ function SettingsModal({ onClose, state, addAgent, removeAgent, addInfra, remove
             <div>
               <form onSubmit={(e) => handleAddInfra(e, activeTab)} className="flex flex-col gap-3 mb-6 bg-slate-800/50 p-4 rounded-lg border border-slate-700">
                 <h4 className="text-sm font-bold text-slate-300">{editingId ? 'Editar' : 'Agregar'} Orden de Servicio</h4>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
                   <input type="text" value={newOSNumero} onChange={e => setNewOSNumero(e.target.value)} placeholder="Número (Ej: 1234/24)" className="bg-slate-800 border border-slate-700 rounded p-2 text-white text-sm" required />
                   <input type="text" value={newOSHorario} onChange={e => setNewOSHorario(e.target.value)} placeholder="Horario (Ej: 08:00 a 12:00)" className="bg-slate-800 border border-slate-700 rounded p-2 text-white text-sm" />
                   <input type="text" value={newOSUbicacion} onChange={e => setNewOSUbicacion(e.target.value)} placeholder="Ubicación (Ej: Estadio Municipal)" className="bg-slate-800 border border-slate-700 rounded p-2 text-white text-sm" required />
                   <input type="text" value={newInfraDescription} onChange={e => setNewInfraDescription(e.target.value)} placeholder="Descripción (Opcional)" className="bg-slate-800 border border-slate-700 rounded p-2 text-white text-sm" />
+                  <select value={newInfraShift} onChange={e => setNewInfraShift(Number(e.target.value) as 1 | 2 | 3 | 4)} className={`bg-slate-800 border border-slate-700 rounded p-2 text-white text-sm ${!isAdmin ? 'opacity-50 cursor-not-allowed' : ''}`} disabled={!isAdmin}>
+                    <option value={1}>Turno 1</option>
+                    <option value={2}>Turno 2</option>
+                    <option value={3}>Turno 3</option>
+                    <option value={4}>Turno 4</option>
+                  </select>
                 </div>
                 <div className="flex justify-end gap-2 mt-1 w-full">
                   {editingId && <button type="button" onClick={cancelEdit} className="bg-slate-700 hover:bg-slate-600 text-white px-4 py-2 rounded font-bold transition-colors w-full sm:w-auto">Cancelar</button>}
                   <button type="submit" className="bg-yellow-600 hover:bg-yellow-500 text-slate-900 px-4 py-2 rounded font-bold transition-colors w-full sm:w-auto">{editingId ? 'Guardar Cambios' : 'Agregar'}</button>
                 </div>
               </form>
+              <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 gap-2">
+                <h4 className="text-sm font-bold text-slate-300">Lista de Órdenes de Servicio</h4>
+                <input 
+                  type="text" 
+                  placeholder="Buscar..." 
+                  value={resourceSearchQuery} 
+                  onChange={e => setResourceSearchQuery(e.target.value)} 
+                  className="bg-slate-800 border border-slate-700 rounded p-1 text-white text-xs w-full sm:w-48" 
+                />
+              </div>
               <div className="grid grid-cols-1 gap-2">
-                {(state.infrastructure.ordenes || []).map((i: InfrastructureItem) => (
+                {(state.infrastructure.ordenes || []).filter((i: InfrastructureItem) => 
+                  (i.name || '').toLowerCase().includes(resourceSearchQuery.toLowerCase()) || 
+                  (i.numero || '').toLowerCase().includes(resourceSearchQuery.toLowerCase()) ||
+                  (i.ubicacion || '').toLowerCase().includes(resourceSearchQuery.toLowerCase()) ||
+                  (i.description || '').toLowerCase().includes(resourceSearchQuery.toLowerCase())
+                ).map((i: InfrastructureItem) => (
                   <div key={i.id} className="bg-slate-800 p-3 rounded flex justify-between items-center border border-slate-700">
                     <div className="flex flex-col">
                       <div className="flex items-center gap-2 mb-1">
@@ -2202,8 +2304,12 @@ function SettingsModal({ onClose, state, addAgent, removeAgent, addInfra, remove
                       {i.description && <span className="text-xs text-slate-500 mt-1">{i.description}</span>}
                     </div>
                     <div className="flex">
-                      <button type="button" onClick={() => handleEditInfra(i)} className="text-slate-500 hover:text-blue-500 p-2"><Edit2 size={16} /></button>
-                      <button type="button" onClick={() => removeInfra(activeTab, i.id)} className="text-slate-500 hover:text-red-500 p-2"><Trash2 size={16} /></button>
+                      {(isAdmin || i.turno === userShiftNum) && (
+                        <>
+                          <button type="button" onClick={() => handleEditInfra(i)} className="text-slate-500 hover:text-blue-500 p-2"><Edit2 size={16} /></button>
+                          <button type="button" onClick={() => removeInfra(activeTab, i.id)} className="text-slate-500 hover:text-red-500 p-2"><Trash2 size={16} /></button>
+                        </>
+                      )}
                     </div>
                   </div>
                 ))}

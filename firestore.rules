@@ -47,8 +47,29 @@ service cloud.firestore {
     }
 
     // 3. Reglas para las nuevas colecciones
-    match /agents/{document=**} {
-      allow read, write: if isAuthenticated() && hasValidRole();
+    match /agents/{agentId} {
+      allow read: if isAuthenticated() && hasValidRole();
+      
+      // Permitir crear solo si es admin o si el agente pertenece al mismo turno del usuario
+      allow create: if isAuthenticated() && hasValidRole() && (
+        isAdmin() || 
+        ('turno' + string(request.resource.data.turno)) == getUserRole()
+      );
+      
+      // Permitir actualizar solo si es admin o si el agente original y el nuevo dato pertenecen al mismo turno del usuario
+      allow update: if isAuthenticated() && hasValidRole() && (
+        isAdmin() || 
+        (
+          ('turno' + string(resource.data.turno)) == getUserRole() && 
+          ('turno' + string(request.resource.data.turno)) == getUserRole()
+        )
+      );
+      
+      // Permitir eliminar solo si es admin o si el agente pertenece al mismo turno del usuario
+      allow delete: if isAuthenticated() && hasValidRole() && (
+        isAdmin() || 
+        ('turno' + string(resource.data.turno)) == getUserRole()
+      );
     }
 
     match /schedules/{document=**} {
@@ -56,7 +77,28 @@ service cloud.firestore {
     }
 
     match /infrastructure/{document=**} {
-      allow read, write: if isAuthenticated() && hasValidRole();
+      allow read: if isAuthenticated() && hasValidRole();
+      
+      // Permitir crear solo si es admin o si la infra pertenece al mismo turno del usuario
+      allow create: if isAuthenticated() && hasValidRole() && (
+        isAdmin() || 
+        ('turno' + string(request.resource.data.turno)) == getUserRole()
+      );
+      
+      // Permitir actualizar solo si es admin o si la infra original y el nuevo dato pertenecen al mismo turno del usuario
+      allow update: if isAuthenticated() && hasValidRole() && (
+        isAdmin() || 
+        (
+          ('turno' + string(resource.data.turno)) == getUserRole() && 
+          ('turno' + string(request.resource.data.turno)) == getUserRole()
+        )
+      );
+      
+      // Permitir eliminar solo si es admin o si la infra pertenece al mismo turno del usuario
+      allow delete: if isAuthenticated() && hasValidRole() && (
+        isAdmin() || 
+        ('turno' + string(resource.data.turno)) == getUserRole()
+      );
     }
   }
 }
