@@ -2196,6 +2196,7 @@ function SettingsModal({ onClose, state, addAgent, removeAgent, addInfra, remove
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                 {state.agents.filter((a: Agent) => 
+                  (isAdmin || (a.turno || 1) === userShiftNum) &&
                   (agentFilterShift === 'all' || (a.turno || 1) === agentFilterShift) && 
                   (a.name.toLowerCase().includes(resourceSearchQuery.toLowerCase()) || (a.legajo || '').includes(resourceSearchQuery))
                 ).map((a: Agent) => (
@@ -2255,8 +2256,9 @@ function SettingsModal({ onClose, state, addAgent, removeAgent, addInfra, remove
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                 {(state.infrastructure[activeTab as keyof Infrastructure] || []).filter((i: InfrastructureItem) => 
-                  i.name.toLowerCase().includes(resourceSearchQuery.toLowerCase()) || 
-                  (i.description || '').toLowerCase().includes(resourceSearchQuery.toLowerCase())
+                  (isAdmin || i.turno === userShiftNum) &&
+                  (i.name.toLowerCase().includes(resourceSearchQuery.toLowerCase()) || 
+                  (i.description || '').toLowerCase().includes(resourceSearchQuery.toLowerCase()))
                 ).map((i: InfrastructureItem) => (
                   <div key={i.id} className="bg-slate-800 p-3 rounded flex justify-between items-center border border-slate-700">
                     <div>
@@ -2309,9 +2311,10 @@ function SettingsModal({ onClose, state, addAgent, removeAgent, addInfra, remove
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                 {(state.infrastructure[activeTab as keyof Infrastructure] || []).filter((i: InfrastructureItem) => 
-                  i.name.toLowerCase().includes(resourceSearchQuery.toLowerCase()) || 
+                  (isAdmin || i.turno === userShiftNum) &&
+                  (i.name.toLowerCase().includes(resourceSearchQuery.toLowerCase()) || 
                   (i.description || '').toLowerCase().includes(resourceSearchQuery.toLowerCase()) ||
-                  (i.ro || '').toLowerCase().includes(resourceSearchQuery.toLowerCase())
+                  (i.ro || '').toLowerCase().includes(resourceSearchQuery.toLowerCase()))
                 ).map((i: InfrastructureItem) => (
                   <div key={i.id} className="bg-slate-800 p-3 rounded flex justify-between items-center border border-slate-700">
                     <div>
@@ -2368,10 +2371,11 @@ function SettingsModal({ onClose, state, addAgent, removeAgent, addInfra, remove
               </div>
               <div className="grid grid-cols-1 gap-2">
                 {(state.infrastructure.ordenes || []).filter((i: InfrastructureItem) => 
-                  (i.name || '').toLowerCase().includes(resourceSearchQuery.toLowerCase()) || 
+                  (isAdmin || i.turno === userShiftNum) &&
+                  ((i.name || '').toLowerCase().includes(resourceSearchQuery.toLowerCase()) || 
                   (i.numero || '').toLowerCase().includes(resourceSearchQuery.toLowerCase()) ||
                   (i.ubicacion || '').toLowerCase().includes(resourceSearchQuery.toLowerCase()) ||
-                  (i.description || '').toLowerCase().includes(resourceSearchQuery.toLowerCase())
+                  (i.description || '').toLowerCase().includes(resourceSearchQuery.toLowerCase()))
                 ).map((i: InfrastructureItem) => (
                   <div key={i.id} className="bg-slate-800 p-3 rounded flex justify-between items-center border border-slate-700">
                     <div className="flex flex-col">
