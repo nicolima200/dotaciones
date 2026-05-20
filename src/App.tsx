@@ -1423,6 +1423,7 @@ Ayte. de guardia: ${getAgentName('ayte_guardia')}</div>
             onClose={() => setSelectedAgentForInfo(null)}
             state={state}
             getInfraName={getInfraName}
+            userRole={userRole}
             updateAgent={(id: string, updates: Partial<Agent>) => {
               updateAgent(id, updates);
               setSelectedAgentForInfo({ ...selectedAgentForInfo, ...updates });
@@ -1737,7 +1738,7 @@ function MovilInfoModal({ movil, infraType, onClose, updateInfra, softRemoveInfr
   );
 }
 
-function AgentInfoModal({ agent, onClose, state, getInfraName, updateAgent, softRemoveAgent }: any) {
+function AgentInfoModal({ agent, onClose, state, getInfraName, updateAgent, softRemoveAgent, userRole }: any) {
   const [isEditing, setIsEditing] = useState(false);
   const [name, setName] = useState(agent.name || '');
   const [telefono, setTelefono] = useState(agent.telefono || '');
@@ -1772,9 +1773,9 @@ function AgentInfoModal({ agent, onClose, state, getInfraName, updateAgent, soft
             <div className="flex justify-between items-center mb-3">
               <h4 className="text-sm font-bold text-slate-400 uppercase tracking-wider">Información Personal</h4>
               {!isEditing ? (
-                <button onClick={() => setIsEditing(true)} className="text-xs text-yellow-500 hover:text-yellow-400">Editar</button>
+                <button onClick={() => setIsEditing(true)} className="text-xs text-yellow-500 hover:text-yellow-400 font-semibold transition-colors">Editar</button>
               ) : (
-                <button onClick={handleSave} className="text-xs bg-yellow-600 text-slate-900 px-2 py-1 rounded font-bold hover:bg-yellow-500">Guardar</button>
+                <button onClick={handleSave} className="text-xs bg-yellow-600 text-slate-900 px-2 py-1 rounded font-bold hover:bg-yellow-500 transition-colors">Guardar</button>
               )}
             </div>
 
@@ -1793,8 +1794,16 @@ function AgentInfoModal({ agent, onClose, state, getInfraName, updateAgent, soft
                   <input type="text" value={telefono} onChange={e => setTelefono(e.target.value.replace(/[^\d\s\-+]/g, ''))} className="w-full bg-slate-800 border border-slate-700 rounded p-2 text-white text-sm" placeholder="Ej: 11-1234-5678" />
                 </div>
                 <div>
-                  <label className="block text-xs text-slate-500 mb-1">Turno Asignado</label>
-                  <select value={turno} onChange={e => setTurno(Number(e.target.value) as 1 | 2 | 3 | 4)} className="w-full bg-slate-800 border border-slate-700 rounded p-2 text-white text-sm">
+                  <label className="block text-xs text-slate-500 mb-1 flex items-center justify-between">
+                    <span>Turno Asignado</span>
+                    {userRole !== 'admin' && <span className="text-[10px] text-yellow-500 font-bold bg-yellow-500/10 px-1.5 py-0.5 rounded">Solo Admin</span>}
+                  </label>
+                  <select
+                    disabled={userRole !== 'admin'}
+                    value={turno}
+                    onChange={e => setTurno(Number(e.target.value) as 1 | 2 | 3 | 4)}
+                    className="w-full bg-slate-800 border border-slate-700 rounded p-2 text-white text-sm disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
                     <option value={1}>Turno 1</option>
                     <option value={2}>Turno 2</option>
                     <option value={3}>Turno 3</option>
