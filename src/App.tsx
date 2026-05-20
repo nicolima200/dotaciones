@@ -1986,7 +1986,7 @@ function SettingsModal({ onClose, state, addAgent, removeAgent, addInfra, remove
   const [newAgentLicenseExpiration, setNewAgentLicenseExpiration] = useState('');
   const [newAgentHasDAEO, setNewAgentHasDAEO] = useState(false);
   const [newAgentDAEOExpiration, setNewAgentDAEOExpiration] = useState('');
-  const [agentFilterShift, setAgentFilterShift] = useState<1 | 2 | 3 | 4 | 'all'>('all');
+  const [resourceFilterShift, setResourceFilterShift] = useState<1 | 2 | 3 | 4 | 'all'>('all');
 
   const cancelEdit = () => {
     setEditingId(null);
@@ -2185,19 +2185,21 @@ function SettingsModal({ onClose, state, addAgent, removeAgent, addInfra, remove
                     onChange={e => setResourceSearchQuery(e.target.value)} 
                     className="bg-slate-800 border border-slate-700 rounded p-1 text-white text-xs flex-1 sm:w-48" 
                   />
-                  <select value={agentFilterShift} onChange={e => setAgentFilterShift(e.target.value === 'all' ? 'all' : Number(e.target.value) as any)} className="bg-slate-800 border border-slate-700 rounded p-1 text-white text-xs shrink-0">
-                    <option value="all">Todos los turnos</option>
-                    <option value={1}>Turno 1</option>
-                    <option value={2}>Turno 2</option>
-                    <option value={3}>Turno 3</option>
-                    <option value={4}>Turno 4</option>
-                  </select>
+                  {isAdmin && (
+                    <select value={resourceFilterShift} onChange={e => setResourceFilterShift(e.target.value === 'all' ? 'all' : Number(e.target.value) as any)} className="bg-slate-800 border border-slate-700 rounded p-1 text-white text-xs shrink-0">
+                      <option value="all">Todos los turnos</option>
+                      <option value={1}>Turno 1</option>
+                      <option value={2}>Turno 2</option>
+                      <option value={3}>Turno 3</option>
+                      <option value={4}>Turno 4</option>
+                    </select>
+                  )}
                 </div>
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                 {state.agents.filter((a: Agent) => 
                   (isAdmin || (a.turno || 1) === userShiftNum) &&
-                  (agentFilterShift === 'all' || (a.turno || 1) === agentFilterShift) && 
+                  (resourceFilterShift === 'all' || (a.turno || 1) === resourceFilterShift) && 
                   (a.name.toLowerCase().includes(resourceSearchQuery.toLowerCase()) || (a.legajo || '').includes(resourceSearchQuery))
                 ).map((a: Agent) => (
                   <div key={a.id} className="bg-slate-800 p-3 rounded flex justify-between items-center border border-slate-700">
@@ -2246,17 +2248,29 @@ function SettingsModal({ onClose, state, addAgent, removeAgent, addInfra, remove
               </form>
               <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 gap-2">
                 <h4 className="text-sm font-bold text-slate-300">Lista de {activeTab === 'garitas' ? 'Módulos' : activeTab === 'qths' ? 'QTHs' : 'Comisiones'}</h4>
-                <input 
-                  type="text" 
-                  placeholder="Buscar..." 
-                  value={resourceSearchQuery} 
-                  onChange={e => setResourceSearchQuery(e.target.value)} 
-                  className="bg-slate-800 border border-slate-700 rounded p-1 text-white text-xs w-full sm:w-48" 
-                />
+                <div className="flex gap-2 w-full sm:w-auto">
+                  <input 
+                    type="text" 
+                    placeholder="Buscar..." 
+                    value={resourceSearchQuery} 
+                    onChange={e => setResourceSearchQuery(e.target.value)} 
+                    className="bg-slate-800 border border-slate-700 rounded p-1 text-white text-xs w-full sm:w-48" 
+                  />
+                  {isAdmin && (
+                    <select value={resourceFilterShift} onChange={e => setResourceFilterShift(e.target.value === 'all' ? 'all' : Number(e.target.value) as any)} className="bg-slate-800 border border-slate-700 rounded p-1 text-white text-xs shrink-0">
+                      <option value="all">Todos los turnos</option>
+                      <option value={1}>Turno 1</option>
+                      <option value={2}>Turno 2</option>
+                      <option value={3}>Turno 3</option>
+                      <option value={4}>Turno 4</option>
+                    </select>
+                  )}
+                </div>
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                 {(state.infrastructure[activeTab as keyof Infrastructure] || []).filter((i: InfrastructureItem) => 
                   (isAdmin || i.turno === userShiftNum) &&
+                  (resourceFilterShift === 'all' || i.turno === resourceFilterShift) &&
                   (i.name.toLowerCase().includes(resourceSearchQuery.toLowerCase()) || 
                   (i.description || '').toLowerCase().includes(resourceSearchQuery.toLowerCase()))
                 ).map((i: InfrastructureItem) => (
@@ -2301,17 +2315,29 @@ function SettingsModal({ onClose, state, addAgent, removeAgent, addInfra, remove
               </form>
               <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 gap-2">
                 <h4 className="text-sm font-bold text-slate-300">Lista de {activeTab === 'moviles' ? 'Móviles' : 'Motos'}</h4>
-                <input 
-                  type="text" 
-                  placeholder="Buscar..." 
-                  value={resourceSearchQuery} 
-                  onChange={e => setResourceSearchQuery(e.target.value)} 
-                  className="bg-slate-800 border border-slate-700 rounded p-1 text-white text-xs w-full sm:w-48" 
-                />
+                <div className="flex gap-2 w-full sm:w-auto">
+                  <input 
+                    type="text" 
+                    placeholder="Buscar..." 
+                    value={resourceSearchQuery} 
+                    onChange={e => setResourceSearchQuery(e.target.value)} 
+                    className="bg-slate-800 border border-slate-700 rounded p-1 text-white text-xs w-full sm:w-48" 
+                  />
+                  {isAdmin && (
+                    <select value={resourceFilterShift} onChange={e => setResourceFilterShift(e.target.value === 'all' ? 'all' : Number(e.target.value) as any)} className="bg-slate-800 border border-slate-700 rounded p-1 text-white text-xs shrink-0">
+                      <option value="all">Todos los turnos</option>
+                      <option value={1}>Turno 1</option>
+                      <option value={2}>Turno 2</option>
+                      <option value={3}>Turno 3</option>
+                      <option value={4}>Turno 4</option>
+                    </select>
+                  )}
+                </div>
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                 {(state.infrastructure[activeTab as keyof Infrastructure] || []).filter((i: InfrastructureItem) => 
                   (isAdmin || i.turno === userShiftNum) &&
+                  (resourceFilterShift === 'all' || i.turno === resourceFilterShift) &&
                   (i.name.toLowerCase().includes(resourceSearchQuery.toLowerCase()) || 
                   (i.description || '').toLowerCase().includes(resourceSearchQuery.toLowerCase()) ||
                   (i.ro || '').toLowerCase().includes(resourceSearchQuery.toLowerCase()))
@@ -2361,17 +2387,29 @@ function SettingsModal({ onClose, state, addAgent, removeAgent, addInfra, remove
               </form>
               <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 gap-2">
                 <h4 className="text-sm font-bold text-slate-300">Lista de Órdenes de Servicio</h4>
-                <input 
-                  type="text" 
-                  placeholder="Buscar..." 
-                  value={resourceSearchQuery} 
-                  onChange={e => setResourceSearchQuery(e.target.value)} 
-                  className="bg-slate-800 border border-slate-700 rounded p-1 text-white text-xs w-full sm:w-48" 
-                />
+                <div className="flex gap-2 w-full sm:w-auto">
+                  <input 
+                    type="text" 
+                    placeholder="Buscar..." 
+                    value={resourceSearchQuery} 
+                    onChange={e => setResourceSearchQuery(e.target.value)} 
+                    className="bg-slate-800 border border-slate-700 rounded p-1 text-white text-xs w-full sm:w-48" 
+                  />
+                  {isAdmin && (
+                    <select value={resourceFilterShift} onChange={e => setResourceFilterShift(e.target.value === 'all' ? 'all' : Number(e.target.value) as any)} className="bg-slate-800 border border-slate-700 rounded p-1 text-white text-xs shrink-0">
+                      <option value="all">Todos los turnos</option>
+                      <option value={1}>Turno 1</option>
+                      <option value={2}>Turno 2</option>
+                      <option value={3}>Turno 3</option>
+                      <option value={4}>Turno 4</option>
+                    </select>
+                  )}
+                </div>
               </div>
               <div className="grid grid-cols-1 gap-2">
                 {(state.infrastructure.ordenes || []).filter((i: InfrastructureItem) => 
                   (isAdmin || i.turno === userShiftNum) &&
+                  (resourceFilterShift === 'all' || i.turno === resourceFilterShift) &&
                   ((i.name || '').toLowerCase().includes(resourceSearchQuery.toLowerCase()) || 
                   (i.numero || '').toLowerCase().includes(resourceSearchQuery.toLowerCase()) ||
                   (i.ubicacion || '').toLowerCase().includes(resourceSearchQuery.toLowerCase()) ||
