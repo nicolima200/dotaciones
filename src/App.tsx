@@ -2276,8 +2276,15 @@ function SettingsModal({ onClose, state, addAgent, removeAgent, addInfra, remove
                 ).map((i: InfrastructureItem) => (
                   <div key={i.id} className="bg-slate-800 p-3 rounded flex justify-between items-center border border-slate-700">
                     <div>
-                      <div className="text-slate-200 font-medium">{i.name}</div>
-                      {i.description && <div className="text-xs text-slate-500">{i.description}</div>}
+                      <div className="text-slate-200 font-medium flex items-center gap-2">
+                        {i.name}
+                        {resourceFilterShift === 'all' && (
+                          <span className="bg-slate-700 px-1.5 py-0.5 rounded text-yellow-500 text-[10px] font-normal">
+                            {`Turno ${i.turno || 1}`}
+                          </span>
+                        )}
+                      </div>
+                      {i.description && <div className="text-xs text-slate-500 mt-1">{i.description}</div>}
                     </div>
                     <div className="flex">
                       {(isAdmin || i.turno === userShiftNum) && (
@@ -2347,6 +2354,11 @@ function SettingsModal({ onClose, state, addAgent, removeAgent, addInfra, remove
                       <div className="flex items-center gap-2 mb-1">
                         <span className="text-slate-200 font-medium">{i.name}</span>
                         {i.ro && <span className="text-xs text-slate-500 bg-slate-900 px-2 py-0.5 rounded">{i.ro}</span>}
+                        {resourceFilterShift === 'all' && (
+                          <span className="bg-slate-700 px-1.5 py-0.5 rounded text-yellow-500 text-[10px] font-normal">
+                            {`Turno ${i.turno || 1}`}
+                          </span>
+                        )}
                       </div>
                       {i.description && <div className="text-xs text-slate-500">{i.description}</div>}
                     </div>
@@ -2420,6 +2432,11 @@ function SettingsModal({ onClose, state, addAgent, removeAgent, addInfra, remove
                       <div className="flex items-center gap-2 mb-1">
                         <span className="text-slate-200 font-bold">OS {i.numero}</span>
                         {i.horario && <span className="text-xs text-slate-500 bg-slate-900 px-2 py-0.5 rounded">{i.horario}</span>}
+                        {resourceFilterShift === 'all' && (
+                          <span className="bg-slate-700 px-1.5 py-0.5 rounded text-yellow-500 text-[10px] font-normal">
+                            {`Turno ${i.turno || 1}`}
+                          </span>
+                        )}
                       </div>
                       <span className="text-sm text-slate-400">{i.ubicacion}</span>
                       {i.description && <span className="text-xs text-slate-500 mt-1">{i.description}</span>}
