@@ -1,0 +1,62 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Función auxiliar: verifica si el usuario inició sesión
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    // Función auxiliar para obtener el rol del usuario actual
+    function getUserRole() {
+      return get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role;
+    }
+
+    // Función auxiliar para verificar si es admin
+    function isAdmin() {
+      return isAuthenticated() && getUserRole() == 'admin';
+    }
+
+    // Función auxiliar: verifica si el usuario tiene un rol asignado y válido
+    function hasValidRole() {
+      let userRole = getUserRole();
+      return userRole == 'admin' || 
+             userRole == 'turno1' || 
+             userRole == 'turno2' || 
+             userRole == 'turno3' || 
+             userRole == 'turno4';
+    }
+
+    // 1. Reglas para la colección 'users' (Manejo de Roles)
+    match /users/{userId} {
+      // LEER: El propio usuario puede leer sus datos, y el admin puede leer a todos
+      allow read: if isAuthenticated() && (request.auth.uid == userId || isAdmin());
+      
+      // PERMITIR CREAR: Solo si el usuario está logueado, es su propio ID y se asigna a sí mismo el rol "pending"
+      allow create: if isAuthenticated() 
+                    && request.auth.uid == userId 
+                    && request.resource.data.role == 'pending';
+      
+      // ACTUALIZAR/BORRAR: Solo el administrador puede modificar roles o borrar usuarios
+      allow update, delete: if isAdmin(); 
+    }
+
+    // 2. Reglas para el estado global (Mantenido temporalmente para la migración)
+    match /state/{document=**} {
+      allow read, write: if isAuthenticated() && hasValidRole();
+    }
+
+    // 3. Reglas para las nuevas colecciones
+    match /agents/{document=**} {
+      allow read, write: if isAuthenticated() && hasValidRole();
+    }
+
+    match /schedules/{document=**} {
+      allow read, write: if isAuthenticated() && hasValidRole();
+    }
+
+    match /infrastructure/{document=**} {
+      allow read, write: if isAuthenticated() && hasValidRole();
+    }
+  }
+}
