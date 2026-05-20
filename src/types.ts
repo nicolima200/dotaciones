@@ -1,6 +1,6 @@
 export type Shift = 'turno1' | 'turno2' | 'turno3' | 'turno4';
 
-export type RoleType = 'garita' | 'caminante' | 'movil' | 'motorizada' | 'correo' | 'orden_servicio' | 'comision' | 'disponible' | 'no_disponible' | 'ofl_control' | 'ofl_servicio' | 'operaciones' | 'ayte_guardia' | 'logistica' | 'personal' | 'judiciales' | 'montada';
+export type RoleType = 'garita' | 'caminante' | 'movil' | 'motorizada' | 'correo' | 'orden_servicio' | 'comision' | 'disponible' | 'no_disponible' | 'ausente' | 'vacaciones' | 'ofl_control' | 'ofl_servicio' | 'operaciones' | 'ayte_guardia' | 'logistica' | 'personal' | 'judiciales' | 'montada';
 
 export interface Agent {
   id: string;

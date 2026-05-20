@@ -247,6 +247,16 @@ function Dashboard() {
     .map(s => shiftAgents.find(a => a.id === s.agentId))
     .filter((a): a is Agent => a !== undefined);
 
+  const ausenteSchedules = currentSchedules.filter(s => s.role === 'ausente');
+  const ausenteAgents = ausenteSchedules
+    .map(s => shiftAgents.find(a => a.id === s.agentId))
+    .filter((a): a is Agent => a !== undefined);
+
+  const vacacionesSchedules = currentSchedules.filter(s => s.role === 'vacaciones');
+  const vacacionesAgents = vacacionesSchedules
+    .map(s => shiftAgents.find(a => a.id === s.agentId))
+    .filter((a): a is Agent => a !== undefined);
+
   const stats = {
     garita: currentSchedules.filter(s => s.role === 'garita').length,
     caminante: currentSchedules.filter(s => s.role === 'caminante').length,
@@ -256,7 +266,10 @@ function Dashboard() {
     orden_servicio: currentSchedules.filter(s => s.role === 'orden_servicio').length,
     comision: currentSchedules.filter(s => s.role === 'comision').length,
     montada: currentSchedules.filter(s => s.role === 'montada').length,
-    disponible: availableAgents.length
+    disponible: availableAgents.length,
+    no_disponible: noDisponibleAgents.length,
+    ausente: ausenteAgents.length,
+    vacaciones: vacacionesAgents.length
   };
 
   const timeToMinutes = (time: string) => {
@@ -725,9 +738,41 @@ Ayte. de guardia: ${getAgentName('ayte_guardia')}</div>
               </div>
             </div>
 
+            {/* Ausente */}
+            <div
+              className={`sidebar-section unavailable ${dragOverTarget === 'ausente' ? 'drag-over' : ''}`}
+              onDragOver={(e) => handleDragOver(e, 'ausente')}
+              onDragLeave={handleDragLeave}
+              onDrop={(e) => handleDrop(e, 'ausente')}
+            >
+              <div className="sidebar-header">
+                <h2 className="sidebar-title"><UserMinus size={20} /> Ausente</h2>
+                <span className="sidebar-badge">{ausenteAgents.length}</span>
+              </div>
+              <div className="sidebar-agent-list">
+                {ausenteAgents.map(agent => {
+                  const schedule = currentSchedules.find(s => s.agentId === agent.id && s.role === 'ausente');
+                  return (
+                    <AgentCard
+                      key={agent.id}
+                      agent={agent}
+                      schedule={schedule}
+                      onDragStart={handleDragStart}
+                      onClick={() => setSelectedAgentForInfo(agent)}
+                      bgClass="bg-orange-900/60"
+                      className="border-l-orange-500 hover:bg-orange-800/80"
+                    />
+                  );
+                })}
+                {ausenteAgents.length === 0 && (
+                  <div className="sidebar-empty-text">Nadie ausente</div>
+                )}
+              </div>
+            </div>
+
             {/* No Disponible */}
             <div
-              className={`sidebar-section unavailable ${dragOverTarget === 'no_disponible' ? 'drag-over' : ''}`}
+              className={`sidebar-section unavailable ${dragOverTarget === 'no_disponible' ? 'drag-over' : ''} mt-4`}
               onDragOver={(e) => handleDragOver(e, 'no_disponible')}
               onDragLeave={handleDragLeave}
               onDrop={(e) => handleDrop(e, 'no_disponible')}
@@ -753,6 +798,38 @@ Ayte. de guardia: ${getAgentName('ayte_guardia')}</div>
                 })}
                 {noDisponibleAgents.length === 0 && (
                   <div className="sidebar-empty-text">Nadie en licencia</div>
+                )}
+              </div>
+            </div>
+
+            {/* Vacaciones */}
+            <div
+              className={`sidebar-section unavailable ${dragOverTarget === 'vacaciones' ? 'drag-over' : ''} mt-4`}
+              onDragOver={(e) => handleDragOver(e, 'vacaciones')}
+              onDragLeave={handleDragLeave}
+              onDrop={(e) => handleDrop(e, 'vacaciones')}
+            >
+              <div className="sidebar-header">
+                <h2 className="sidebar-title"><UserMinus size={20} /> Vacaciones</h2>
+                <span className="sidebar-badge">{vacacionesAgents.length}</span>
+              </div>
+              <div className="sidebar-agent-list">
+                {vacacionesAgents.map(agent => {
+                  const schedule = currentSchedules.find(s => s.agentId === agent.id && s.role === 'vacaciones');
+                  return (
+                    <AgentCard
+                      key={agent.id}
+                      agent={agent}
+                      schedule={schedule}
+                      onDragStart={handleDragStart}
+                      onClick={() => setSelectedAgentForInfo(agent)}
+                      bgClass="bg-purple-900/60"
+                      className="border-l-purple-500 hover:bg-purple-800/80"
+                    />
+                  );
+                })}
+                {vacacionesAgents.length === 0 && (
+                  <div className="sidebar-empty-text">Nadie de vacaciones</div>
                 )}
               </div>
             </div>
@@ -1812,10 +1889,12 @@ function ScheduleModal({ onClose, state, assignAgent, removeSchedule, getInfraNa
                   <option value="orden_servicio">Orden de Servicio</option>
                   <option value="disponible">Disponible</option>
                   <option value="no_disponible">No Disponible (Licencia)</option>
+                  <option value="ausente">Ausente</option>
+                  <option value="vacaciones">Vacaciones</option>
                 </select>
               </div>
 
-              {role !== 'correo' && role !== 'disponible' && role !== 'no_disponible' && (
+              {role !== 'correo' && role !== 'disponible' && role !== 'no_disponible' && role !== 'ausente' && role !== 'vacaciones' && (
                 <div>
                   <label className="block text-xs text-slate-500 mb-1">Destino</label>
                   <select value={targetId} onChange={e => setTargetId(e.target.value)} className="w-full bg-slate-800 border border-slate-700 rounded p-2 text-white text-sm">
