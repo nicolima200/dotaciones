@@ -3994,7 +3994,9 @@ export function useStore() {
 
   useEffect(() => {
     const unsubAgents = onSnapshot(collection(db, 'agents'), (snapshot) => {
-      const agents = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Agent));
+      const agents = snapshot.docs
+        .map(doc => ({ id: doc.id, ...doc.data() } as Agent))
+        .filter(agent => !agent.isDeleted);
       setLocalState(s => ({ ...s, agents }));
     });
 
@@ -4159,9 +4161,25 @@ export function useStore() {
     batch.commit().catch(console.error);
   };
 
+  const softRemoveAgent = async (id: string) => {
+    try {
+      const batch = writeBatch(db);
+      batch.update(doc(db, 'agents', id), { isDeleted: true });
+      
+      const schedulesToRemove = state.schedules.filter(sch => sch.agentId === id);
+      schedulesToRemove.forEach(sch => {
+        batch.delete(doc(db, 'schedules', sch.id));
+      });
+      
+      await batch.commit();
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
   const loadState = (newState: AppState) => {
     console.warn("loadState is deprecated with decoupled DB");
   };
 
-  return { state, addAgent, updateAgent, removeAgent, addInfra, removeInfra, updateInfra, assignAgent, removeSchedule, clearRoleSchedules, restoreSchedules, loadState };
+  return { state, addAgent, updateAgent, removeAgent, softRemoveAgent, addInfra, removeInfra, updateInfra, assignAgent, removeSchedule, clearRoleSchedules, restoreSchedules, loadState };
 }

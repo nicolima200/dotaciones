@@ -14,6 +14,7 @@ export interface Agent {
   licenseExpiration?: string;
   hasDAEO?: boolean;
   daeoExpiration?: string;
+  isDeleted?: boolean;
 }
 
 export interface InfrastructureItem {

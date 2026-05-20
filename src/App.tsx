@@ -15,7 +15,7 @@ import logoMinisterio from './assets/logo_ministerio.png';
 import logoProvincia from './assets/logo_provincia.png';
 
 function Dashboard() {
-  const { state, addAgent, updateAgent, removeAgent, addInfra, removeInfra, updateInfra, assignAgent, removeSchedule, clearRoleSchedules, restoreSchedules, loadState } = useStore();
+  const { state, addAgent, updateAgent, removeAgent, softRemoveAgent, addInfra, removeInfra, updateInfra, assignAgent, removeSchedule, clearRoleSchedules, restoreSchedules, loadState } = useStore();
   const { userRole } = useAuth();
   const navigate = useNavigate();
 
@@ -1415,6 +1415,10 @@ Ayte. de guardia: ${getAgentName('ayte_guardia')}</div>
               updateAgent(id, updates);
               setSelectedAgentForInfo({ ...selectedAgentForInfo, ...updates });
             }}
+            softRemoveAgent={(id: string) => {
+              softRemoveAgent(id);
+              setSelectedAgentForInfo(null);
+            }}
           />
         )
       }
@@ -1614,7 +1618,7 @@ function MovilInfoModal({ movil, infraType, onClose, updateInfra }: any) {
   );
 }
 
-function AgentInfoModal({ agent, onClose, state, getInfraName, updateAgent }: any) {
+function AgentInfoModal({ agent, onClose, state, getInfraName, updateAgent, softRemoveAgent }: any) {
   const [isEditing, setIsEditing] = useState(false);
   const [name, setName] = useState(agent.name || '');
   const [telefono, setTelefono] = useState(agent.telefono || '');
@@ -1782,6 +1786,19 @@ function AgentInfoModal({ agent, onClose, state, getInfraName, updateAgent }: an
                 ))
               )}
             </div>
+          </div>
+          <div className="p-4 border-t border-slate-800 bg-slate-950/50 mt-auto flex justify-end">
+            <button 
+              onClick={() => {
+                if (window.confirm('¿Está seguro que desea eliminar este efectivo?')) {
+                  softRemoveAgent(agent.id);
+                }
+              }} 
+              className="text-xs bg-red-900/50 hover:bg-red-900 text-red-200 px-4 py-2 rounded font-bold transition-colors flex items-center"
+            >
+              <Trash2 size={14} className="mr-2" />
+              Eliminar Efectivo
+            </button>
           </div>
         </div>
       </div>
