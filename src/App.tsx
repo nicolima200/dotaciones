@@ -1752,11 +1752,50 @@ function AgentInfoModal({ agent, onClose, state, getInfraName, updateAgent, soft
   const [hasDAEO, setHasDAEO] = useState(agent.hasDAEO || false);
   const [daeoExpiration, setDaeoExpiration] = useState(agent.daeoExpiration || '');
 
+  const [domicilio, setDomicilio] = useState(agent.domicilio || '');
+  const [marcaChaleco, setMarcaChaleco] = useState(agent.marcaChaleco || '');
+  const [modeloChaleco, setModeloChaleco] = useState(agent.modeloChaleco || '');
+  const [nroSerieChaleco, setNroSerieChaleco] = useState(agent.nroSerieChaleco || '');
+  const [marcaArmamento, setMarcaArmamento] = useState(agent.marcaArmamento || '');
+  const [modeloArmamento, setModeloArmamento] = useState(agent.modeloArmamento || '');
+  const [nroSerieArmamento, setNroSerieArmamento] = useState(agent.nroSerieArmamento || '');
+  const [showMoreFields, setShowMoreFields] = useState(false);
+
+  React.useEffect(() => {
+    setName(agent.name || '');
+    setTelefono(agent.telefono || '');
+    setLegajo(agent.legajo || '');
+    setTurno(agent.turno || 1);
+    setHasLicense(agent.hasLicense || false);
+    setLicenseType(agent.licenseType || 'auto');
+    setLicenseCategory(agent.licenseCategory || 'comun');
+    setLicenseExpiration(agent.licenseExpiration || '');
+    setHasDAEO(agent.hasDAEO || false);
+    setDaeoExpiration(agent.daeoExpiration || '');
+    setDomicilio(agent.domicilio || '');
+    setMarcaChaleco(agent.marcaChaleco || '');
+    setModeloChaleco(agent.modeloChaleco || '');
+    setNroSerieChaleco(agent.nroSerieChaleco || '');
+    setMarcaArmamento(agent.marcaArmamento || '');
+    setModeloArmamento(agent.modeloArmamento || '');
+    setNroSerieArmamento(agent.nroSerieArmamento || '');
+    
+    const hasAnyPopulated = !!(agent.domicilio || agent.marcaChaleco || agent.modeloChaleco || agent.nroSerieChaleco || agent.marcaArmamento || agent.modeloArmamento || agent.nroSerieArmamento);
+    setShowMoreFields(hasAnyPopulated);
+  }, [agent, isEditing]);
+
   const handleSave = () => {
     updateAgent(agent.id, {
       name, telefono, legajo, turno,
       hasLicense, licenseType, licenseCategory, licenseExpiration,
-      hasDAEO, daeoExpiration
+      hasDAEO, daeoExpiration,
+      domicilio: domicilio.trim(),
+      marcaChaleco: marcaChaleco.trim(),
+      modeloChaleco: modeloChaleco.trim(),
+      nroSerieChaleco: nroSerieChaleco.trim(),
+      marcaArmamento: marcaArmamento.trim(),
+      modeloArmamento: modeloArmamento.trim(),
+      nroSerieArmamento: nroSerieArmamento.trim()
     });
     setIsEditing(false);
   };
@@ -1851,6 +1890,103 @@ function AgentInfoModal({ agent, onClose, state, getInfraName, updateAgent, soft
                       <input type="date" value={daeoExpiration} onChange={e => setDaeoExpiration(e.target.value)} className="w-full bg-slate-800 border border-slate-700 rounded p-1.5 text-white text-xs" />
                     </div>
                   )}
+
+                  <div className="border-t border-slate-700/50 pt-3 mt-3">
+                    <button
+                      type="button"
+                      onClick={() => setShowMoreFields(!showMoreFields)}
+                      className="flex items-center gap-1 text-xs text-yellow-500 hover:text-yellow-400 font-bold transition-colors mb-2"
+                    >
+                      {showMoreFields ? (
+                        <>
+                          <ChevronUp size={16} /> Mostrar menos
+                        </>
+                      ) : (
+                        <>
+                          <ChevronDown size={16} /> Mostrar más
+                        </>
+                      )}
+                    </button>
+
+                    {showMoreFields && (
+                      <div className="space-y-3 pl-4 border-l-2 border-slate-700 ml-1 mt-3 mb-2">
+                        <div>
+                          <label className="block text-[10px] text-slate-500 mb-1">Domicilio</label>
+                          <input
+                            type="text"
+                            value={domicilio}
+                            onChange={e => setDomicilio(e.target.value)}
+                            placeholder="Calle, Número, Localidad"
+                            className="w-full bg-slate-800 border border-slate-700 rounded p-1.5 text-white text-xs"
+                          />
+                        </div>
+                        <div className="grid grid-cols-2 gap-2">
+                          <div>
+                            <label className="block text-[10px] text-slate-500 mb-1">Marca Chaleco</label>
+                            <input
+                              type="text"
+                              value={marcaChaleco}
+                              onChange={e => setMarcaChaleco(e.target.value)}
+                              placeholder="Ej: RB3"
+                              className="w-full bg-slate-800 border border-slate-700 rounded p-1.5 text-white text-xs"
+                            />
+                          </div>
+                          <div>
+                            <label className="block text-[10px] text-slate-500 mb-1">Modelo Chaleco</label>
+                            <input
+                              type="text"
+                              value={modeloChaleco}
+                              onChange={e => setModeloChaleco(e.target.value)}
+                              placeholder="Ej: Multiamenaza"
+                              className="w-full bg-slate-800 border border-slate-700 rounded p-1.5 text-white text-xs"
+                            />
+                          </div>
+                        </div>
+                        <div>
+                          <label className="block text-[10px] text-slate-500 mb-1">N° Serie Chaleco</label>
+                          <input
+                            type="text"
+                            value={nroSerieChaleco}
+                            onChange={e => setNroSerieChaleco(e.target.value)}
+                            placeholder="Ej: 12345"
+                            className="w-full bg-slate-800 border border-slate-700 rounded p-1.5 text-white text-xs"
+                          />
+                        </div>
+                        <div className="grid grid-cols-2 gap-2">
+                          <div>
+                            <label className="block text-[10px] text-slate-500 mb-1">Marca Armamento</label>
+                            <input
+                              type="text"
+                              value={marcaArmamento}
+                              onChange={e => setMarcaArmamento(e.target.value)}
+                              placeholder="Ej: Bersa"
+                              className="w-full bg-slate-800 border border-slate-700 rounded p-1.5 text-white text-xs"
+                            />
+                          </div>
+                          <div>
+                            <label className="block text-[10px] text-slate-500 mb-1">Modelo Armamento</label>
+                            <input
+                              type="text"
+                              value={modeloArmamento}
+                              onChange={e => setModeloArmamento(e.target.value)}
+                              placeholder="Ej: TPR9"
+                              className="w-full bg-slate-800 border border-slate-700 rounded p-1.5 text-white text-xs"
+                            />
+                          </div>
+                        </div>
+                        <div>
+                          <label className="block text-[10px] text-slate-500 mb-1">N° Serie Armamento</label>
+                          <input
+                            type="text"
+                            value={nroSerieArmamento}
+                            onChange={e => setNroSerieArmamento(e.target.value)}
+                            placeholder="Ej: 98765"
+                            className="w-full bg-slate-800 border border-slate-700 rounded p-1.5 text-white text-xs"
+                          />
+                        </div>
+                      </div>
+                    )}
+                  </div>
                 </div>
               </div>
             ) : (
@@ -1887,6 +2023,60 @@ function AgentInfoModal({ agent, onClose, state, getInfraName, updateAgent, soft
                     </span>
                   </div>
                 )}
+
+                <div className="pt-2 border-t border-slate-800 mt-2">
+                  <button
+                    onClick={() => setShowMoreFields(!showMoreFields)}
+                    className="flex items-center gap-1 text-xs text-yellow-500 hover:text-yellow-400 font-bold transition-colors"
+                  >
+                    {showMoreFields ? (
+                      <>
+                        <ChevronUp size={14} /> Mostrar menos
+                      </>
+                    ) : (
+                      <>
+                        <ChevronDown size={14} /> Mostrar más
+                      </>
+                    )}
+                  </button>
+
+                  {showMoreFields && (
+                    <div className="mt-2 space-y-2 pl-2 border-l border-slate-800 text-xs">
+                      <div className="flex justify-between">
+                        <span className="text-slate-500">Domicilio:</span>
+                        <span className="text-slate-300 font-medium text-right max-w-[200px] break-words">
+                          {agent.domicilio || <span className="text-slate-600 italic">No registrado</span>}
+                        </span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-slate-500">Chaleco:</span>
+                        <span className="text-slate-300 font-medium text-right">
+                          {agent.marcaChaleco || agent.modeloChaleco || agent.nroSerieChaleco ? (
+                            <>
+                              {agent.marcaChaleco || '-'} / {agent.modeloChaleco || '-'}
+                              <div className="text-[10px] text-slate-500">S/N: {agent.nroSerieChaleco || '-'}</div>
+                            </>
+                          ) : (
+                            <span className="text-slate-600 italic">No registrado</span>
+                          )}
+                        </span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-slate-500">Armamento:</span>
+                        <span className="text-slate-300 font-medium text-right">
+                          {agent.marcaArmamento || agent.modeloArmamento || agent.nroSerieArmamento ? (
+                            <>
+                              {agent.marcaArmamento || '-'} / {agent.modeloArmamento || '-'}
+                              <div className="text-[10px] text-slate-500">S/N: {agent.nroSerieArmamento || '-'}</div>
+                            </>
+                          ) : (
+                            <span className="text-slate-600 italic">No registrado</span>
+                          )}
+                        </span>
+                      </div>
+                    </div>
+                  )}
+                </div>
               </div>
             )}
           </div>
@@ -2132,6 +2322,16 @@ function SettingsModal({ onClose, state, addAgent, removeAgent, addInfra, remove
   const [newAgentLicenseExpiration, setNewAgentLicenseExpiration] = useState('');
   const [newAgentHasDAEO, setNewAgentHasDAEO] = useState(false);
   const [newAgentDAEOExpiration, setNewAgentDAEOExpiration] = useState('');
+
+  const [newAgentDomicilio, setNewAgentDomicilio] = useState('');
+  const [newAgentMarcaChaleco, setNewAgentMarcaChaleco] = useState('');
+  const [newAgentModeloChaleco, setNewAgentModeloChaleco] = useState('');
+  const [newAgentNroSerieChaleco, setNewAgentNroSerieChaleco] = useState('');
+  const [newAgentMarcaArmamento, setNewAgentMarcaArmamento] = useState('');
+  const [newAgentModeloArmamento, setNewAgentModeloArmamento] = useState('');
+  const [newAgentNroSerieArmamento, setNewAgentNroSerieArmamento] = useState('');
+  const [showMoreFields, setShowMoreFields] = useState(false);
+
   const [resourceFilterShift, setResourceFilterShift] = useState<1 | 2 | 3 | 4 | 'all'>('all');
 
   const cancelEdit = () => {
@@ -2146,6 +2346,15 @@ function SettingsModal({ onClose, state, addAgent, removeAgent, addInfra, remove
     setNewAgentHasDAEO(false);
     setNewAgentDAEOExpiration('');
     
+    setNewAgentDomicilio('');
+    setNewAgentMarcaChaleco('');
+    setNewAgentModeloChaleco('');
+    setNewAgentNroSerieChaleco('');
+    setNewAgentMarcaArmamento('');
+    setNewAgentModeloArmamento('');
+    setNewAgentNroSerieArmamento('');
+    setShowMoreFields(false);
+
     setNewInfraName('');
     setNewInfraRO('');
     setNewInfraDescription('');
@@ -2167,6 +2376,18 @@ function SettingsModal({ onClose, state, addAgent, removeAgent, addInfra, remove
     setNewAgentLicenseExpiration(a.licenseExpiration || '');
     setNewAgentHasDAEO(a.hasDAEO || false);
     setNewAgentDAEOExpiration(a.daeoExpiration || '');
+    
+    setNewAgentDomicilio(a.domicilio || '');
+    setNewAgentMarcaChaleco(a.marcaChaleco || '');
+    setNewAgentModeloChaleco(a.modeloChaleco || '');
+    setNewAgentNroSerieChaleco(a.nroSerieChaleco || '');
+    setNewAgentMarcaArmamento(a.marcaArmamento || '');
+    setNewAgentModeloArmamento(a.modeloArmamento || '');
+    setNewAgentNroSerieArmamento(a.nroSerieArmamento || '');
+    
+    if (a.domicilio || a.marcaChaleco || a.modeloChaleco || a.nroSerieChaleco || a.marcaArmamento || a.modeloArmamento || a.nroSerieArmamento) {
+      setShowMoreFields(true);
+    }
   };
 
   const handleEditInfra = (i: any) => {
@@ -2196,7 +2417,14 @@ function SettingsModal({ onClose, state, addAgent, removeAgent, addInfra, remove
             licenseCategory: newAgentLicenseCategory,
             licenseExpiration: newAgentLicenseExpiration,
             hasDAEO: newAgentHasDAEO,
-            daeoExpiration: newAgentDAEOExpiration
+            daeoExpiration: newAgentDAEOExpiration,
+            domicilio: newAgentDomicilio.trim(),
+            marcaChaleco: newAgentMarcaChaleco.trim(),
+            modeloChaleco: newAgentModeloChaleco.trim(),
+            nroSerieChaleco: newAgentNroSerieChaleco.trim(),
+            marcaArmamento: newAgentMarcaArmamento.trim(),
+            modeloArmamento: newAgentModeloArmamento.trim(),
+            nroSerieArmamento: newAgentNroSerieArmamento.trim()
           });
           cancelEdit();
         }
@@ -2211,7 +2439,14 @@ function SettingsModal({ onClose, state, addAgent, removeAgent, addInfra, remove
           newAgentLicenseCategory,
           newAgentLicenseExpiration,
           newAgentHasDAEO,
-          newAgentDAEOExpiration
+          newAgentDAEOExpiration,
+          newAgentDomicilio.trim(),
+          newAgentMarcaChaleco.trim(),
+          newAgentModeloChaleco.trim(),
+          newAgentNroSerieChaleco.trim(),
+          newAgentMarcaArmamento.trim(),
+          newAgentModeloArmamento.trim(),
+          newAgentNroSerieArmamento.trim()
         );
         cancelEdit();
       }
@@ -2317,6 +2552,99 @@ function SettingsModal({ onClose, state, addAgent, removeAgent, addInfra, remove
                       <input type="date" value={newAgentDAEOExpiration} onChange={e => setNewAgentDAEOExpiration(e.target.value)} className="w-full sm:w-1/3 bg-slate-800 border border-slate-700 rounded p-1.5 text-white text-xs" />
                     </div>
                   )}
+
+                  <div className="border-t border-slate-700/50 pt-3 mt-3">
+                    <button
+                      type="button"
+                      onClick={() => setShowMoreFields(!showMoreFields)}
+                      className="flex items-center gap-1 text-xs text-yellow-500 hover:text-yellow-400 font-bold transition-colors mb-2"
+                    >
+                      {showMoreFields ? (
+                        <>
+                          <ChevronUp size={16} /> Mostrar menos
+                        </>
+                      ) : (
+                        <>
+                          <ChevronDown size={16} /> Mostrar más
+                        </>
+                      )}
+                    </button>
+
+                    {showMoreFields && (
+                      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 pl-4 border-l-2 border-slate-700 ml-1 mt-3 mb-2">
+                        <div className="col-span-1 sm:col-span-2 md:col-span-3">
+                          <label className="block text-[10px] text-slate-500 mb-1">Domicilio</label>
+                          <input
+                            type="text"
+                            value={newAgentDomicilio}
+                            onChange={e => setNewAgentDomicilio(e.target.value)}
+                            placeholder="Calle, Número, Localidad"
+                            className="w-full bg-slate-800 border border-slate-700 rounded p-1.5 text-white text-xs"
+                          />
+                        </div>
+                        <div>
+                          <label className="block text-[10px] text-slate-500 mb-1">Marca Chaleco</label>
+                          <input
+                            type="text"
+                            value={newAgentMarcaChaleco}
+                            onChange={e => setNewAgentMarcaChaleco(e.target.value)}
+                            placeholder="Ej: RB3"
+                            className="w-full bg-slate-800 border border-slate-700 rounded p-1.5 text-white text-xs"
+                          />
+                        </div>
+                        <div>
+                          <label className="block text-[10px] text-slate-500 mb-1">Modelo Chaleco</label>
+                          <input
+                            type="text"
+                            value={newAgentModeloChaleco}
+                            onChange={e => setNewAgentModeloChaleco(e.target.value)}
+                            placeholder="Ej: Multiamenaza"
+                            className="w-full bg-slate-800 border border-slate-700 rounded p-1.5 text-white text-xs"
+                          />
+                        </div>
+                        <div>
+                          <label className="block text-[10px] text-slate-500 mb-1">N° Serie Chaleco</label>
+                          <input
+                            type="text"
+                            value={newAgentNroSerieChaleco}
+                            onChange={e => setNewAgentNroSerieChaleco(e.target.value)}
+                            placeholder="Ej: 12345"
+                            className="w-full bg-slate-800 border border-slate-700 rounded p-1.5 text-white text-xs"
+                          />
+                        </div>
+                        <div>
+                          <label className="block text-[10px] text-slate-500 mb-1">Marca Armamento</label>
+                          <input
+                            type="text"
+                            value={newAgentMarcaArmamento}
+                            onChange={e => setNewAgentMarcaArmamento(e.target.value)}
+                            placeholder="Ej: Bersa"
+                            className="w-full bg-slate-800 border border-slate-700 rounded p-1.5 text-white text-xs"
+                          />
+                        </div>
+                        <div>
+                          <label className="block text-[10px] text-slate-500 mb-1">Modelo Armamento</label>
+                          <input
+                            type="text"
+                            value={newAgentModeloArmamento}
+                            onChange={e => setNewAgentModeloArmamento(e.target.value)}
+                            placeholder="Ej: TPR9"
+                            className="w-full bg-slate-800 border border-slate-700 rounded p-1.5 text-white text-xs"
+                          />
+                        </div>
+                        <div>
+                          <label className="block text-[10px] text-slate-500 mb-1">N° Serie Armamento</label>
+                          <input
+                            type="text"
+                            value={newAgentNroSerieArmamento}
+                            onChange={e => setNewAgentNroSerieArmamento(e.target.value)}
+                            placeholder="Ej: 98765"
+                            className="w-full bg-slate-800 border border-slate-700 rounded p-1.5 text-white text-xs"
+                          />
+                        </div>
+                      </div>
+                    )}
+                  </div>
                 </div>
 
                 <div className="flex justify-end gap-2 mt-1 w-full">

@@ -15,6 +15,13 @@ export interface Agent {
   hasDAEO?: boolean;
   daeoExpiration?: string;
   isDeleted?: boolean;
+  domicilio?: string;
+  marcaChaleco?: string;
+  modeloChaleco?: string;
+  nroSerieChaleco?: string;
+  marcaArmamento?: string;
+  modeloArmamento?: string;
+  nroSerieArmamento?: string;
 }
 
 export interface InfrastructureItem {

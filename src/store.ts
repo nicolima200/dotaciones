@@ -4042,13 +4042,27 @@ export function useStore() {
     licenseCategory?: 'comun' | 'profesional',
     licenseExpiration?: string,
     hasDAEO?: boolean,
-    daeoExpiration?: string
+    daeoExpiration?: string,
+    domicilio?: string,
+    marcaChaleco?: string,
+    modeloChaleco?: string,
+    nroSerieChaleco?: string,
+    marcaArmamento?: string,
+    modeloArmamento?: string,
+    nroSerieArmamento?: string
   ) => {
     const id = Date.now().toString();
     const newAgent = { 
       id, name, telefono, legajo, turno: turno || 1,
       hasLicense, licenseType, licenseCategory, licenseExpiration,
-      hasDAEO, daeoExpiration
+      hasDAEO, daeoExpiration,
+      domicilio,
+      marcaChaleco,
+      modeloChaleco,
+      nroSerieChaleco,
+      marcaArmamento,
+      modeloArmamento,
+      nroSerieArmamento
     };
     setDoc(doc(db, 'agents', id), newAgent).catch(console.error);
   };
