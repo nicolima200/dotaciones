@@ -310,17 +310,67 @@ function Dashboard() {
     downloadAnchorNode.remove();
   };
 
+  const isValidBackup = (json: any): boolean => {
+    if (!json || typeof json !== 'object') return false;
+    
+    // Validate agents
+    if (!Array.isArray(json.agents)) return false;
+    for (const agent of json.agents) {
+      if (!agent || typeof agent !== 'object' || !agent.id || !agent.name) {
+        return false;
+      }
+    }
+    
+    // Validate infrastructure
+    if (!json.infrastructure || typeof json.infrastructure !== 'object') return false;
+    const expectedInfraKeys = ['garitas', 'moviles', 'motos', 'qths', 'ordenes', 'comisiones'];
+    for (const key of expectedInfraKeys) {
+      if (!Array.isArray(json.infrastructure[key])) return false;
+      for (const item of json.infrastructure[key]) {
+        if (!item || typeof item !== 'object' || !item.id || !item.name) {
+          return false;
+        }
+      }
+    }
+    
+    // Validate schedules
+    if (!Array.isArray(json.schedules)) return false;
+    for (const sch of json.schedules) {
+      if (!sch || typeof sch !== 'object' || !sch.id || !sch.agentId || !sch.role || !sch.shift) {
+        return false;
+      }
+    }
+    
+    return true;
+  };
+
   const handleImport = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
       const reader = new FileReader();
-      reader.onload = (e) => {
+      reader.onload = async (e) => {
         try {
           const json = JSON.parse(e.target?.result as string);
-          loadState(json);
+          
+          if (!isValidBackup(json)) {
+            alert("Error: El archivo JSON importado no tiene un formato de copia de seguridad válido para la aplicación.");
+            event.target.value = '';
+            return;
+          }
+          
+          if (window.confirm("¿Está seguro de que desea importar este archivo de copia de seguridad?\n\n¡ATENCIÓN! Esta acción borrará de manera irreversible todos los efectivos, infraestructuras y asignaciones actuales de la base de datos y los reemplazará con los del archivo.")) {
+            try {
+              await loadState(json);
+              alert("Importación exitosa. Los datos se han restaurado correctamente en la base de datos.");
+            } catch (err) {
+              console.error("Error writing imported state to Firestore:", err);
+              alert("Ocurrió un error al escribir los datos importados en la base de datos.");
+            }
+          }
         } catch (err) {
-          alert("Error al cargar el archivo JSON");
+          alert("Error al procesar el archivo JSON. Asegúrese de que sea un archivo de texto JSON válido.");
         }
+        event.target.value = '';
       };
       reader.readAsText(file);
     }

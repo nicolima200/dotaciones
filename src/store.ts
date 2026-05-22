@@ -4207,8 +4207,66 @@ export function useStore() {
     }
   };
 
-  const loadState = (newState: AppState) => {
-    console.warn("loadState is deprecated with decoupled DB");
+  const loadState = async (newState: AppState) => {
+    try {
+      const agentsSnapshot = await getDocs(collection(db, 'agents'));
+      const infraSnapshot = await getDocs(collection(db, 'infrastructure'));
+      const schedSnapshot = await getDocs(collection(db, 'schedules'));
+      
+      const batch1 = writeBatch(db);
+      
+      agentsSnapshot.docs.forEach(d => {
+        batch1.delete(d.ref);
+      });
+      infraSnapshot.docs.forEach(d => {
+        batch1.delete(d.ref);
+      });
+      schedSnapshot.docs.forEach(d => {
+        batch1.delete(d.ref);
+      });
+      
+      await batch1.commit();
+      
+      let batch = writeBatch(db);
+      let count = 0;
+      
+      const commitIfNeeded = async () => {
+        count++;
+        if (count >= 200) {
+          await batch.commit();
+          batch = writeBatch(db);
+          count = 0;
+        }
+      };
+      
+      for (const agent of newState.agents) {
+        batch.set(doc(db, 'agents', agent.id), agent);
+        await commitIfNeeded();
+      }
+      
+      const infraKeys = ['garitas', 'moviles', 'motos', 'qths', 'ordenes', 'comisiones'] as const;
+      for (const key of infraKeys) {
+        const items = newState.infrastructure[key] || [];
+        for (const item of items) {
+          batch.set(doc(db, 'infrastructure', item.id), { ...item, type: key });
+          await commitIfNeeded();
+        }
+      }
+      
+      for (const sch of newState.schedules) {
+        batch.set(doc(db, 'schedules', sch.id), sch);
+        await commitIfNeeded();
+      }
+      
+      if (count > 0) {
+        await batch.commit();
+      }
+      
+      return true;
+    } catch (e) {
+      console.error("Error loading imported state:", e);
+      throw e;
+    }
   };
 
   return { state, addAgent, updateAgent, removeAgent, softRemoveAgent, softRemoveInfra, addInfra, removeInfra, updateInfra, assignAgent, removeSchedule, clearRoleSchedules, restoreSchedules, loadState };
