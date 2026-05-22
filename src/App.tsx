@@ -1,7 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useStore } from './store';
 import { Shift, RoleType, Agent, Schedule, InfrastructureItem, Infrastructure } from './types';
-import { Shield, MapPin, Car, Bike, Mail, Users, Download, Upload, Settings, Calendar, Clock, X, Plus, Trash2, AlertCircle, ClipboardList, UserMinus, ClipboardCopy, Printer, Check, FileText, Undo2, LogOut, ArrowUp, Search, ChevronUp, ChevronDown, Edit2, Menu } from 'lucide-react';
+import { Shield, MapPin, Car, Bike, Mail, Users, Download, Upload, Settings, Calendar, Clock, X, Plus, Trash2, AlertCircle, ClipboardList, UserMinus, ClipboardCopy, Printer, Check, FileText, Undo2, LogOut, ArrowUp, Search, ChevronUp, ChevronDown, Edit2, Menu, RefreshCw } from 'lucide-react';
+declare const __APP_VERSION__: string;
 import { AgentCard } from './components/AgentCard';
 import { Routes, Route, useNavigate } from 'react-router-dom';
 import { Login } from './pages/Login';
@@ -2184,18 +2185,21 @@ function SettingsModal({ onClose, state, addAgent, removeAgent, addInfra, remove
     e.preventDefault();
     if (newAgentName.trim()) {
       if (editingId) {
-        updateAgent(editingId, {
-          name: newAgentName.trim(), 
-          telefono: newAgentPhone.trim(), 
-          legajo: newAgentLegajo.trim(), 
-          turno: newAgentShift,
-          hasLicense: newAgentHasLicense,
-          licenseType: newAgentLicenseType,
-          licenseCategory: newAgentLicenseCategory,
-          licenseExpiration: newAgentLicenseExpiration,
-          hasDAEO: newAgentHasDAEO,
-          daeoExpiration: newAgentDAEOExpiration
-        });
+        if (window.confirm(`¿Está seguro que desea guardar los cambios para el efectivo ${newAgentName.trim()}?`)) {
+          updateAgent(editingId, {
+            name: newAgentName.trim(), 
+            telefono: newAgentPhone.trim(), 
+            legajo: newAgentLegajo.trim(), 
+            turno: newAgentShift,
+            hasLicense: newAgentHasLicense,
+            licenseType: newAgentLicenseType,
+            licenseCategory: newAgentLicenseCategory,
+            licenseExpiration: newAgentLicenseExpiration,
+            hasDAEO: newAgentHasDAEO,
+            daeoExpiration: newAgentDAEOExpiration
+          });
+          cancelEdit();
+        }
       } else {
         addAgent(
           newAgentName.trim(), 
@@ -2209,8 +2213,8 @@ function SettingsModal({ onClose, state, addAgent, removeAgent, addInfra, remove
           newAgentHasDAEO,
           newAgentDAEOExpiration
         );
+        cancelEdit();
       }
-      cancelEdit();
     }
   };
 
@@ -2362,7 +2366,11 @@ function SettingsModal({ onClose, state, addAgent, removeAgent, addInfra, remove
                       {(isAdmin || userShiftNum === (a.turno || 1)) && (
                         <>
                           <button onClick={() => handleEditAgent(a)} className="text-slate-500 hover:text-blue-500 p-2"><Edit2 size={16} /></button>
-                          <button onClick={() => removeAgent(a.id)} className="text-slate-500 hover:text-red-500 p-2"><Trash2 size={16} /></button>
+                          <button onClick={() => {
+                            if (window.confirm(`¿Está seguro que desea eliminar al efectivo ${a.name}?`)) {
+                              removeAgent(a.id);
+                            }
+                          }} className="text-slate-500 hover:text-red-500 p-2"><Trash2 size={16} /></button>
                         </>
                       )}
                     </div>
@@ -2605,21 +2613,90 @@ function SettingsModal({ onClose, state, addAgent, removeAgent, addInfra, remove
   );
 }
 
-export default function App() {
+function UpdateBanner() {
   return (
-    <Routes>
-      <Route path="/login" element={<Login />} />
-      <Route path="/register" element={<Register />} />
-      <Route path="/admin" element={
-        <ProtectedRoute allowedRoles={['admin']}>
-          <AdminView />
-        </ProtectedRoute>
-      } />
-      <Route path="/" element={
-        <ProtectedRoute allowedRoles={['admin', 'turno1', 'turno2', 'turno3', 'turno4']}>
-          <Dashboard />
-        </ProtectedRoute>
-      } />
-    </Routes>
+    <div className="fixed bottom-6 right-6 z-[9999] max-w-md">
+      <div className="bg-slate-900/95 backdrop-blur-md border border-indigo-500/40 text-white p-4 rounded-2xl shadow-2xl flex items-center gap-4 hover:border-indigo-500/60 transition-all duration-300">
+        <div className="bg-indigo-500/20 p-2.5 rounded-xl text-indigo-400 animate-pulse">
+          <RefreshCw className="w-5 h-5 animate-spin" style={{ animationDuration: '3s' }} />
+        </div>
+        <div className="flex-1">
+          <h4 className="font-semibold text-sm text-slate-100">Nueva versión disponible</h4>
+          <p className="text-xs text-slate-400 mt-0.5">Se han realizado mejoras en la plataforma. Recarga para aplicarlas.</p>
+        </div>
+        <button
+          onClick={() => window.location.reload()}
+          className="bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold px-4 py-2.5 rounded-xl shadow-lg shadow-indigo-600/20 active:scale-95 transition-all cursor-pointer whitespace-nowrap"
+        >
+          Actualizar
+        </button>
+      </div>
+    </div>
+  );
+}
+
+export default function App() {
+  const [updateAvailable, setUpdateAvailable] = useState(false);
+
+  useEffect(() => {
+    // Definimos una versión por defecto si __APP_VERSION__ no está disponible
+    const localVersion = typeof __APP_VERSION__ !== 'undefined' ? __APP_VERSION__ : 'dev';
+    
+    if (localVersion === 'dev') {
+      return;
+    }
+
+    const checkVersion = async () => {
+      try {
+        const response = await fetch(`/version.json?t=${Date.now()}`);
+        if (response.ok) {
+          const data = await response.json();
+          if (data && data.version && data.version !== localVersion) {
+            setUpdateAvailable(true);
+          }
+        }
+      } catch (err) {
+        console.warn('Error al verificar versión:', err);
+      }
+    };
+
+    // Ejecuta la comprobación al montar
+    checkVersion();
+
+    // Comprueba cada 60 segundos
+    const interval = setInterval(checkVersion, 60 * 1000);
+
+    // Comprueba al volver a enfocar la pestaña
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === 'visible') {
+        checkVersion();
+      }
+    };
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+
+    return () => {
+      clearInterval(interval);
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+    };
+  }, []);
+
+  return (
+    <div className="relative min-h-screen">
+      {updateAvailable && <UpdateBanner />}
+      <Routes>
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/admin" element={
+          <ProtectedRoute allowedRoles={['admin']}>
+            <AdminView />
+          </ProtectedRoute>
+        } />
+        <Route path="/" element={
+          <ProtectedRoute allowedRoles={['admin', 'turno1', 'turno2', 'turno3', 'turno4']}>
+            <Dashboard />
+          </ProtectedRoute>
+        } />
+      </Routes>
+    </div>
   );
 }
