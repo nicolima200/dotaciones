@@ -44,6 +44,7 @@ function Dashboard() {
   // Modals state
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isReportSubmenuOpen, setIsReportSubmenuOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -55,6 +56,13 @@ function Dashboard() {
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
+
+  useEffect(() => {
+    if (!isMenuOpen) {
+      setIsReportSubmenuOpen(false);
+    }
+  }, [isMenuOpen]);
+
   const [isScheduleModalOpen, setIsScheduleModalOpen] = useState(false);
   const [isReportModalOpen, setIsReportModalOpen] = useState(false);
   const [reportDate, setReportDate] = useState('');
@@ -814,18 +822,10 @@ Ayte. de guardia: ${getAgentName('ayte_guardia')}</div>
                 <MapPin size={18} />
                 <span className="text-xs font-medium hidden lg:inline">Mapa</span>
               </a>
-              <a href="https://calendar.google.com/calendar/u/0?cid=MmNhOWRiNzQ0MmFkMzlhNjlhOGQ3MzExODc5YjM3ZTUyNDMyOThhYzkzYmNiNzMzYWVlYTljNjg1NjBjZDFmNEBncm91cC5jYWxlbmRhci5nb29nbGUuY29t" target="_blank" rel="noopener noreferrer" className="btn-icon" style={{ borderRight: '1px solid var(--glass-border)' }} title="Ver Calendario">
+              <a href="https://calendar.google.com/calendar/u/0?cid=MmNhOWRiNzQ0MmFkMzlhNjlhOGQ3MzExODc5YjM3ZTUyNDMyOThhYzkzYmNiNzMzYWVlYTljNjg1NjBjZDFmNEBncm91cC5jYWxlbmRhci5nb29nbGUuY29t" target="_blank" rel="noopener noreferrer" className="btn-icon" title="Ver Calendario">
                 <Calendar size={18} />
                 <span className="text-xs font-medium hidden lg:inline">Calendario</span>
               </a>
-              <button onClick={() => openReportModal('copy')} className="btn-icon" style={{ borderRight: '1px solid var(--glass-border)' }} title="Copiar Informe">
-                {copied ? <Check size={18} className="text-green-500" /> : <ClipboardCopy size={18} />}
-                <span className="text-xs font-medium hidden lg:inline">{copied ? 'Copiado' : 'Copiar'}</span>
-              </button>
-              <button onClick={() => openReportModal('print')} className="btn-icon" title="Guardar PDF / Imprimir">
-                <Printer size={18} />
-                <span className="text-xs font-medium hidden lg:inline">PDF</span>
-              </button>
             </div>
             <div className="relative" ref={menuRef}>
               <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="btn-icon standalone flex items-center gap-2" title="Menú de opciones">
@@ -843,7 +843,50 @@ Ayte. de guardia: ${getAgentName('ayte_guardia')}</div>
                   <button onClick={() => { setIsMenuOpen(false); setIsSettingsOpen(true); }} className="flex items-center gap-3 px-4 py-3 hover:bg-slate-700 text-slate-200 transition-colors text-sm text-left">
                     <Settings size={18} className="text-slate-400" /> Gestionar Recursos
                   </button>
+                  
                   <div className="h-px bg-slate-700 my-1"></div>
+                  
+                  {/* Generar informe collapsible menu option */}
+                  <button 
+                    onClick={(e) => { 
+                      e.stopPropagation(); 
+                      setIsReportSubmenuOpen(!isReportSubmenuOpen); 
+                    }} 
+                    className="flex items-center justify-between w-full px-4 py-3 hover:bg-slate-700 text-slate-200 transition-colors text-sm text-left"
+                  >
+                    <span className="flex items-center gap-3">
+                      <FileText size={18} className="text-slate-400" /> Generar informe
+                    </span>
+                    {isReportSubmenuOpen ? <ChevronUp size={16} className="text-slate-400" /> : <ChevronDown size={16} className="text-slate-400" />}
+                  </button>
+                  
+                  {isReportSubmenuOpen && (
+                    <div className="bg-slate-900/40 border-y border-slate-700/50 flex flex-col py-1">
+                      <button 
+                        onClick={() => { 
+                          setIsMenuOpen(false); 
+                          openReportModal('copy'); 
+                        }} 
+                        className="flex items-center gap-3 pl-8 pr-4 py-2.5 hover:bg-slate-700 text-slate-300 hover:text-white transition-colors text-sm text-left"
+                      >
+                        {copied ? <Check size={16} className="text-green-500" /> : <ClipboardCopy size={16} className="text-slate-400" />}
+                        <span>Copiar</span>
+                      </button>
+                      <button 
+                        onClick={() => { 
+                          setIsMenuOpen(false); 
+                          openReportModal('print'); 
+                        }} 
+                        className="flex items-center gap-3 pl-8 pr-4 py-2.5 hover:bg-slate-700 text-slate-300 hover:text-white transition-colors text-sm text-left"
+                      >
+                        <Printer size={16} className="text-slate-400" />
+                        <span>PDF</span>
+                      </button>
+                    </div>
+                  )}
+
+                  <div className="h-px bg-slate-700 my-1"></div>
+                  
                   <button onClick={handleExportClick} className="flex items-center gap-3 px-4 py-3 hover:bg-slate-700 text-slate-200 transition-colors text-sm text-left">
                     <Download size={18} className="text-slate-400" /> Exportar Datos
                   </button>
