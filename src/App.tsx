@@ -74,6 +74,12 @@ function Dashboard() {
 
   const fileInputRef = useRef<HTMLInputElement>(null);
 
+  const [importState, setImportState] = useState<any>(null);
+  const [isImportModalOpen, setIsImportModalOpen] = useState(false);
+  const [importSelectedTurns, setImportSelectedTurns] = useState<number[]>([1, 2, 3, 4]);
+  const [isExportModalOpen, setIsExportModalOpen] = useState(false);
+  const [exportSelectedTurns, setExportSelectedTurns] = useState<number[]>([1, 2, 3, 4]);
+
   const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
     if (e.currentTarget.scrollTop > 300) {
       setShowScrollTop(true);
@@ -293,8 +299,30 @@ function Dashboard() {
   }, {} as Record<string, Schedule[]>);
 
   // Export/Import
-  const handleExport = () => {
-    const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(state));
+  const handleExport = (targetTurns: number[]) => {
+    const filteredAgents = state.agents.filter(agent => targetTurns.includes(agent.turno));
+    
+    const filteredInfrastructure: Infrastructure = {
+      garitas: state.infrastructure.garitas.filter(item => !item.turno || targetTurns.includes(item.turno)),
+      moviles: state.infrastructure.moviles.filter(item => !item.turno || targetTurns.includes(item.turno)),
+      motos: state.infrastructure.motos.filter(item => !item.turno || targetTurns.includes(item.turno)),
+      qths: state.infrastructure.qths.filter(item => !item.turno || targetTurns.includes(item.turno)),
+      ordenes: state.infrastructure.ordenes.filter(item => !item.turno || targetTurns.includes(item.turno)),
+      comisiones: state.infrastructure.comisiones.filter(item => !item.turno || targetTurns.includes(item.turno))
+    };
+    
+    const filteredSchedules = state.schedules.filter(sch => {
+      const shiftNum = sch.shift ? Number(sch.shift.replace('turno', '')) : null;
+      return shiftNum && targetTurns.includes(shiftNum);
+    });
+
+    const exportState = {
+      agents: filteredAgents,
+      infrastructure: filteredInfrastructure,
+      schedules: filteredSchedules
+    };
+
+    const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(exportState));
     const downloadAnchorNode = document.createElement('a');
     downloadAnchorNode.setAttribute("href", dataStr);
 
@@ -302,12 +330,32 @@ function Dashboard() {
     const pad = (n: number) => n.toString().padStart(2, '0');
     const dateStr = `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}`;
     const timeStr = `${pad(now.getHours())}-${pad(now.getMinutes())}`;
-    const fileName = `${dateStr}_${timeStr}_${currentShift}.json`;
+    
+    let turnsStr = '';
+    if (targetTurns.length === 4) {
+      turnsStr = 'todos';
+    } else if (targetTurns.length === 1) {
+      turnsStr = `turno${targetTurns[0]}`;
+    } else {
+      turnsStr = `turnos_${targetTurns.join('-')}`;
+    }
+    const fileName = `backup_${dateStr}_${timeStr}_${turnsStr}.json`;
 
     downloadAnchorNode.setAttribute("download", fileName);
     document.body.appendChild(downloadAnchorNode);
     downloadAnchorNode.click();
     downloadAnchorNode.remove();
+  };
+
+  const handleExportClick = () => {
+    setIsMenuOpen(false);
+    if (userRole === 'admin') {
+      setExportSelectedTurns([1, 2, 3, 4]);
+      setIsExportModalOpen(true);
+    } else {
+      const shiftNum = userRole ? Number(userRole.replace('turno', '')) : 1;
+      handleExport([shiftNum]);
+    }
   };
 
   const isValidBackup = (json: any): boolean => {
@@ -403,18 +451,26 @@ function Dashboard() {
             return;
           }
           
-          if (window.confirm("¿Está seguro de que desea importar este archivo de copia de seguridad?\n\n¡ATENCIÓN! Esta acción borrará de manera irreversible todos los efectivos, infraestructuras y asignaciones actuales de la base de datos y los reemplazará con los del archivo.")) {
-            console.log("handleImport: Confirmado por el usuario. Iniciando loadState...");
-            try {
-              await loadState(json);
-              console.log("handleImport: loadState finalizado con éxito.");
-              alert("Importación exitosa. Los datos se han restaurado correctamente en la base de datos.");
-            } catch (err) {
-              console.error("Error writing imported state to Firestore:", err);
-              alert("Ocurrió un error al escribir los datos importados en la base de datos.");
+          const isAdmin = userRole === 'admin';
+          if (!isAdmin) {
+            // Rol de Turno X: Deducir turno y procesar directamente
+            const shiftNum = userRole ? Number(userRole.replace('turno', '')) : 1;
+            if (window.confirm(`¿Está seguro de que desea importar este archivo para el Turno ${shiftNum}?\n\n¡ATENCIÓN! Esta acción borrará de manera irreversible todos los efectivos, infraestructuras y asignaciones del Turno ${shiftNum} actuales en la base de datos y los reemplazará con los de este archivo.`)) {
+              console.log(`handleImport: Procesando importación directa para el Turno ${shiftNum}...`);
+              try {
+                await loadState(json, [shiftNum]);
+                console.log("handleImport: loadState finalizado con éxito.");
+                alert(`Importación exitosa. Los datos del Turno ${shiftNum} se han restaurado correctamente.`);
+              } catch (err) {
+                console.error("Error writing imported state to Firestore:", err);
+                alert("Ocurrió un error al escribir los datos importados en la base de datos.");
+              }
             }
           } else {
-            console.log("handleImport: Cancelado por el usuario.");
+            // Rol Admin: Guardar estado y abrir modal de selección
+            setImportState(json);
+            setImportSelectedTurns([1, 2, 3, 4]); // Reset default selection
+            setIsImportModalOpen(true);
           }
         } catch (err) {
           console.error("handleImport: Error al procesar el archivo:", err);
@@ -788,7 +844,7 @@ Ayte. de guardia: ${getAgentName('ayte_guardia')}</div>
                     <Settings size={18} className="text-slate-400" /> Gestionar Recursos
                   </button>
                   <div className="h-px bg-slate-700 my-1"></div>
-                  <button onClick={() => { setIsMenuOpen(false); handleExport(); }} className="flex items-center gap-3 px-4 py-3 hover:bg-slate-700 text-slate-200 transition-colors text-sm text-left">
+                  <button onClick={handleExportClick} className="flex items-center gap-3 px-4 py-3 hover:bg-slate-700 text-slate-200 transition-colors text-sm text-left">
                     <Download size={18} className="text-slate-400" /> Exportar Datos
                   </button>
                   <button onClick={() => { setIsMenuOpen(false); fileInputRef.current?.click(); }} className="flex items-center gap-3 px-4 py-3 hover:bg-slate-700 text-slate-200 transition-colors text-sm text-left">
@@ -1628,6 +1684,142 @@ Ayte. de guardia: ${getAgentName('ayte_guardia')}</div>
             updateInfra={updateInfra}
             userRole={userRole}
           />
+        )
+      }
+
+      {/* Export Config Modal for Admins */}
+      {
+        isExportModalOpen && (
+          <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-[9998] p-4">
+            <div className="bg-slate-900 border border-slate-700 rounded-xl max-w-sm w-full p-6 shadow-2xl max-h-[85vh] overflow-y-auto relative z-[9999]">
+              <div className="flex justify-between items-center mb-6 sticky top-0 bg-slate-900 z-10 pb-2 border-b border-slate-800">
+                <h2 className="text-xl font-bold text-white flex items-center">
+                  <Download className="mr-2 text-yellow-500" /> Exportar por Turnos
+                </h2>
+                <button onClick={() => setIsExportModalOpen(false)} className="text-slate-400 hover:text-white transition-colors">
+                  <X size={24} />
+                </button>
+              </div>
+              <div className="mb-6">
+                <p className="text-sm text-slate-400 mb-4">Selecciona los turnos de los cuales deseas exportar la información:</p>
+                <div className="flex flex-col gap-3">
+                  {[1, 2, 3, 4].map(t => (
+                    <label key={t} className="flex items-center gap-3 p-3 bg-slate-800/50 hover:bg-slate-800 rounded-lg cursor-pointer border border-slate-850 hover:border-slate-700 transition-all">
+                      <input
+                        type="checkbox"
+                        checked={exportSelectedTurns.includes(t)}
+                        onChange={(e) => {
+                          if (e.target.checked) {
+                            setExportSelectedTurns([...exportSelectedTurns, t]);
+                          } else {
+                            setExportSelectedTurns(exportSelectedTurns.filter(turn => turn !== t));
+                          }
+                        }}
+                        className="w-4 h-4 rounded text-yellow-600 focus:ring-yellow-500 bg-slate-700 border-slate-600"
+                      />
+                      <span className="text-slate-200 font-medium">Turno {t}</span>
+                    </label>
+                  ))}
+                </div>
+              </div>
+              <div className="flex justify-end gap-3 border-t border-slate-800 pt-4">
+                <button
+                  onClick={() => setIsExportModalOpen(false)}
+                  className="px-4 py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg transition-colors text-sm font-medium"
+                >
+                  Cancelar
+                </button>
+                <button
+                  onClick={() => {
+                    if (exportSelectedTurns.length === 0) {
+                      alert("Error: Debes seleccionar al menos un turno para exportar.");
+                      return;
+                    }
+                    handleExport(exportSelectedTurns);
+                    setIsExportModalOpen(false);
+                  }}
+                  className="px-4 py-2.5 bg-yellow-600 hover:bg-yellow-500 text-white font-bold rounded-lg transition-colors flex items-center gap-2 text-sm"
+                >
+                  <Download size={16} /> Exportar JSON
+                </button>
+              </div>
+            </div>
+          </div>
+        )
+      }
+
+      {/* Import Config Modal for Admins */}
+      {
+        isImportModalOpen && (
+          <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-[9998] p-4">
+            <div className="bg-slate-900 border border-slate-700 rounded-xl max-w-sm w-full p-6 shadow-2xl max-h-[85vh] overflow-y-auto relative z-[9999]">
+              <div className="flex justify-between items-center mb-6 sticky top-0 bg-slate-900 z-10 pb-2 border-b border-slate-800">
+                <h2 className="text-xl font-bold text-white flex items-center">
+                  <Upload className="mr-2 text-yellow-500" /> Importar por Turnos
+                </h2>
+                <button onClick={() => { setIsImportModalOpen(false); setImportState(null); }} className="text-slate-400 hover:text-white transition-colors">
+                  <X size={24} />
+                </button>
+              </div>
+              <div className="mb-6">
+                <p className="text-sm text-slate-400 mb-4">Selecciona qué turnos del archivo deseas importar y sobrescribir en la base de datos:</p>
+                <div className="flex flex-col gap-3">
+                  {[1, 2, 3, 4].map(t => (
+                    <label key={t} className="flex items-center gap-3 p-3 bg-slate-800/50 hover:bg-slate-800 rounded-lg cursor-pointer border border-slate-850 hover:border-slate-700 transition-all">
+                      <input
+                        type="checkbox"
+                        checked={importSelectedTurns.includes(t)}
+                        onChange={(e) => {
+                          if (e.target.checked) {
+                            setImportSelectedTurns([...importSelectedTurns, t]);
+                          } else {
+                            setImportSelectedTurns(importSelectedTurns.filter(turn => turn !== t));
+                          }
+                        }}
+                        className="w-4 h-4 rounded text-yellow-600 focus:ring-yellow-500 bg-slate-700 border-slate-600"
+                      />
+                      <span className="text-slate-200 font-medium">Turno {t}</span>
+                    </label>
+                  ))}
+                </div>
+                <div className="mt-4 p-3 bg-red-900/20 border border-red-500/30 rounded-lg">
+                  <p className="text-xs text-red-400 leading-relaxed">
+                    <strong>¡ATENCIÓN!</strong> Se borrarán e importarán de forma masiva los datos correspondientes únicamente a los turnos seleccionados. Los turnos no seleccionados permanecerán sin cambios en la base de datos.
+                  </p>
+                </div>
+              </div>
+              <div className="flex justify-end gap-3 border-t border-slate-800 pt-4">
+                <button
+                  onClick={() => { setIsImportModalOpen(false); setImportState(null); }}
+                  className="px-4 py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg transition-colors text-sm font-medium"
+                >
+                  Cancelar
+                </button>
+                <button
+                  onClick={async () => {
+                    if (importSelectedTurns.length === 0) {
+                      alert("Error: Debes seleccionar al menos un turno para importar.");
+                      return;
+                    }
+                    if (window.confirm("¿Está seguro de que desea proceder con la importación selectiva? Los datos de los turnos seleccionados serán sobrescritos.")) {
+                      try {
+                        setIsImportModalOpen(false);
+                        await loadState(importState, importSelectedTurns);
+                        setImportState(null);
+                        alert("Importación exitosa. Los turnos seleccionados han sido restaurados.");
+                      } catch (err) {
+                        console.error("Error writing imported state to Firestore:", err);
+                        alert("Ocurrió un error al escribir los datos importados en la base de datos.");
+                      }
+                    }
+                  }}
+                  className="px-4 py-2.5 bg-red-600 hover:bg-red-500 text-white font-bold rounded-lg transition-colors flex items-center gap-2 text-sm"
+                >
+                  <Upload size={16} /> Importar Datos
+                </button>
+              </div>
+            </div>
+          </div>
         )
       }
 

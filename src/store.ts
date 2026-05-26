@@ -232,7 +232,7 @@ export function useStore() {
     }
   };
 
-  const loadState = async (newState: any) => {
+  const loadState = async (newState: any, targetTurns: number[]) => {
     try {
       const agentsSnapshot = await getDocs(collection(db, 'agents'));
       const infraSnapshot = await getDocs(collection(db, 'infrastructure'));
@@ -240,18 +240,30 @@ export function useStore() {
       
       const batch1 = writeBatch(db);
       
+      // 1. Eliminar solo los datos de los turnos seleccionados
       agentsSnapshot.docs.forEach(d => {
-        batch1.delete(d.ref);
+        const agent = d.data();
+        if (agent.turno !== undefined && targetTurns.includes(agent.turno)) {
+          batch1.delete(d.ref);
+        }
       });
       infraSnapshot.docs.forEach(d => {
-        batch1.delete(d.ref);
+        const item = d.data();
+        if (item.turno !== undefined && targetTurns.includes(item.turno)) {
+          batch1.delete(d.ref);
+        }
       });
       schedSnapshot.docs.forEach(d => {
-        batch1.delete(d.ref);
+        const sch = d.data();
+        const shiftNum = sch.shift ? Number(sch.shift.replace('turno', '')) : null;
+        if (shiftNum && targetTurns.includes(shiftNum)) {
+          batch1.delete(d.ref);
+        }
       });
       
       await batch1.commit();
       
+      // 2. Insertar solo los nuevos datos de los turnos seleccionados
       let batch = writeBatch(db);
       let count = 0;
       
@@ -265,9 +277,11 @@ export function useStore() {
       };
       
       for (const agent of newState.agents) {
-        const id = agent.id || doc(collection(db, 'agents')).id;
-        batch.set(doc(db, 'agents', id), { ...agent, id });
-        await commitIfNeeded();
+        if (agent.turno !== undefined && targetTurns.includes(agent.turno)) {
+          const id = agent.id || doc(collection(db, 'agents')).id;
+          batch.set(doc(db, 'agents', id), { ...agent, id });
+          await commitIfNeeded();
+        }
       }
       
       if (Array.isArray(newState.infrastructure)) {
@@ -282,9 +296,11 @@ export function useStore() {
           if (type === 'orden' || type === 'orden_servicio') type = 'ordenes';
           if (type === 'comision') type = 'comisiones';
           
-          const id = item.id || doc(collection(db, 'infrastructure')).id;
-          batch.set(doc(db, 'infrastructure', id), { ...item, id, type });
-          await commitIfNeeded();
+          if (item.turno !== undefined && targetTurns.includes(item.turno)) {
+            const id = item.id || doc(collection(db, 'infrastructure')).id;
+            batch.set(doc(db, 'infrastructure', id), { ...item, id, type });
+            await commitIfNeeded();
+          }
         }
       } else {
         // Formato: Objeto de arrays (estándar)
@@ -292,17 +308,24 @@ export function useStore() {
         for (const key of infraKeys) {
           const items = newState.infrastructure[key] || [];
           for (const item of items) {
-            const id = item.id || doc(collection(db, 'infrastructure')).id;
-            batch.set(doc(db, 'infrastructure', id), { ...item, id, type: key });
-            await commitIfNeeded();
+            if (item.turno !== undefined && targetTurns.includes(item.turno)) {
+              const id = item.id || doc(collection(db, 'infrastructure')).id;
+              batch.set(doc(db, 'infrastructure', id), { ...item, id, type: key });
+              await commitIfNeeded();
+            }
           }
         }
       }
       
-      for (const sch of newState.schedules) {
-        const id = sch.id || doc(collection(db, 'schedules')).id;
-        batch.set(doc(db, 'schedules', id), { ...sch, id });
-        await commitIfNeeded();
+      if (Array.isArray(newState.schedules)) {
+        for (const sch of newState.schedules) {
+          const shiftNum = sch.shift ? Number(sch.shift.replace('turno', '')) : null;
+          if (shiftNum && targetTurns.includes(shiftNum)) {
+            const id = sch.id || doc(collection(db, 'schedules')).id;
+            batch.set(doc(db, 'schedules', id), { ...sch, id });
+            await commitIfNeeded();
+          }
+        }
       }
       
       if (count > 0) {
