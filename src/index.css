@@ -343,12 +343,9 @@ h1, h2, h3, h4, h5, h6 {
   border-radius: 0.5rem;
   font-size: 0.75rem;
   font-weight: 700;
-}
-
-.sidebar-section.available .sidebar-badge {
   background: rgba(0, 0, 0, 0.4);
   color: var(--color-text-main);
-  border: 1px solid rgba(255,255,255,0.1);
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .sidebar-section.unavailable .sidebar-badge {

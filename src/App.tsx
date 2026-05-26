@@ -1193,6 +1193,9 @@ Ayte. de guardia: ${getAgentName('ayte_guardia')}` : ''}</div>
             <div className="sidebar-section bg-slate-900/50 mt-4 border border-slate-700/50">
               <div className="sidebar-header">
                 <h2 className="sidebar-title"><Shield size={20} /> Base</h2>
+                <span className="sidebar-badge">
+                  {currentSchedules.filter(s => ['ofl_control', 'ofl_servicio', 'operaciones', 'ayte_guardia', 'logistica', 'personal', 'judiciales'].includes(s.role)).length}
+                </span>
               </div>
               <div className="flex flex-col gap-2 p-3 pb-4">
                 {[
@@ -1242,7 +1245,7 @@ Ayte. de guardia: ${getAgentName('ayte_guardia')}` : ''}</div>
             {/* Stats & Alerts */}
             <div className="flex flex-col gap-4 mb-6">
               <div className="stats-bar">
-                <div className="stats-title">Efectivos por función</div>
+                <div className="stats-title">Efectivos en funciones</div>
                 <div className="stats-items">
                   <div className="stat-item" onClick={() => document.getElementById('section-garitas')?.scrollIntoView({ behavior: 'smooth' })}><span className="stat-label">Módulos</span><span className="stat-value">{stats.garita}</span></div>
                   <div className="stat-item" onClick={() => document.getElementById('section-caminantes')?.scrollIntoView({ behavior: 'smooth' })}><span className="stat-label">Caminantes</span><span className="stat-value">{stats.caminante}</span></div>
@@ -1252,6 +1255,10 @@ Ayte. de guardia: ${getAgentName('ayte_guardia')}` : ''}</div>
                   <div className="stat-item" onClick={() => document.getElementById('section-correo')?.scrollIntoView({ behavior: 'smooth' })}><span className="stat-label">Correo</span><span className="stat-value">{stats.correo}</span></div>
                   <div className="stat-item" onClick={() => document.getElementById('section-ordenes')?.scrollIntoView({ behavior: 'smooth' })}><span className="stat-label">Órdenes</span><span className="stat-value">{stats.orden_servicio}</span></div>
                   <div className="stat-item" onClick={() => document.getElementById('section-comisiones')?.scrollIntoView({ behavior: 'smooth' })}><span className="stat-label">Comisiones</span><span className="stat-value">{stats.comision}</span></div>
+                  <div className="stat-item border-l border-slate-700/50 pl-3 ml-2 font-bold pointer-events-none">
+                    <span className="stat-label" style={{ color: '#34d399' }}>TOTAL:</span>
+                    <span className="stat-value" style={{ color: '#34d399', textShadow: '0 0 10px rgba(52, 211, 153, 0.4)' }}>{stats.garita + stats.caminante + stats.movil + stats.motorizada + stats.montada + stats.correo + stats.orden_servicio + stats.comision}</span>
+                  </div>
                 </div>
               </div>
 
