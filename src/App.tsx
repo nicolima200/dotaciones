@@ -311,32 +311,71 @@ function Dashboard() {
   };
 
   const isValidBackup = (json: any): boolean => {
-    if (!json || typeof json !== 'object') return false;
+    if (!json || typeof json !== 'object') {
+      console.warn("isValidBackup failed: El JSON es nulo o no es un objeto.");
+      return false;
+    }
     
     // Validate agents
-    if (!Array.isArray(json.agents)) return false;
+    if (!Array.isArray(json.agents)) {
+      console.warn("isValidBackup failed: json.agents no es un array.");
+      return false;
+    }
     for (const agent of json.agents) {
-      if (!agent || typeof agent !== 'object' || !agent.id || !agent.name) {
+      if (!agent || typeof agent !== 'object' || !agent.name) {
+        console.warn("isValidBackup failed: Efectivo inválido encontrado (debe tener name):", agent);
         return false;
       }
     }
     
     // Validate infrastructure
-    if (!json.infrastructure || typeof json.infrastructure !== 'object') return false;
-    const expectedInfraKeys = ['garitas', 'moviles', 'motos', 'qths', 'ordenes', 'comisiones'];
-    for (const key of expectedInfraKeys) {
-      if (!Array.isArray(json.infrastructure[key])) return false;
-      for (const item of json.infrastructure[key]) {
-        if (!item || typeof item !== 'object' || !item.id || !item.name) {
+    if (!json.infrastructure) {
+      console.warn("isValidBackup failed: json.infrastructure está ausente.");
+      return false;
+    }
+
+    const validTypes = ['garitas', 'moviles', 'motos', 'qths', 'ordenes', 'comisiones', 'garita', 'movil', 'moto', 'qth', 'orden', 'comision', 'orden_servicio'];
+
+    if (Array.isArray(json.infrastructure)) {
+      // Formato: Array plano de ítems de infraestructura
+      for (const item of json.infrastructure) {
+        if (!item || typeof item !== 'object' || !item.name || !item.type) {
+          console.warn("isValidBackup failed: Ítem de infraestructura plano inválido (debe tener name y type):", item);
+          return false;
+        }
+        if (!validTypes.includes(item.type)) {
+          console.warn("isValidBackup failed: Tipo de infraestructura desconocido:", item.type);
           return false;
         }
       }
+    } else if (typeof json.infrastructure === 'object') {
+      // Formato: Objeto de arrays (estándar)
+      const expectedInfraKeys = ['garitas', 'moviles', 'motos', 'qths', 'ordenes', 'comisiones'];
+      for (const key of expectedInfraKeys) {
+        if (!Array.isArray(json.infrastructure[key])) {
+          console.warn(`isValidBackup failed: json.infrastructure.${key} no es un array.`);
+          return false;
+        }
+        for (const item of json.infrastructure[key]) {
+          if (!item || typeof item !== 'object' || !item.name) {
+            console.warn(`isValidBackup failed: Infraestructura inválida en ${key} (debe tener name):`, item);
+            return false;
+          }
+        }
+      }
+    } else {
+      console.warn("isValidBackup failed: json.infrastructure no es ni un array ni un objeto.");
+      return false;
     }
     
     // Validate schedules
-    if (!Array.isArray(json.schedules)) return false;
+    if (!Array.isArray(json.schedules)) {
+      console.warn("isValidBackup failed: json.schedules no es un array.");
+      return false;
+    }
     for (const sch of json.schedules) {
-      if (!sch || typeof sch !== 'object' || !sch.id || !sch.agentId || !sch.role || !sch.shift) {
+      if (!sch || typeof sch !== 'object' || !sch.agentId || !sch.role || !sch.shift) {
+        console.warn("isValidBackup failed: Asignación/horario inválido (debe tener agentId, role y shift):", sch);
         return false;
       }
     }
@@ -347,32 +386,45 @@ function Dashboard() {
   const handleImport = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
+      console.log("handleImport: Archivo seleccionado:", file.name, file.size, "bytes");
       const reader = new FileReader();
       reader.onload = async (e) => {
         try {
-          const json = JSON.parse(e.target?.result as string);
+          const text = e.target?.result as string;
+          console.log("handleImport: Archivo leído. Longitud del texto:", text.length);
+          const json = JSON.parse(text);
+          console.log("handleImport: JSON parseado con éxito:", json);
           
-          if (!isValidBackup(json)) {
+          const valid = isValidBackup(json);
+          console.log("handleImport: ¿Es backup válido?", valid);
+          if (!valid) {
             alert("Error: El archivo JSON importado no tiene un formato de copia de seguridad válido para la aplicación.");
             event.target.value = '';
             return;
           }
           
           if (window.confirm("¿Está seguro de que desea importar este archivo de copia de seguridad?\n\n¡ATENCIÓN! Esta acción borrará de manera irreversible todos los efectivos, infraestructuras y asignaciones actuales de la base de datos y los reemplazará con los del archivo.")) {
+            console.log("handleImport: Confirmado por el usuario. Iniciando loadState...");
             try {
               await loadState(json);
+              console.log("handleImport: loadState finalizado con éxito.");
               alert("Importación exitosa. Los datos se han restaurado correctamente en la base de datos.");
             } catch (err) {
               console.error("Error writing imported state to Firestore:", err);
               alert("Ocurrió un error al escribir los datos importados en la base de datos.");
             }
+          } else {
+            console.log("handleImport: Cancelado por el usuario.");
           }
         } catch (err) {
+          console.error("handleImport: Error al procesar el archivo:", err);
           alert("Error al procesar el archivo JSON. Asegúrese de que sea un archivo de texto JSON válido.");
         }
         event.target.value = '';
       };
       reader.readAsText(file);
+    } else {
+      console.log("handleImport: No se seleccionó ningún archivo.");
     }
   };
 
@@ -725,6 +777,8 @@ Ayte. de guardia: ${getAgentName('ayte_guardia')}</div>
                 <span className="text-xs font-medium hidden lg:inline">Opciones</span>
               </button>
 
+              <input type="file" ref={fileInputRef} onChange={(e) => { handleImport(e); setIsMenuOpen(false); }} accept=".json" className="hidden" />
+
               {isMenuOpen && (
                 <div className="absolute right-0 mt-2 w-56 bg-slate-800 border border-slate-700 rounded-lg shadow-xl z-50 overflow-hidden flex flex-col py-1">
                   <button onClick={() => { setIsMenuOpen(false); setIsScheduleModalOpen(true); }} className="flex items-center gap-3 px-4 py-3 hover:bg-slate-700 text-slate-200 transition-colors text-sm text-left">
@@ -740,7 +794,6 @@ Ayte. de guardia: ${getAgentName('ayte_guardia')}</div>
                   <button onClick={() => { setIsMenuOpen(false); fileInputRef.current?.click(); }} className="flex items-center gap-3 px-4 py-3 hover:bg-slate-700 text-slate-200 transition-colors text-sm text-left">
                     <Upload size={18} className="text-slate-400" /> Importar Datos
                   </button>
-                  <input type="file" ref={fileInputRef} onChange={(e) => { handleImport(e); setIsMenuOpen(false); }} accept=".json" className="hidden" />
                   
                   <div className="h-px bg-slate-700 my-1"></div>
                   

@@ -3,7 +3,6 @@ import { collection, getDocs, doc, updateDoc, setDoc } from 'firebase/firestore'
 import { db } from '../firebase';
 import { ShieldCheck, Users, Database, ArrowLeft, Download } from 'lucide-react';
 import { UserRole } from '../context/AuthContext';
-import { defaultState } from '../store';
 import { useNavigate } from 'react-router-dom';
 
 interface UserData {
@@ -62,9 +61,9 @@ export const AdminView: React.FC = () => {
 
       const backupData = {
         timestamp: new Date().toISOString(),
-        agents: agentsSnap.docs.map(d => d.data()),
-        infrastructure: infraSnap.docs.map(d => d.data()),
-        schedules: schSnap.docs.map(d => d.data())
+        agents: agentsSnap.docs.map(d => ({ id: d.id, ...d.data() })),
+        infrastructure: infraSnap.docs.map(d => ({ id: d.id, ...d.data() })),
+        schedules: schSnap.docs.map(d => ({ id: d.id, ...d.data() }))
       };
 
       const blob = new Blob([JSON.stringify(backupData, null, 2)], { type: 'application/json' });

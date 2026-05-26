@@ -1,0 +1,7553 @@
+{
+  "agents": [
+    {
+      "id": "1",
+      "hasDAEO": false,
+      "licenseCategory": "comun",
+      "licenseType": "auto",
+      "licenseExpiration": "",
+      "telefono": "",
+      "legajo": "470094",
+      "turno": 1,
+      "name": "SGTO. CARDOZO SUSANA",
+      "daeoExpiration": "",
+      "hasLicense": false
+    },
+    {
+      "id": "10",
+      "licenseType": "auto",
+      "licenseCategory": "comun",
+      "hasDAEO": false,
+      "hasLicense": false,
+      "daeoExpiration": "",
+      "legajo": "470256",
+      "turno": 1,
+      "name": "SGTO. LEDESMA FLORENCIA",
+      "licenseExpiration": "",
+      "telefono": ""
+    },
+    {
+      "id": "100",
+      "legajo": "470321",
+      "turno": 2,
+      "name": "SGTO MONASTERIO JOHANA"
+    },
+    {
+      "id": "101",
+      "legajo": "427989",
+      "name": "OFL FERNANDEZ BUSTOS DAMIAN",
+      "turno": 2
+    },
+    {
+      "id": "102",
+      "legajo": "470512",
+      "name": "SGTO YFRAN LAURA",
+      "turno": 2
+    },
+    {
+      "id": "103",
+      "legajo": "493471",
+      "name": "SGTO COSTA VALERIA",
+      "turno": 2
+    },
+    {
+      "id": "104",
+      "turno": 2,
+      "name": "SGTO VALENZUELA MACARENA",
+      "legajo": "419659"
+    },
+    {
+      "id": "105",
+      "turno": 2,
+      "name": "SGTO AYALA ALDO",
+      "legajo": "483668"
+    },
+    {
+      "id": "106",
+      "legajo": "470008",
+      "turno": 2,
+      "name": "SGTO AGUILAR JULIANA"
+    },
+    {
+      "id": "107",
+      "legajo": "470412",
+      "turno": 2,
+      "name": "SGTO RODRIGUEZ NICOLAS"
+    },
+    {
+      "id": "108",
+      "licenseCategory": "comun",
+      "hasDAEO": false,
+      "licenseType": "auto",
+      "daeoExpiration": "",
+      "name": "SGTO FERRER JUAN",
+      "turno": 2,
+      "legajo": "470159",
+      "telefono": "",
+      "licenseExpiration": "",
+      "hasLicense": false
+    },
+    {
+      "id": "109",
+      "turno": 2,
+      "legajo": "498014",
+      "name": "OSA SERNA CARLOS"
+    },
+    {
+      "id": "110",
+      "legajo": "483830",
+      "turno": 2,
+      "name": "SGTO TOJA PABLO"
+    },
+    {
+      "id": "111",
+      "name": "OFL SOSA BRIAN",
+      "legajo": "498123",
+      "turno": 2
+    },
+    {
+      "id": "112",
+      "legajo": "498025",
+      "turno": 2,
+      "name": "SGTO TORRELLES MAXIMILIANO"
+    },
+    {
+      "id": "113",
+      "turno": 2,
+      "legajo": "470165",
+      "name": "SGTO FLEYTA BRIAN"
+    },
+    {
+      "id": "114",
+      "legajo": "470420",
+      "name": "SGTO ROMANY MAYRA",
+      "turno": 2
+    },
+    {
+      "id": "115",
+      "name": "SGTO ALBARRACIN GASTON",
+      "turno": 2,
+      "legajo": "470016"
+    },
+    {
+      "id": "116",
+      "legajo": "470277",
+      "name": "OFL LUGONES FACUNDO",
+      "turno": 2
+    },
+    {
+      "id": "117",
+      "legajo": "483769",
+      "turno": 2,
+      "name": "OSA MEZA RODRIGO"
+    },
+    {
+      "id": "118",
+      "legajo": "493508",
+      "turno": 2,
+      "name": "SGTO GARCÍA ROCÍO"
+    },
+    {
+      "id": "119",
+      "legajo": "497921",
+      "turno": 2,
+      "name": "SGTO LEIVA MARIA"
+    },
+    {
+      "id": "12",
+      "licenseCategory": "comun",
+      "hasDAEO": false,
+      "licenseType": "auto",
+      "licenseExpiration": "",
+      "telefono": "",
+      "daeoExpiration": "",
+      "legajo": "470248",
+      "name": "SGTO. LAPRIETA MARTIN",
+      "turno": 1,
+      "hasLicense": false
+    },
+    {
+      "id": "120",
+      "turno": 2,
+      "name": "OSA AZUAGA JESICA",
+      "legajo": "470049",
+      "isDeleted": true
+    },
+    {
+      "id": "121",
+      "isDeleted": true,
+      "turno": 2,
+      "name": "SGTO RUIZ YÉSICA",
+      "legajo": "483814"
+    },
+    {
+      "id": "122",
+      "legajo": "",
+      "name": "SGTO VILLALBA MAURO",
+      "turno": 3
+    },
+    {
+      "id": "123",
+      "name": "SGTO GOMEZ CARLA",
+      "legajo": "",
+      "turno": 3
+    },
+    {
+      "id": "124",
+      "legajo": "",
+      "name": "SGTO ACOSTA LUCAS",
+      "turno": 3
+    },
+    {
+      "id": "125",
+      "legajo": "",
+      "turno": 3,
+      "name": "SGTO MARTINEZ SERGIO"
+    },
+    {
+      "id": "126",
+      "name": "SGTO SANDOBAL MARIA",
+      "legajo": "",
+      "turno": 3
+    },
+    {
+      "id": "127",
+      "turno": 3,
+      "legajo": "",
+      "name": "SGTO RODRIGUEZ DANIELA"
+    },
+    {
+      "id": "128",
+      "legajo": "",
+      "name": "SGTO GONZALEZ NOELIA",
+      "turno": 3
+    },
+    {
+      "id": "129",
+      "legajo": "",
+      "turno": 3,
+      "name": "SGTO AMAYA NELSON"
+    },
+    {
+      "id": "13",
+      "hasLicense": false,
+      "telefono": "",
+      "licenseExpiration": "",
+      "daeoExpiration": "",
+      "name": "SGTO. ROA MARIANA",
+      "legajo": "470402",
+      "turno": 1,
+      "licenseType": "auto",
+      "licenseCategory": "comun",
+      "hasDAEO": false
+    },
+    {
+      "id": "130",
+      "legajo": "",
+      "name": "SGTO LIENDO LEONARDO",
+      "turno": 3
+    },
+    {
+      "id": "131",
+      "legajo": "",
+      "name": "SGTO LOPEZ GERMAN",
+      "turno": 3
+    },
+    {
+      "id": "132",
+      "turno": 3,
+      "legajo": "",
+      "name": "SGTO AREVALO ANGEL"
+    },
+    {
+      "id": "133",
+      "name": "SGTO BERNALLA MATIAS",
+      "turno": 3,
+      "legajo": ""
+    },
+    {
+      "id": "134",
+      "turno": 3,
+      "name": "OSA FERNANDEZ FLAVIA",
+      "legajo": ""
+    },
+    {
+      "id": "135",
+      "legajo": "",
+      "turno": 3,
+      "name": "OSA BILLORDO DORA"
+    },
+    {
+      "id": "136",
+      "name": "SGTO BORRELIMAXMILIANO",
+      "turno": 3,
+      "legajo": ""
+    },
+    {
+      "id": "137",
+      "name": "OFL MAIBRODA MICAELA",
+      "legajo": "",
+      "turno": 3
+    },
+    {
+      "id": "138",
+      "turno": 3,
+      "legajo": "",
+      "name": "CAPITAN ORTIZ MARCELO"
+    },
+    {
+      "id": "139",
+      "name": "SGTO MARQUEZ DAMIAN",
+      "turno": 3,
+      "legajo": ""
+    },
+    {
+      "id": "14",
+      "name": "SGTO. POLLIFRONI CINTHIA",
+      "turno": 1,
+      "legajo": "470385",
+      "daeoExpiration": "",
+      "telefono": "",
+      "licenseExpiration": "",
+      "hasLicense": false,
+      "hasDAEO": false,
+      "licenseCategory": "comun",
+      "licenseType": "auto"
+    },
+    {
+      "id": "140",
+      "legajo": "",
+      "name": "SGTO BENITEZ DAMIAN",
+      "turno": 3
+    },
+    {
+      "id": "141",
+      "legajo": "",
+      "turno": 3,
+      "name": "SGTO PEREZ PINTO JOEL"
+    },
+    {
+      "id": "142",
+      "legajo": "",
+      "name": "SGTO VARGAS MIRIAM",
+      "turno": 3
+    },
+    {
+      "id": "143",
+      "legajo": "",
+      "name": "SGTO QUINTEROS HERNAN",
+      "turno": 3
+    },
+    {
+      "id": "144",
+      "legajo": "",
+      "name": "SGTO HEREÑU FACUNDO",
+      "turno": 3
+    },
+    {
+      "id": "145",
+      "turno": 3,
+      "legajo": "",
+      "name": "SGTO LAZARTE CLAUDIA"
+    },
+    {
+      "id": "146",
+      "legajo": "",
+      "turno": 3,
+      "name": "SGTO OLMAR ROMINA"
+    },
+    {
+      "id": "147",
+      "legajo": "",
+      "name": "SGTO AGUIRRE LEONELA",
+      "turno": 3
+    },
+    {
+      "id": "148",
+      "legajo": "",
+      "turno": 3,
+      "name": "SGTO CRUZ ROMINA"
+    },
+    {
+      "id": "149",
+      "turno": 3,
+      "legajo": "",
+      "name": "SGTO AGUILAR DEBORA"
+    },
+    {
+      "id": "15",
+      "name": "SGTO. LOPEZ WALTER",
+      "legajo": "493560",
+      "turno": 1,
+      "daeoExpiration": "",
+      "telefono": "",
+      "licenseExpiration": "",
+      "hasLicense": false,
+      "hasDAEO": false,
+      "licenseCategory": "comun",
+      "licenseType": "auto"
+    },
+    {
+      "id": "150",
+      "turno": 3,
+      "name": "OFL CIBER ROSANA",
+      "legajo": ""
+    },
+    {
+      "id": "151",
+      "legajo": "",
+      "name": "SGTO GONZALEZ VICTORIA",
+      "turno": 3
+    },
+    {
+      "id": "152",
+      "turno": 3,
+      "legajo": "",
+      "name": "SGTO BERLE DANIEL"
+    },
+    {
+      "id": "153",
+      "legajo": "",
+      "turno": 3,
+      "name": "SGTO ECHAVARRIA CAMILA"
+    },
+    {
+      "id": "154",
+      "name": "SGTO ZENIQUEL NOELIA",
+      "legajo": "",
+      "turno": 3
+    },
+    {
+      "id": "155",
+      "legajo": "",
+      "name": "SGTO BAEZ LEONARDO",
+      "turno": 3
+    },
+    {
+      "id": "156",
+      "legajo": "",
+      "turno": 3,
+      "name": "SGTO BENITEZ MIGUEL"
+    },
+    {
+      "id": "157",
+      "name": "SGTO ROMERO MARCELA",
+      "turno": 3,
+      "legajo": ""
+    },
+    {
+      "id": "158",
+      "legajo": "",
+      "name": "SGTO TORRES SILVANA",
+      "turno": 3
+    },
+    {
+      "id": "159",
+      "legajo": "",
+      "turno": 3,
+      "name": "SGTO GALARZA MICAELA"
+    },
+    {
+      "id": "16",
+      "licenseType": "auto",
+      "licenseCategory": "comun",
+      "hasDAEO": false,
+      "hasLicense": false,
+      "daeoExpiration": "",
+      "legajo": "470389",
+      "name": "SGTO. RAMIREZ LEONARDO",
+      "turno": 1,
+      "licenseExpiration": "",
+      "telefono": ""
+    },
+    {
+      "id": "160",
+      "turno": 3,
+      "name": "SGTO HENRIQUEZ DAJANA",
+      "legajo": ""
+    },
+    {
+      "id": "161",
+      "legajo": "",
+      "turno": 3,
+      "name": "SGTO MORAN JULIAN"
+    },
+    {
+      "id": "162",
+      "name": "SGTO BARRIENTO KEVIN",
+      "turno": 3,
+      "legajo": ""
+    },
+    {
+      "id": "163",
+      "name": "SGTO VERON BRIAN",
+      "turno": 3,
+      "legajo": ""
+    },
+    {
+      "id": "164",
+      "legajo": "",
+      "turno": 3,
+      "name": "SGTO OJEDA RODRIGO"
+    },
+    {
+      "id": "165",
+      "name": "SGTO GODOY NATALIA",
+      "legajo": "",
+      "turno": 3
+    },
+    {
+      "id": "166",
+      "turno": 3,
+      "name": "SGTO. MARTINEZ MARIANA",
+      "legajo": ""
+    },
+    {
+      "id": "167",
+      "name": "OFL FRANCO JULIETA",
+      "legajo": "",
+      "turno": 3
+    },
+    {
+      "id": "168",
+      "name": "OFL FERREYRA CLAUDIA",
+      "turno": 3,
+      "legajo": ""
+    },
+    {
+      "id": "169",
+      "legajo": "",
+      "name": "SGTO MEDINA DEBORA",
+      "turno": 3
+    },
+    {
+      "id": "17",
+      "licenseType": "auto",
+      "hasDAEO": false,
+      "licenseCategory": "comun",
+      "hasLicense": false,
+      "legajo": "493453",
+      "name": "SGTO. CARIELLE EZEQUIEL",
+      "turno": 1,
+      "daeoExpiration": "",
+      "licenseExpiration": "",
+      "telefono": ""
+    },
+    {
+      "id": "170",
+      "legajo": "",
+      "name": "SGTO DIAZ CARLA",
+      "turno": 3
+    },
+    {
+      "id": "171",
+      "legajo": "",
+      "turno": 3,
+      "name": "SGTO SILVA DIEGO"
+    },
+    {
+      "id": "172",
+      "name": "SGTO SALINAS CAMILA",
+      "turno": 3,
+      "legajo": ""
+    },
+    {
+      "id": "173",
+      "name": "SGTO SOSA CECILIA",
+      "turno": 3,
+      "legajo": ""
+    },
+    {
+      "id": "174",
+      "legajo": "",
+      "turno": 3,
+      "name": "SGTO LEDESMA ELVIRA"
+    },
+    {
+      "id": "175",
+      "legajo": "",
+      "turno": 3,
+      "name": "SGTO NUÑEZ NANCY"
+    },
+    {
+      "id": "176",
+      "legajo": "",
+      "name": "SGTO GUERRA LIONEL",
+      "turno": 3
+    },
+    {
+      "id": "177",
+      "legajo": "",
+      "turno": 3,
+      "name": "OFL ALBORNOZ MARIANO"
+    },
+    {
+      "id": "1779294881647",
+      "licenseCategory": "comun",
+      "hasDAEO": false,
+      "licenseType": "auto",
+      "daeoExpiration": "",
+      "legajo": "493592",
+      "name": "SGTO. MIÑO LURDES",
+      "turno": 1,
+      "licenseExpiration": "",
+      "telefono": "",
+      "hasLicense": false
+    },
+    {
+      "id": "1779294902634",
+      "hasLicense": false,
+      "licenseExpiration": "",
+      "telefono": "",
+      "daeoExpiration": "",
+      "turno": 1,
+      "name": "SGTO. GAMARRA NADIA",
+      "legajo": "470172",
+      "licenseType": "auto",
+      "licenseCategory": "comun",
+      "hasDAEO": false
+    },
+    {
+      "id": "1779294915700",
+      "licenseType": "auto",
+      "licenseCategory": "comun",
+      "hasDAEO": false,
+      "hasLicense": false,
+      "daeoExpiration": "",
+      "turno": 1,
+      "name": "SGTO.  GUTIERREZ SERGIO",
+      "legajo": "493528",
+      "telefono": "",
+      "licenseExpiration": ""
+    },
+    {
+      "id": "1779294930607",
+      "hasLicense": false,
+      "legajo": "483755",
+      "turno": 1,
+      "name": "SGTO. MACIEL AMALIA",
+      "daeoExpiration": "",
+      "telefono": "",
+      "licenseExpiration": "",
+      "licenseType": "auto",
+      "hasDAEO": false,
+      "licenseCategory": "comun"
+    },
+    {
+      "id": "1779294951112",
+      "hasLicense": false,
+      "legajo": "493454",
+      "name": "OFL. CARMONA VILLCA KAREN",
+      "turno": 1,
+      "daeoExpiration": "",
+      "telefono": "",
+      "licenseExpiration": "",
+      "licenseType": "auto",
+      "hasDAEO": false,
+      "licenseCategory": "comun"
+    },
+    {
+      "id": "1779294962564",
+      "daeoExpiration": "",
+      "legajo": "470378",
+      "name": "SGTO. PEREZ PABLO",
+      "turno": 1,
+      "licenseExpiration": "",
+      "telefono": "",
+      "hasLicense": false,
+      "licenseCategory": "comun",
+      "hasDAEO": false,
+      "licenseType": "auto"
+    },
+    {
+      "id": "1779294974173",
+      "telefono": "",
+      "licenseExpiration": "",
+      "daeoExpiration": "",
+      "legajo": "493472",
+      "name": "SGTO. COSTA VICTOR",
+      "turno": 1,
+      "hasLicense": false,
+      "licenseCategory": "comun",
+      "hasDAEO": false,
+      "licenseType": "auto"
+    },
+    {
+      "id": "1779294985434",
+      "turno": 1,
+      "legajo": "470432",
+      "name": "SGTO. RUIZ LUCAS",
+      "daeoExpiration": "2027-07-07",
+      "licenseExpiration": "2027-07-07",
+      "telefono": "",
+      "hasLicense": true,
+      "hasDAEO": true,
+      "licenseCategory": "profesional",
+      "licenseType": "auto"
+    },
+    {
+      "id": "1779294999224",
+      "licenseType": "auto",
+      "nroSerieArmamento": "",
+      "telefono": "",
+      "domicilio": "Molina 587 - Jose Marmol",
+      "modeloArmamento": "",
+      "turno": 1,
+      "licenseCategory": "comun",
+      "modeloChaleco": "",
+      "marcaArmamento": "",
+      "hasDAEO": false,
+      "hasLicense": false,
+      "nroSerieChaleco": "",
+      "licenseExpiration": "",
+      "daeoExpiration": "",
+      "legajo": "430235",
+      "marcaChaleco": "",
+      "name": "OSA CAYUQUEO DAIANA"
+    },
+    {
+      "id": "1779295008749",
+      "licenseExpiration": "",
+      "telefono": "",
+      "legajo": "470029",
+      "turno": 1,
+      "name": "SGTO. ARANDA PAULA",
+      "daeoExpiration": "",
+      "hasLicense": false,
+      "hasDAEO": false,
+      "licenseCategory": "comun",
+      "licenseType": "auto"
+    },
+    {
+      "id": "1779295022612",
+      "licenseType": "auto",
+      "nroSerieArmamento": "",
+      "modeloArmamento": "",
+      "turno": 1,
+      "telefono": "",
+      "domicilio": "Calle 834 N°2443 - Solano",
+      "licenseCategory": "comun",
+      "modeloChaleco": "",
+      "marcaArmamento": "",
+      "hasDAEO": false,
+      "hasLicense": false,
+      "nroSerieChaleco": "",
+      "daeoExpiration": "",
+      "name": "OSA ZABALA MATIAS",
+      "legajo": "483849",
+      "marcaChaleco": "",
+      "licenseExpiration": ""
+    },
+    {
+      "id": "1779295041937",
+      "hasDAEO": false,
+      "licenseCategory": "comun",
+      "licenseType": "auto",
+      "legajo": "470484",
+      "name": "SGTO. TORRICO GRACIELA",
+      "turno": 1,
+      "daeoExpiration": "",
+      "telefono": "",
+      "licenseExpiration": "",
+      "hasLicense": false
+    },
+    {
+      "id": "1779295058689",
+      "hasLicense": true,
+      "telefono": "",
+      "licenseExpiration": "2028-03-02",
+      "daeoExpiration": "2028-03-02",
+      "legajo": "470235",
+      "turno": 1,
+      "name": "SGTO. IBARRA CINTIA",
+      "licenseType": "auto",
+      "licenseCategory": "profesional",
+      "hasDAEO": true
+    },
+    {
+      "id": "1779295072626",
+      "hasLicense": false,
+      "name": "SGTO. GODOY DAIANA",
+      "legajo": "497918",
+      "turno": 1,
+      "daeoExpiration": "",
+      "telefono": "",
+      "licenseExpiration": "",
+      "licenseType": "auto",
+      "hasDAEO": false,
+      "licenseCategory": "comun"
+    },
+    {
+      "id": "1779295084467",
+      "hasLicense": true,
+      "daeoExpiration": "2027-09-11",
+      "legajo": "470068",
+      "name": "SGTO. BORRE LEONEL",
+      "turno": 1,
+      "telefono": "",
+      "licenseExpiration": "2027-09-11",
+      "licenseType": "ambas",
+      "licenseCategory": "profesional",
+      "hasDAEO": true
+    },
+    {
+      "id": "1779295096598",
+      "licenseCategory": "comun",
+      "hasDAEO": false,
+      "licenseType": "auto",
+      "daeoExpiration": "",
+      "name": "SGTO. FULQUIN ERICA",
+      "turno": 1,
+      "legajo": "493501",
+      "telefono": "",
+      "licenseExpiration": "",
+      "hasLicense": false
+    },
+    {
+      "id": "1779295111354",
+      "hasLicense": false,
+      "nroSerieChaleco": "",
+      "licenseExpiration": "",
+      "name": "OSA MARTINEZ ARIANA",
+      "marcaChaleco": "",
+      "legajo": "438598",
+      "daeoExpiration": "",
+      "modeloChaleco": "",
+      "marcaArmamento": "",
+      "hasDAEO": false,
+      "licenseCategory": "comun",
+      "domicilio": "Sargento Cabral 1087 - Claypole",
+      "telefono": "",
+      "turno": 1,
+      "modeloArmamento": "",
+      "licenseType": "auto",
+      "nroSerieArmamento": ""
+    },
+    {
+      "id": "1779295268493",
+      "hasLicense": false,
+      "legajo": "483679",
+      "turno": 1,
+      "name": "OFL. BENITEZ LAURA",
+      "daeoExpiration": "",
+      "licenseExpiration": "",
+      "telefono": "",
+      "licenseType": "auto",
+      "hasDAEO": false,
+      "licenseCategory": "comun"
+    },
+    {
+      "id": "1779295281855",
+      "hasLicense": true,
+      "daeoExpiration": "2030-02-19",
+      "legajo": "428187",
+      "turno": 1,
+      "name": "OFL. LOPEZ MIGUEL",
+      "telefono": "",
+      "licenseExpiration": "2030-02-19",
+      "licenseType": "ambas",
+      "licenseCategory": "comun",
+      "hasDAEO": true
+    },
+    {
+      "id": "1779295305814",
+      "modeloChaleco": "",
+      "marcaArmamento": "",
+      "hasDAEO": false,
+      "licenseCategory": "comun",
+      "hasLicense": false,
+      "nroSerieChaleco": "",
+      "name": "OA ALARCON EVELIN",
+      "legajo": "493280",
+      "marcaChaleco": "",
+      "daeoExpiration": "",
+      "licenseExpiration": "",
+      "licenseType": "auto",
+      "nroSerieArmamento": "",
+      "turno": 1,
+      "modeloArmamento": "",
+      "domicilio": "Gauna 179 - Glew",
+      "telefono": ""
+    },
+    {
+      "id": "1779301669808",
+      "telefono": "",
+      "licenseExpiration": "",
+      "daeoExpiration": "",
+      "legajo": "428353",
+      "turno": 1,
+      "name": "OFL. MACHUCA AILEN",
+      "hasLicense": false,
+      "licenseCategory": "comun",
+      "hasDAEO": false,
+      "licenseType": "auto"
+    },
+    {
+      "id": "1779301680630",
+      "licenseType": "auto",
+      "licenseCategory": "comun",
+      "hasDAEO": false,
+      "hasLicense": false,
+      "daeoExpiration": "",
+      "legajo": "470109",
+      "turno": 1,
+      "name": "SGTO. CENTENO GUSTAVO",
+      "telefono": "",
+      "licenseExpiration": ""
+    },
+    {
+      "id": "1779301691605",
+      "licenseType": "auto",
+      "hasDAEO": false,
+      "licenseCategory": "comun",
+      "hasLicense": false,
+      "legajo": "486816",
+      "turno": 1,
+      "name": "SGTO. VILLAFAÑE GISELE",
+      "daeoExpiration": "",
+      "licenseExpiration": "",
+      "telefono": ""
+    },
+    {
+      "id": "1779301704373",
+      "licenseExpiration": "",
+      "telefono": "",
+      "name": "OFL. LUGONES FACUNDO",
+      "turno": 1,
+      "legajo": "470277",
+      "daeoExpiration": "",
+      "hasLicense": false,
+      "hasDAEO": false,
+      "licenseCategory": "comun",
+      "licenseType": "auto"
+    },
+    {
+      "id": "1779301725818",
+      "licenseType": "auto",
+      "hasDAEO": false,
+      "licenseCategory": "comun",
+      "hasLicense": false,
+      "turno": 1,
+      "legajo": "470196",
+      "name": "OSA ADM GOMEZ GISELA",
+      "daeoExpiration": "",
+      "licenseExpiration": "",
+      "telefono": ""
+    },
+    {
+      "id": "1779301743833",
+      "hasLicense": false,
+      "licenseExpiration": "",
+      "telefono": "",
+      "daeoExpiration": "",
+      "name": "SGTO. SKIPOR ANDREA",
+      "turno": 1,
+      "legajo": "498017",
+      "licenseType": "auto",
+      "licenseCategory": "comun",
+      "hasDAEO": false
+    },
+    {
+      "id": "1779301758476",
+      "name": "SGTO. MICUCCI PATRICIA",
+      "legajo": "470312",
+      "turno": 1,
+      "daeoExpiration": "",
+      "licenseExpiration": "",
+      "telefono": "",
+      "hasLicense": false,
+      "hasDAEO": false,
+      "licenseCategory": "comun",
+      "licenseType": "auto"
+    },
+    {
+      "id": "1779301767243",
+      "licenseType": "auto",
+      "licenseCategory": "comun",
+      "hasDAEO": false,
+      "hasLicense": false,
+      "telefono": "",
+      "licenseExpiration": "",
+      "daeoExpiration": "",
+      "legajo": "470462",
+      "turno": 1,
+      "name": "SGTO. SOSA ELIANA"
+    },
+    {
+      "id": "1779301774577",
+      "hasLicense": false,
+      "licenseExpiration": "",
+      "telefono": "",
+      "daeoExpiration": "",
+      "name": "SGTO. PONTE CARLOS",
+      "turno": 1,
+      "legajo": "497958",
+      "licenseType": "auto",
+      "licenseCategory": "comun",
+      "hasDAEO": false
+    },
+    {
+      "id": "1779301780862",
+      "licenseType": "auto",
+      "hasDAEO": false,
+      "licenseCategory": "comun",
+      "hasLicense": false,
+      "legajo": "493477",
+      "turno": 1,
+      "name": "SGTO. DIAZ JOEL",
+      "daeoExpiration": "",
+      "telefono": "",
+      "licenseExpiration": ""
+    },
+    {
+      "id": "1779301790911",
+      "hasLicense": false,
+      "telefono": "",
+      "licenseExpiration": "",
+      "daeoExpiration": "",
+      "legajo": "434849",
+      "turno": 1,
+      "name": "OFL. VALENZUELA MARIANO",
+      "licenseType": "auto",
+      "licenseCategory": "comun",
+      "hasDAEO": false
+    },
+    {
+      "id": "1779301938492",
+      "hasDAEO": true,
+      "licenseCategory": "comun",
+      "licenseType": "ambas",
+      "name": "SGTO. RIOS ARIEL",
+      "turno": 1,
+      "legajo": "497978",
+      "daeoExpiration": "2030-11-04",
+      "licenseExpiration": "2030-11-04",
+      "telefono": "",
+      "hasLicense": true
+    },
+    {
+      "id": "1779301946159",
+      "hasLicense": true,
+      "licenseExpiration": "2027-11-20",
+      "telefono": "",
+      "name": "SGTO. ARROYO GERARDO",
+      "legajo": "470038",
+      "turno": 1,
+      "daeoExpiration": "2027-11-20",
+      "licenseType": "auto",
+      "hasDAEO": true,
+      "licenseCategory": "profesional"
+    },
+    {
+      "id": "1779301954192",
+      "hasLicense": true,
+      "licenseExpiration": "2026-07-12",
+      "telefono": "",
+      "name": "SGTO. IGLESIAS MARCELO",
+      "legajo": "470238",
+      "turno": 1,
+      "daeoExpiration": "2026-07-12",
+      "licenseType": "auto",
+      "hasDAEO": true,
+      "licenseCategory": "comun"
+    },
+    {
+      "id": "1779301961023",
+      "licenseType": "auto",
+      "licenseCategory": "comun",
+      "hasDAEO": false,
+      "hasLicense": false,
+      "licenseExpiration": "",
+      "telefono": "",
+      "daeoExpiration": "",
+      "name": "SGTO. SAREM DAVID",
+      "turno": 1,
+      "legajo": "470449"
+    },
+    {
+      "id": "1779301968764",
+      "hasDAEO": false,
+      "licenseCategory": "comun",
+      "licenseType": "auto",
+      "licenseExpiration": "",
+      "telefono": "",
+      "name": "OFL. BARRETO FERNANDO",
+      "turno": 1,
+      "legajo": "483672",
+      "daeoExpiration": "",
+      "hasLicense": false
+    },
+    {
+      "id": "1779302070643",
+      "licenseCategory": "comun",
+      "hasDAEO": false,
+      "licenseType": "auto",
+      "daeoExpiration": "",
+      "turno": 1,
+      "legajo": "470520",
+      "name": "SGTO. ZORAIDEZ EVA",
+      "licenseExpiration": "",
+      "telefono": "",
+      "hasLicense": false
+    },
+    {
+      "id": "1779302079319",
+      "hasLicense": false,
+      "legajo": "497988",
+      "turno": 1,
+      "name": "SGTO. RODRIGUEZ MATIAS",
+      "daeoExpiration": "",
+      "telefono": "",
+      "licenseExpiration": "",
+      "licenseType": "auto",
+      "hasDAEO": false,
+      "licenseCategory": "comun"
+    },
+    {
+      "id": "1779302229716",
+      "licenseType": "auto",
+      "licenseCategory": "comun",
+      "hasDAEO": false,
+      "hasLicense": false,
+      "licenseExpiration": "",
+      "telefono": "",
+      "daeoExpiration": "",
+      "name": "SGTO. BAUTISTA TIMOTEO",
+      "turno": 1,
+      "legajo": "483677"
+    },
+    {
+      "id": "1779302538765",
+      "legajo": "493279",
+      "turno": 1,
+      "name": "SGTO. AGUIRRE DANIEL",
+      "daeoExpiration": "",
+      "telefono": "",
+      "licenseExpiration": "",
+      "hasLicense": false,
+      "hasDAEO": false,
+      "licenseCategory": "comun",
+      "licenseType": "auto"
+    },
+    {
+      "id": "1779302789694",
+      "licenseType": "auto",
+      "nroSerieArmamento": "",
+      "telefono": "",
+      "domicilio": "San Francisco 135 - Claypole",
+      "modeloArmamento": "",
+      "turno": 1,
+      "licenseCategory": "comun",
+      "modeloChaleco": "",
+      "marcaArmamento": "",
+      "hasDAEO": false,
+      "hasLicense": false,
+      "nroSerieChaleco": "",
+      "licenseExpiration": "",
+      "daeoExpiration": "",
+      "name": "OSA ACOSTA STEFANIA",
+      "legajo": "470005",
+      "marcaChaleco": ""
+    },
+    {
+      "id": "1779302802786",
+      "hasLicense": false,
+      "daeoExpiration": "",
+      "legajo": "470433",
+      "turno": 1,
+      "name": "SGTO. SAAVEDRA ANA",
+      "licenseExpiration": "",
+      "telefono": "",
+      "licenseType": "auto",
+      "licenseCategory": "comun",
+      "hasDAEO": false
+    },
+    {
+      "id": "1779302809873",
+      "licenseCategory": "comun",
+      "hasDAEO": false,
+      "licenseType": "auto",
+      "telefono": "",
+      "licenseExpiration": "",
+      "daeoExpiration": "",
+      "legajo": "470219",
+      "turno": 1,
+      "name": "SGTO. GRAMAJO ANA",
+      "hasLicense": false
+    },
+    {
+      "id": "1779302818487",
+      "telefono": "",
+      "licenseExpiration": "",
+      "legajo": "470052",
+      "turno": 1,
+      "name": "OA BAEZ SOLEDAD",
+      "daeoExpiration": "",
+      "hasLicense": false,
+      "hasDAEO": false,
+      "licenseCategory": "comun",
+      "licenseType": "auto"
+    },
+    {
+      "id": "1779302827386",
+      "hasLicense": false,
+      "nroSerieChaleco": "",
+      "licenseExpiration": "",
+      "daeoExpiration": "",
+      "marcaChaleco": "",
+      "legajo": "414710",
+      "name": "OA ADM. SERVIN CAMILO",
+      "licenseCategory": "comun",
+      "hasDAEO": false,
+      "marcaArmamento": "",
+      "modeloChaleco": "",
+      "telefono": "",
+      "domicilio": "Lope de Vega 1820 - Lomas de Zamora",
+      "modeloArmamento": "",
+      "turno": 1,
+      "licenseType": "auto",
+      "nroSerieArmamento": ""
+    },
+    {
+      "id": "1779302834993",
+      "licenseCategory": "comun",
+      "hasDAEO": false,
+      "licenseType": "auto",
+      "licenseExpiration": "",
+      "telefono": "",
+      "daeoExpiration": "",
+      "name": "OFL. SANTOS MARIA",
+      "legajo": "470446",
+      "turno": 1,
+      "hasLicense": false
+    },
+    {
+      "id": "1779302847035",
+      "licenseType": "auto",
+      "hasDAEO": false,
+      "licenseCategory": "comun",
+      "hasLicense": false,
+      "legajo": "470445",
+      "turno": 1,
+      "name": "OFL. ADM. SANTORO DEBORA",
+      "daeoExpiration": "",
+      "telefono": "",
+      "licenseExpiration": ""
+    },
+    {
+      "id": "1779302858368",
+      "hasLicense": false,
+      "nroSerieChaleco": "",
+      "licenseExpiration": "",
+      "name": "SUBTTE. GINTO VERONICA",
+      "legajo": "483728",
+      "marcaChaleco": "",
+      "daeoExpiration": "",
+      "modeloChaleco": "",
+      "marcaArmamento": "",
+      "hasDAEO": false,
+      "licenseCategory": "comun",
+      "domicilio": "Frias 5559, planta alta - San Jose",
+      "telefono": "",
+      "turno": 1,
+      "modeloArmamento": "",
+      "licenseType": "auto",
+      "nroSerieArmamento": ""
+    },
+    {
+      "id": "1779302868234",
+      "name": "OSA ADM. ALEGRE YAMILA",
+      "marcaChaleco": "",
+      "legajo": "493288",
+      "daeoExpiration": "",
+      "licenseExpiration": "",
+      "hasLicense": false,
+      "nroSerieChaleco": "",
+      "hasDAEO": false,
+      "marcaArmamento": "",
+      "modeloChaleco": "",
+      "licenseCategory": "comun",
+      "turno": 1,
+      "modeloArmamento": "",
+      "domicilio": "Cesar Ratti 181 - Burzaco",
+      "telefono": "",
+      "nroSerieArmamento": "",
+      "licenseType": "auto"
+    },
+    {
+      "id": "1779302875761",
+      "domicilio": "",
+      "telefono": "",
+      "turno": 1,
+      "modeloArmamento": "Thunder 9 pro",
+      "nroSerieArmamento": "13-L57898",
+      "licenseType": "auto",
+      "licenseExpiration": "2029-04-15",
+      "name": "SGTO. OLIMA NICOLAS",
+      "legajo": "470345",
+      "marcaChaleco": "",
+      "daeoExpiration": "2029-04-15",
+      "hasLicense": true,
+      "nroSerieChaleco": "",
+      "hasDAEO": true,
+      "modeloChaleco": "",
+      "marcaArmamento": "Bersa",
+      "licenseCategory": "comun"
+    },
+    {
+      "id": "1779302886418",
+      "hasLicense": true,
+      "licenseExpiration": "2029-06-06",
+      "telefono": "",
+      "daeoExpiration": "2029-06-06",
+      "turno": 1,
+      "legajo": "172487",
+      "name": "OFL. PPAL. NUÑEZ JUAN",
+      "licenseType": "ambas",
+      "licenseCategory": "comun",
+      "hasDAEO": true
+    },
+    {
+      "id": "1779303016344",
+      "hasDAEO": true,
+      "licenseCategory": "profesional",
+      "licenseType": "auto",
+      "legajo": "470230",
+      "turno": 1,
+      "name": "SGTO. HIDALGO LUIS",
+      "daeoExpiration": "2028-01-07",
+      "telefono": "",
+      "licenseExpiration": "2028-01-07",
+      "hasLicense": true
+    },
+    {
+      "id": "1779309958541",
+      "telefono": "",
+      "licenseExpiration": "",
+      "daeoExpiration": "",
+      "legajo": "470415",
+      "turno": 1,
+      "name": "SGTO. ROJAS SABRINA",
+      "hasLicense": false,
+      "licenseCategory": "comun",
+      "hasDAEO": false,
+      "licenseType": "auto"
+    },
+    {
+      "id": "1779309967984",
+      "daeoExpiration": "",
+      "legajo": "493489",
+      "turno": 1,
+      "name": "SGTO. FARIAS NATALIA",
+      "telefono": "",
+      "licenseExpiration": "",
+      "hasLicense": false,
+      "licenseCategory": "comun",
+      "hasDAEO": false,
+      "licenseType": "auto"
+    },
+    {
+      "id": "1779309976500",
+      "licenseType": "auto",
+      "licenseCategory": "comun",
+      "hasDAEO": false,
+      "hasLicense": false,
+      "daeoExpiration": "",
+      "name": "SGTO. OZAFRAN MAILEN",
+      "turno": 1,
+      "legajo": "497938",
+      "licenseExpiration": "",
+      "telefono": ""
+    },
+    {
+      "id": "1779309986850",
+      "licenseType": "auto",
+      "hasDAEO": false,
+      "licenseCategory": "comun",
+      "hasLicense": false,
+      "legajo": "493282",
+      "turno": 1,
+      "name": "SGTO. ALBENABA DAIANA",
+      "daeoExpiration": "",
+      "telefono": "",
+      "licenseExpiration": ""
+    },
+    {
+      "id": "1779309993799",
+      "licenseType": "auto",
+      "nroSerieArmamento": "",
+      "modeloArmamento": "",
+      "turno": 1,
+      "telefono": "",
+      "domicilio": "Mza 29 casa 6 S/L - Barrio policial",
+      "licenseCategory": "comun",
+      "modeloChaleco": "",
+      "marcaArmamento": "",
+      "hasDAEO": false,
+      "hasLicense": false,
+      "nroSerieChaleco": "",
+      "daeoExpiration": "",
+      "name": "OSA BARRETO BELEN",
+      "legajo": "493313",
+      "marcaChaleco": "",
+      "licenseExpiration": ""
+    },
+    {
+      "id": "1779310002671",
+      "licenseType": "auto",
+      "licenseCategory": "comun",
+      "hasDAEO": false,
+      "hasLicense": false,
+      "daeoExpiration": "",
+      "legajo": "470086",
+      "turno": 1,
+      "name": "SGTO. CANO JUAN",
+      "telefono": "",
+      "licenseExpiration": ""
+    },
+    {
+      "id": "1779315987016",
+      "daeoExpiration": "2026-08-28",
+      "name": "SGTO. TORO SANTIAGO",
+      "turno": 1,
+      "legajo": "482774",
+      "licenseExpiration": "2026-08-28",
+      "telefono": "",
+      "hasLicense": true,
+      "licenseCategory": "profesional",
+      "hasDAEO": true,
+      "licenseType": "ambas"
+    },
+    {
+      "id": "1779316399808",
+      "licenseCategory": "comun",
+      "hasDAEO": false,
+      "licenseType": "auto",
+      "daeoExpiration": "",
+      "legajo": "483798",
+      "turno": 1,
+      "name": "OSA ADM. PUIGROSS LAURA",
+      "licenseExpiration": "",
+      "telefono": "",
+      "hasLicense": false
+    },
+    {
+      "id": "1779316470230",
+      "domicilio": "Pino 1040 - Adrogue",
+      "telefono": "",
+      "turno": 1,
+      "modeloArmamento": "",
+      "licenseType": "auto",
+      "nroSerieArmamento": "",
+      "hasLicense": false,
+      "nroSerieChaleco": "",
+      "licenseExpiration": "",
+      "name": "OSA BENGOLEA AGUSTINA",
+      "legajo": "493424",
+      "marcaChaleco": "",
+      "daeoExpiration": "",
+      "modeloChaleco": "",
+      "marcaArmamento": "",
+      "hasDAEO": false,
+      "licenseCategory": "comun"
+    },
+    {
+      "id": "1779316526757",
+      "hasLicense": false,
+      "licenseExpiration": "",
+      "telefono": "",
+      "daeoExpiration": "",
+      "name": "SGTO. ROMERO ALBERTO",
+      "turno": 1,
+      "legajo": "470421",
+      "licenseType": "auto",
+      "licenseCategory": "comun",
+      "hasDAEO": false
+    },
+    {
+      "id": "1779316568741",
+      "licenseCategory": "comun",
+      "hasDAEO": false,
+      "licenseType": "auto",
+      "telefono": "",
+      "licenseExpiration": "",
+      "daeoExpiration": "",
+      "legajo": "470032",
+      "turno": 1,
+      "name": "SGTO. ARCE DARIO",
+      "hasLicense": false
+    },
+    {
+      "id": "1779316578339",
+      "licenseCategory": "comun",
+      "hasDAEO": false,
+      "licenseType": "auto",
+      "telefono": "",
+      "licenseExpiration": "",
+      "daeoExpiration": "",
+      "legajo": "470112",
+      "turno": 1,
+      "name": "SGTO. CEPEDA HORACIO",
+      "hasLicense": false
+    },
+    {
+      "id": "1779316636462",
+      "licenseExpiration": "",
+      "telefono": "",
+      "daeoExpiration": "",
+      "name": "SGTO. PERALTA PABLO",
+      "turno": 1,
+      "legajo": "470370",
+      "hasLicense": false,
+      "licenseCategory": "comun",
+      "hasDAEO": false,
+      "licenseType": "auto"
+    },
+    {
+      "id": "1779316696611",
+      "hasLicense": false,
+      "daeoExpiration": "",
+      "turno": 1,
+      "legajo": "498024",
+      "name": "SGTO. TORRELLES CHRISTIAN",
+      "licenseExpiration": "",
+      "telefono": "",
+      "licenseType": "auto",
+      "licenseCategory": "comun",
+      "hasDAEO": false
+    },
+    {
+      "id": "1779316729163",
+      "licenseType": "auto",
+      "licenseCategory": "comun",
+      "hasDAEO": false,
+      "hasLicense": false,
+      "telefono": "",
+      "licenseExpiration": "",
+      "daeoExpiration": "",
+      "legajo": "483675",
+      "turno": 1,
+      "name": "SGTO. ADM BARRIOS PATRICIA"
+    },
+    {
+      "id": "1779316856683",
+      "hasDAEO": false,
+      "licenseCategory": "comun",
+      "licenseType": "auto",
+      "turno": 1,
+      "legajo": "493452",
+      "name": "SGTO ADM CARDOZO AYELEN",
+      "daeoExpiration": "",
+      "licenseExpiration": "",
+      "telefono": "",
+      "hasLicense": false
+    },
+    {
+      "id": "1779316910891",
+      "licenseType": "auto",
+      "hasDAEO": false,
+      "licenseCategory": "comun",
+      "hasLicense": false,
+      "licenseExpiration": "",
+      "telefono": "",
+      "legajo": "493522",
+      "turno": 1,
+      "name": "SGTO. GONZALEZ DANIELA",
+      "daeoExpiration": ""
+    },
+    {
+      "id": "1779316985236",
+      "licenseType": "auto",
+      "hasDAEO": false,
+      "licenseCategory": "comun",
+      "hasLicense": false,
+      "legajo": "497976",
+      "turno": 1,
+      "name": "SGTO. RICARDO DAIANA",
+      "daeoExpiration": "",
+      "telefono": "",
+      "licenseExpiration": ""
+    },
+    {
+      "id": "1779317011670",
+      "licenseExpiration": "",
+      "telefono": "",
+      "name": "SGTO. RUEDA MARINA",
+      "legajo": "497998",
+      "turno": 1,
+      "daeoExpiration": "",
+      "hasLicense": false,
+      "hasDAEO": false,
+      "licenseCategory": "comun",
+      "licenseType": "auto"
+    },
+    {
+      "id": "1779317037526",
+      "licenseType": "auto",
+      "hasDAEO": false,
+      "licenseCategory": "comun",
+      "hasLicense": false,
+      "name": "SGTO. RUIZ DIAZ ANGELA",
+      "legajo": "497999",
+      "turno": 1,
+      "daeoExpiration": "",
+      "licenseExpiration": "",
+      "telefono": ""
+    },
+    {
+      "id": "1779317103729",
+      "licenseType": "auto",
+      "hasDAEO": false,
+      "licenseCategory": "comun",
+      "hasLicense": false,
+      "telefono": "",
+      "licenseExpiration": "",
+      "legajo": "470501",
+      "turno": 1,
+      "name": "SGTO. VERON ROCIO",
+      "daeoExpiration": ""
+    },
+    {
+      "id": "1779317135658",
+      "hasDAEO": false,
+      "licenseCategory": "comun",
+      "licenseType": "auto",
+      "telefono": "",
+      "licenseExpiration": "",
+      "legajo": "497942",
+      "turno": 1,
+      "name": "OFL. PASINA JUAN",
+      "daeoExpiration": "",
+      "hasLicense": false
+    },
+    {
+      "id": "1779317212060",
+      "legajo": "493448",
+      "turno": 1,
+      "name": "SGTO. ADM CAMPUZANO ANGEL",
+      "daeoExpiration": "",
+      "telefono": "",
+      "licenseExpiration": "",
+      "hasLicense": false,
+      "hasDAEO": false,
+      "licenseCategory": "comun",
+      "licenseType": "auto"
+    },
+    {
+      "id": "1779627150558",
+      "nroSerieArmamento": "",
+      "licenseType": "auto",
+      "telefono": "",
+      "domicilio": "",
+      "modeloArmamento": "",
+      "turno": 1,
+      "licenseCategory": "comun",
+      "marcaArmamento": "",
+      "modeloChaleco": "",
+      "hasDAEO": false,
+      "licenseExpiration": "",
+      "daeoExpiration": "",
+      "legajo": "470298",
+      "marcaChaleco": "",
+      "name": "SGTO MARTINEZ TAMARA",
+      "hasLicense": false,
+      "nroSerieChaleco": ""
+    },
+    {
+      "id": "1779627168626",
+      "nroSerieArmamento": "",
+      "licenseType": "auto",
+      "modeloArmamento": "",
+      "turno": 1,
+      "telefono": "",
+      "domicilio": "",
+      "licenseCategory": "comun",
+      "marcaArmamento": "",
+      "modeloChaleco": "",
+      "hasDAEO": false,
+      "daeoExpiration": "",
+      "name": "SGTO ELIZAUL MARIANA",
+      "legajo": "483712",
+      "marcaChaleco": "",
+      "licenseExpiration": "",
+      "nroSerieChaleco": "",
+      "hasLicense": false
+    },
+    {
+      "id": "1779627185149",
+      "hasDAEO": false,
+      "modeloChaleco": "",
+      "marcaArmamento": "",
+      "licenseCategory": "comun",
+      "licenseExpiration": "",
+      "marcaChaleco": "",
+      "legajo": "470422",
+      "name": "SGTO ROMERO DAIANA",
+      "daeoExpiration": "",
+      "hasLicense": false,
+      "nroSerieChaleco": "",
+      "nroSerieArmamento": "",
+      "licenseType": "auto",
+      "domicilio": "",
+      "telefono": "",
+      "turno": 1,
+      "modeloArmamento": ""
+    },
+    {
+      "id": "1779627479096",
+      "marcaChaleco": "",
+      "legajo": "470020",
+      "name": "SGTO ALVAREZ BRENDA",
+      "daeoExpiration": "",
+      "licenseExpiration": "",
+      "hasLicense": false,
+      "nroSerieChaleco": "",
+      "marcaArmamento": "",
+      "modeloChaleco": "",
+      "hasDAEO": false,
+      "licenseCategory": "comun",
+      "turno": 1,
+      "modeloArmamento": "",
+      "domicilio": "",
+      "telefono": "",
+      "nroSerieArmamento": "",
+      "licenseType": "auto"
+    },
+    {
+      "id": "1779808180598",
+      "licenseCategory": "comun",
+      "marcaArmamento": "",
+      "modeloChaleco": "",
+      "hasDAEO": false,
+      "daeoExpiration": "",
+      "name": "peralta cristan",
+      "legajo": "164910",
+      "marcaChaleco": "",
+      "licenseExpiration": "",
+      "hasLicense": true,
+      "isDeleted": true,
+      "nroSerieChaleco": "",
+      "nroSerieArmamento": "",
+      "licenseType": "auto",
+      "modeloArmamento": "",
+      "turno": 1,
+      "telefono": "1542455111",
+      "domicilio": ""
+    },
+    {
+      "id": "1779808382869",
+      "nroSerieArmamento": "",
+      "licenseType": "auto",
+      "telefono": "113201457625",
+      "domicilio": "",
+      "modeloArmamento": "",
+      "turno": 3,
+      "licenseCategory": "comun",
+      "marcaArmamento": "",
+      "modeloChaleco": "",
+      "hasDAEO": false,
+      "licenseExpiration": "5016-02-25",
+      "daeoExpiration": "",
+      "name": "peralta cristian",
+      "legajo": "164910",
+      "marcaChaleco": "",
+      "hasLicense": true,
+      "isDeleted": true,
+      "nroSerieChaleco": ""
+    },
+    {
+      "id": "178",
+      "name": "SGTO LACUNZA HERNAN",
+      "turno": 3,
+      "legajo": ""
+    },
+    {
+      "id": "179",
+      "name": "OSA GAURISSO",
+      "turno": 3,
+      "legajo": ""
+    },
+    {
+      "id": "18",
+      "licenseType": "auto",
+      "hasDAEO": false,
+      "licenseCategory": "comun",
+      "hasLicense": false,
+      "turno": 1,
+      "legajo": "470355",
+      "name": "SGTO. OVIEDO JUAN",
+      "daeoExpiration": "",
+      "telefono": "",
+      "licenseExpiration": ""
+    },
+    {
+      "id": "180",
+      "legajo": "",
+      "name": "SGTO MONTIEL DIEGO",
+      "turno": 3
+    },
+    {
+      "id": "181",
+      "name": "SGTO GAURISSO",
+      "turno": 3,
+      "legajo": ""
+    },
+    {
+      "id": "182",
+      "turno": 3,
+      "legajo": "",
+      "name": "SGTO MANSILLA CRISTIAN"
+    },
+    {
+      "id": "183",
+      "legajo": "",
+      "turno": 3,
+      "name": "SGTO BROCOLI A"
+    },
+    {
+      "id": "184",
+      "name": "SGTO RODRIGUEZ ESTEBAN",
+      "legajo": "",
+      "turno": 3
+    },
+    {
+      "id": "185",
+      "turno": 3,
+      "name": "OFL CUELLO L",
+      "legajo": ""
+    },
+    {
+      "id": "186",
+      "name": "OSI CARDOZO WALTER",
+      "legajo": "180.735",
+      "turno": 4
+    },
+    {
+      "id": "187",
+      "legajo": "470.013",
+      "turno": 4,
+      "name": "OSA AGUIRRE MELINA"
+    },
+    {
+      "id": "188",
+      "legajo": "470.311",
+      "name": "SGTO MERELES CARLA",
+      "turno": 4
+    },
+    {
+      "id": "189",
+      "legajo": "470.419",
+      "turno": 4,
+      "name": "SGTO ROLON DAVID"
+    },
+    {
+      "id": "19",
+      "hasLicense": false,
+      "licenseExpiration": "",
+      "telefono": "",
+      "daeoExpiration": "",
+      "legajo": "497966",
+      "turno": 1,
+      "name": "SGTO. RAMIREZ JULIAN",
+      "licenseType": "auto",
+      "licenseCategory": "comun",
+      "hasDAEO": false
+    },
+    {
+      "id": "190",
+      "name": "SGTO CARRIZO MARIO",
+      "legajo": "",
+      "turno": 4
+    },
+    {
+      "id": "191",
+      "name": "SGTO GODOY ROCIO",
+      "turno": 4,
+      "legajo": ""
+    },
+    {
+      "id": "192",
+      "legajo": "",
+      "name": "SGTO ALMIRON MARCELO",
+      "turno": 4
+    },
+    {
+      "id": "193",
+      "name": "SGTO SOTO CEJAS SONIA",
+      "turno": 4,
+      "legajo": ""
+    },
+    {
+      "id": "194",
+      "legajo": "",
+      "turno": 4,
+      "name": "SGTO SPANHAKE JUAN"
+    },
+    {
+      "id": "195",
+      "legajo": "",
+      "name": "SGTO GOMEZ KARINA",
+      "turno": 4
+    },
+    {
+      "id": "196",
+      "turno": 4,
+      "legajo": "",
+      "name": "STTE NAVARRO RICARDO"
+    },
+    {
+      "id": "197",
+      "turno": 4,
+      "name": "SGTO ALBA LEON JONATHAN",
+      "legajo": ""
+    },
+    {
+      "id": "198",
+      "name": "SGTO CABRERA CECILIA",
+      "turno": 4,
+      "legajo": ""
+    },
+    {
+      "id": "199",
+      "name": "SGTO CASTILLO CELIA",
+      "turno": 4,
+      "legajo": ""
+    },
+    {
+      "id": "2",
+      "licenseType": "auto",
+      "licenseCategory": "comun",
+      "hasDAEO": false,
+      "hasLicense": false,
+      "daeoExpiration": "",
+      "legajo": "483701",
+      "name": "SGTO. CONTHE SUSANA",
+      "turno": 1,
+      "telefono": "",
+      "licenseExpiration": ""
+    },
+    {
+      "id": "20",
+      "hasDAEO": false,
+      "licenseCategory": "comun",
+      "licenseType": "auto",
+      "licenseExpiration": "",
+      "telefono": "",
+      "legajo": "470077",
+      "name": "SGTO. BUSTOS JUAN",
+      "turno": 1,
+      "daeoExpiration": "",
+      "hasLicense": false
+    },
+    {
+      "id": "200",
+      "legajo": "",
+      "turno": 4,
+      "name": "OFL BLANCO LUCAS"
+    },
+    {
+      "id": "201",
+      "turno": 4,
+      "name": "SGTO GÓMEZ JULIANA",
+      "legajo": ""
+    },
+    {
+      "id": "202",
+      "legajo": "",
+      "turno": 4,
+      "name": "SGTO FIGOLI ADRIANA"
+    },
+    {
+      "id": "203",
+      "legajo": "",
+      "name": "SGTO GONZALEZ CLAUDIA",
+      "turno": 4
+    },
+    {
+      "id": "204",
+      "legajo": "",
+      "name": "SGTO TORRES MAXIMILIANO",
+      "turno": 4
+    },
+    {
+      "id": "205",
+      "legajo": "",
+      "name": "SGTO CABRERA SILVIA",
+      "turno": 4
+    },
+    {
+      "id": "206",
+      "legajo": "",
+      "name": "SGTO CARBALLO ELIANA",
+      "turno": 4
+    },
+    {
+      "id": "207",
+      "name": "AYTE GAMARRA MARIANA",
+      "turno": 4,
+      "legajo": ""
+    },
+    {
+      "id": "208",
+      "legajo": "",
+      "turno": 4,
+      "name": "OSA RAMOS LUCIANA"
+    },
+    {
+      "id": "209",
+      "turno": 4,
+      "legajo": "",
+      "name": "OFL HERRERA VALERIA"
+    },
+    {
+      "id": "21",
+      "hasLicense": false,
+      "telefono": "",
+      "licenseExpiration": "",
+      "daeoExpiration": "",
+      "name": "SGTO. CASTRO YANINA",
+      "legajo": "410775",
+      "turno": 1,
+      "licenseType": "auto",
+      "licenseCategory": "comun",
+      "hasDAEO": false
+    },
+    {
+      "id": "210",
+      "legajo": "",
+      "name": "SGTO CELEDON ETHEL",
+      "turno": 4
+    },
+    {
+      "id": "211",
+      "name": "SGTO VELEZ SARA",
+      "turno": 4,
+      "legajo": ""
+    },
+    {
+      "id": "212",
+      "legajo": "",
+      "turno": 4,
+      "name": "SGTO BELIERA MARIA"
+    },
+    {
+      "id": "213",
+      "legajo": "",
+      "name": "SGTO SEGOVIA SONIA",
+      "turno": 4
+    },
+    {
+      "id": "214",
+      "legajo": "",
+      "name": "SGTO ROMERO JAQUELINE",
+      "turno": 4
+    },
+    {
+      "id": "215",
+      "legajo": "",
+      "name": "SGTO SALAS FLORENCIA",
+      "turno": 4
+    },
+    {
+      "id": "216",
+      "turno": 4,
+      "name": "OFL GAUTO SILVANA",
+      "legajo": ""
+    },
+    {
+      "id": "217",
+      "legajo": "",
+      "name": "SGTO BRITEZ DAIANA",
+      "turno": 4
+    },
+    {
+      "id": "218",
+      "name": "OFL AMARILLO JONATHAN",
+      "turno": 4,
+      "legajo": ""
+    },
+    {
+      "id": "219",
+      "turno": 4,
+      "name": "STTE AMAYA CINTIA",
+      "legajo": ""
+    },
+    {
+      "id": "22",
+      "hasDAEO": false,
+      "licenseCategory": "comun",
+      "licenseType": "auto",
+      "name": "SGTO. RODRIGUEZ YESICA",
+      "legajo": "486573",
+      "turno": 1,
+      "daeoExpiration": "",
+      "telefono": "",
+      "licenseExpiration": "",
+      "hasLicense": false
+    },
+    {
+      "id": "220",
+      "turno": 4,
+      "legajo": "",
+      "name": "SGTO ALVARENGA DANIELA"
+    },
+    {
+      "id": "221",
+      "legajo": "",
+      "name": "SGTO MEDINA YESICA",
+      "turno": 4
+    },
+    {
+      "id": "222",
+      "name": "SGTO RIVAROLA YESICA",
+      "turno": 4,
+      "legajo": ""
+    },
+    {
+      "id": "223",
+      "turno": 4,
+      "name": "SGTO NIEVA MARTA",
+      "legajo": ""
+    },
+    {
+      "id": "224",
+      "name": "SGTO FERREYRA CINTIA",
+      "turno": 4,
+      "legajo": ""
+    },
+    {
+      "id": "225",
+      "name": "SGTO RAMIREZ BECERRA JANET",
+      "turno": 4,
+      "legajo": ""
+    },
+    {
+      "id": "226",
+      "name": "SGTO BURGUETE VERONICA",
+      "turno": 4,
+      "legajo": ""
+    },
+    {
+      "id": "227",
+      "legajo": "",
+      "turno": 4,
+      "name": "SGTO CASCO JIMENA"
+    },
+    {
+      "id": "228",
+      "turno": 4,
+      "legajo": "",
+      "name": "SGTO CABRAL IVAN"
+    },
+    {
+      "id": "229",
+      "legajo": "",
+      "turno": 4,
+      "name": "SGTO SCORSA PABLO"
+    },
+    {
+      "id": "23",
+      "licenseType": "auto",
+      "licenseCategory": "comun",
+      "hasDAEO": false,
+      "hasLicense": false,
+      "daeoExpiration": "",
+      "name": "SGTO. ACUÑA SILVIA",
+      "turno": 1,
+      "legajo": "493276",
+      "telefono": "",
+      "licenseExpiration": ""
+    },
+    {
+      "id": "230",
+      "legajo": "",
+      "name": "SGTO CORONEL EMMANUEL",
+      "turno": 4
+    },
+    {
+      "id": "231",
+      "legajo": "",
+      "name": "SGTO BISCOCHEA YANINA",
+      "turno": 4
+    },
+    {
+      "id": "232",
+      "legajo": "",
+      "turno": 4,
+      "name": "SGTO TARASIUK IVANA"
+    },
+    {
+      "id": "233",
+      "turno": 4,
+      "name": "SGTO PEINADO ANA",
+      "legajo": ""
+    },
+    {
+      "id": "234",
+      "legajo": "",
+      "turno": 4,
+      "name": "OSA MARTIN PAMELA"
+    },
+    {
+      "id": "235",
+      "name": "OFL HONNEKER MARCELO",
+      "legajo": "",
+      "turno": 4
+    },
+    {
+      "id": "236",
+      "turno": 4,
+      "name": "OFL LEGUIZAMON JONATHAN",
+      "legajo": ""
+    },
+    {
+      "id": "237",
+      "legajo": "",
+      "turno": 4,
+      "name": "SGTO MAYDANA SAMUEL"
+    },
+    {
+      "id": "238",
+      "legajo": "",
+      "turno": 4,
+      "name": "SGTO MARTINEZ SONIA"
+    },
+    {
+      "id": "25",
+      "hasDAEO": false,
+      "licenseCategory": "comun",
+      "licenseType": "auto",
+      "telefono": "",
+      "licenseExpiration": "",
+      "turno": 1,
+      "name": "SGTO. VALLEJOS MARIA",
+      "legajo": "470493",
+      "daeoExpiration": "",
+      "hasLicense": false
+    },
+    {
+      "id": "26",
+      "hasLicense": false,
+      "daeoExpiration": "",
+      "legajo": "497955",
+      "name": "SGTO. PINEDA MARIA",
+      "turno": 1,
+      "licenseExpiration": "",
+      "telefono": "",
+      "licenseType": "auto",
+      "licenseCategory": "comun",
+      "hasDAEO": false
+    },
+    {
+      "id": "27",
+      "licenseType": "auto",
+      "licenseCategory": "comun",
+      "hasDAEO": true,
+      "hasLicense": true,
+      "daeoExpiration": "2028-01-04",
+      "name": "SGTO. RUIZ SOLEDAD",
+      "turno": 1,
+      "legajo": "483812",
+      "licenseExpiration": "2028-01-04",
+      "telefono": ""
+    },
+    {
+      "id": "28",
+      "hasLicense": false,
+      "telefono": "",
+      "licenseExpiration": "",
+      "daeoExpiration": "",
+      "legajo": "483826",
+      "name": "SGTO. SPADA LUCIA",
+      "turno": 1,
+      "licenseType": "auto",
+      "licenseCategory": "comun",
+      "hasDAEO": false
+    },
+    {
+      "id": "29",
+      "licenseType": "ambas",
+      "hasDAEO": true,
+      "licenseCategory": "comun",
+      "hasLicense": true,
+      "licenseExpiration": "2029-05-18",
+      "telefono": "",
+      "turno": 1,
+      "legajo": "493449",
+      "name": "SGTO. CANTO LAURA",
+      "daeoExpiration": "2029-05-18"
+    },
+    {
+      "id": "30",
+      "licenseExpiration": "2027-11-18",
+      "telefono": "",
+      "daeoExpiration": "2027-11-18",
+      "name": "SGTO. MORGADO ANDRES",
+      "turno": 1,
+      "legajo": "470330",
+      "hasLicense": true,
+      "licenseCategory": "profesional",
+      "hasDAEO": true,
+      "licenseType": "auto"
+    },
+    {
+      "id": "31",
+      "licenseCategory": "comun",
+      "hasDAEO": false,
+      "licenseType": "auto",
+      "telefono": "",
+      "licenseExpiration": "",
+      "daeoExpiration": "",
+      "turno": 1,
+      "name": "SGTO. OCAMPO ROCIO",
+      "legajo": "470340",
+      "hasLicense": false
+    },
+    {
+      "id": "32",
+      "licenseType": "ambas",
+      "hasDAEO": true,
+      "licenseCategory": "profesional",
+      "hasLicense": true,
+      "licenseExpiration": "2028-02-20",
+      "telefono": "",
+      "name": "SGTO. BARZOLA JULIO",
+      "legajo": "483676",
+      "turno": 1,
+      "daeoExpiration": "2028-02-20"
+    },
+    {
+      "id": "33",
+      "licenseCategory": "comun",
+      "hasDAEO": true,
+      "licenseType": "auto",
+      "daeoExpiration": "2027-11-14",
+      "turno": 1,
+      "legajo": "493281",
+      "name": "SGTO. ALBARRACIN BRAHIAN",
+      "licenseExpiration": "2027-11-14",
+      "telefono": "",
+      "hasLicense": true
+    },
+    {
+      "id": "34",
+      "hasLicense": true,
+      "daeoExpiration": "2028-03-02",
+      "legajo": "493577",
+      "name": "SGTO. MARENSSI NAHUEL",
+      "turno": 1,
+      "telefono": "",
+      "licenseExpiration": "2028-03-02",
+      "licenseType": "auto",
+      "licenseCategory": "profesional",
+      "hasDAEO": true
+    },
+    {
+      "id": "35",
+      "daeoExpiration": "2027-06-29",
+      "name": "SGTO. PALACIOS HECTOR",
+      "legajo": "497940",
+      "marcaChaleco": "",
+      "licenseExpiration": "2027-06-29",
+      "hasLicense": true,
+      "nroSerieChaleco": "",
+      "licenseCategory": "comun",
+      "hasDAEO": true,
+      "modeloChaleco": "",
+      "marcaArmamento": "",
+      "modeloArmamento": "",
+      "turno": 1,
+      "telefono": "",
+      "domicilio": "",
+      "nroSerieArmamento": "",
+      "licenseType": "ambas"
+    },
+    {
+      "id": "37",
+      "hasLicense": true,
+      "legajo": "493312",
+      "turno": 1,
+      "name": "SGTO. BARRENECHE GABRIEL",
+      "daeoExpiration": "2027-05-19",
+      "licenseExpiration": "2027-05-19",
+      "telefono": "",
+      "licenseType": "auto",
+      "hasDAEO": true,
+      "licenseCategory": "comun"
+    },
+    {
+      "id": "38",
+      "name": "SGTO. CENA PAOLA",
+      "turno": 1,
+      "legajo": "470108",
+      "daeoExpiration": "2026-07-26",
+      "licenseExpiration": "2026-07-26",
+      "telefono": "",
+      "hasLicense": true,
+      "hasDAEO": true,
+      "licenseCategory": "profesional",
+      "licenseType": "auto"
+    },
+    {
+      "id": "39",
+      "hasLicense": true,
+      "telefono": "",
+      "licenseExpiration": "2027-05-29",
+      "daeoExpiration": "2027-05-29",
+      "legajo": "483724",
+      "turno": 1,
+      "name": "SGTO. GAUNA GABRIELA",
+      "licenseType": "ambas",
+      "licenseCategory": "profesional",
+      "hasDAEO": true
+    },
+    {
+      "id": "40",
+      "daeoExpiration": "",
+      "legajo": "497957",
+      "name": "SGTO. PONCE SERGIO",
+      "turno": 1,
+      "licenseExpiration": "",
+      "telefono": "",
+      "hasLicense": false,
+      "licenseCategory": "comun",
+      "hasDAEO": false,
+      "licenseType": "auto"
+    },
+    {
+      "id": "41",
+      "hasLicense": false,
+      "telefono": "",
+      "licenseExpiration": "",
+      "turno": 1,
+      "name": "SGTO. IBAÑEZ GASTON",
+      "legajo": "470233",
+      "daeoExpiration": "",
+      "licenseType": "auto",
+      "hasDAEO": false,
+      "licenseCategory": "comun"
+    },
+    {
+      "id": "42",
+      "hasLicense": false,
+      "telefono": "",
+      "licenseExpiration": "",
+      "turno": 1,
+      "name": "SGTO. VAZQUEZ JOSE",
+      "legajo": "199377",
+      "daeoExpiration": "",
+      "licenseType": "auto",
+      "hasDAEO": false,
+      "licenseCategory": "comun"
+    },
+    {
+      "id": "43",
+      "hasLicense": false,
+      "licenseExpiration": "",
+      "telefono": "",
+      "daeoExpiration": "",
+      "legajo": "493450",
+      "name": "OSA CARABAJAL SERGIO",
+      "turno": 1,
+      "licenseType": "auto",
+      "licenseCategory": "comun",
+      "hasDAEO": false
+    },
+    {
+      "id": "44",
+      "licenseType": "auto",
+      "licenseCategory": "comun",
+      "hasDAEO": false,
+      "hasLicense": false,
+      "licenseExpiration": "",
+      "telefono": "",
+      "daeoExpiration": "",
+      "legajo": "470336",
+      "name": "SGTO. NOCIONI SOLEDAD",
+      "turno": 1
+    },
+    {
+      "id": "45",
+      "daeoExpiration": "",
+      "legajo": "483846",
+      "name": "SGTO. WIERNEZ SOLEDAD",
+      "turno": 1,
+      "telefono": "",
+      "licenseExpiration": "",
+      "hasLicense": false,
+      "licenseCategory": "comun",
+      "hasDAEO": false,
+      "licenseType": "auto"
+    },
+    {
+      "id": "46",
+      "licenseType": "auto",
+      "licenseCategory": "comun",
+      "hasDAEO": false,
+      "hasLicense": false,
+      "daeoExpiration": "",
+      "turno": 1,
+      "name": "SGTO. WEINBENDER MARIA",
+      "legajo": "470508",
+      "telefono": "",
+      "licenseExpiration": ""
+    },
+    {
+      "id": "47",
+      "licenseType": "auto",
+      "licenseCategory": "comun",
+      "hasDAEO": false,
+      "hasLicense": false,
+      "daeoExpiration": "",
+      "turno": 1,
+      "legajo": "470095",
+      "name": "SGTO. CARNIEL CINTIA",
+      "telefono": "",
+      "licenseExpiration": ""
+    },
+    {
+      "id": "48",
+      "telefono": "",
+      "licenseExpiration": "",
+      "turno": 1,
+      "legajo": "470444",
+      "name": "SGTO. SANDOVAL VALERIA",
+      "daeoExpiration": "",
+      "hasLicense": false,
+      "hasDAEO": false,
+      "licenseCategory": "comun",
+      "licenseType": "auto"
+    },
+    {
+      "id": "49",
+      "legajo": "470404",
+      "name": "SGTO. ROCHA HECTOR",
+      "turno": 1,
+      "daeoExpiration": "",
+      "licenseExpiration": "",
+      "telefono": "",
+      "hasLicense": false,
+      "hasDAEO": false,
+      "licenseCategory": "comun",
+      "licenseType": "auto"
+    },
+    {
+      "id": "5",
+      "licenseCategory": "comun",
+      "hasDAEO": false,
+      "licenseType": "auto",
+      "daeoExpiration": "",
+      "turno": 1,
+      "name": "SGTO. PEREYRA DAIANA",
+      "legajo": "470372",
+      "telefono": "",
+      "licenseExpiration": "",
+      "hasLicense": false
+    },
+    {
+      "id": "50",
+      "hasLicense": false,
+      "licenseExpiration": "",
+      "telefono": "",
+      "legajo": "483713",
+      "name": "SGTO. ESCOBAR SONIA",
+      "turno": 1,
+      "daeoExpiration": "",
+      "licenseType": "auto",
+      "hasDAEO": false,
+      "licenseCategory": "comun"
+    },
+    {
+      "id": "51",
+      "telefono": "",
+      "licenseExpiration": "",
+      "name": "SGTO. JUAREZ ARIEL",
+      "turno": 1,
+      "legajo": "493543",
+      "daeoExpiration": "",
+      "hasLicense": false,
+      "hasDAEO": false,
+      "licenseCategory": "comun",
+      "licenseType": "auto"
+    },
+    {
+      "id": "52",
+      "licenseType": "auto",
+      "hasDAEO": false,
+      "licenseCategory": "comun",
+      "hasLicense": false,
+      "telefono": "",
+      "licenseExpiration": "",
+      "name": "SGTO. DEL AMO FACUNDO",
+      "turno": 1,
+      "legajo": "470131",
+      "daeoExpiration": ""
+    },
+    {
+      "id": "53",
+      "licenseType": "auto",
+      "nroSerieArmamento": "",
+      "turno": 1,
+      "modeloArmamento": "",
+      "domicilio": "Mza 777 E lote 14 - Barrio Parque Rivadavia",
+      "telefono": "",
+      "marcaArmamento": "",
+      "modeloChaleco": "",
+      "hasDAEO": false,
+      "licenseCategory": "comun",
+      "nroSerieChaleco": "",
+      "hasLicense": false,
+      "name": "OSA BELIERA ROMINA",
+      "legajo": "493422",
+      "marcaChaleco": "",
+      "daeoExpiration": "",
+      "licenseExpiration": ""
+    },
+    {
+      "id": "54",
+      "licenseCategory": "comun",
+      "hasDAEO": false,
+      "licenseType": "auto",
+      "licenseExpiration": "",
+      "telefono": "",
+      "daeoExpiration": "",
+      "legajo": "483822",
+      "turno": 1,
+      "name": "SGTO. SILVA CRISTIAN",
+      "hasLicense": false
+    },
+    {
+      "id": "55",
+      "licenseCategory": "comun",
+      "hasDAEO": false,
+      "licenseType": "auto",
+      "daeoExpiration": "",
+      "legajo": "470042",
+      "turno": 1,
+      "name": "SGTO. ASTUENA ARIEL",
+      "licenseExpiration": "",
+      "telefono": "",
+      "hasLicense": false
+    },
+    {
+      "id": "56",
+      "hasLicense": false,
+      "licenseExpiration": "",
+      "telefono": "",
+      "legajo": "470504",
+      "name": "SGTO. VILLALBA YANINA",
+      "turno": 1,
+      "daeoExpiration": "",
+      "licenseType": "auto",
+      "hasDAEO": false,
+      "licenseCategory": "comun"
+    },
+    {
+      "id": "57",
+      "hasDAEO": false,
+      "licenseCategory": "comun",
+      "licenseType": "auto",
+      "name": "SGTO. BRAO LUCERO",
+      "legajo": "493434",
+      "turno": 1,
+      "daeoExpiration": "",
+      "telefono": "",
+      "licenseExpiration": "",
+      "hasLicense": false
+    },
+    {
+      "id": "58",
+      "hasLicense": false,
+      "nroSerieChaleco": "",
+      "licenseExpiration": "",
+      "name": "OSA FUENTES SOLEDAD",
+      "marcaChaleco": "",
+      "legajo": "470169",
+      "daeoExpiration": "",
+      "modeloChaleco": "",
+      "marcaArmamento": "",
+      "hasDAEO": false,
+      "licenseCategory": "comun",
+      "domicilio": "Soto Acebal 804 - Burzaco",
+      "telefono": "",
+      "turno": 1,
+      "modeloArmamento": "",
+      "licenseType": "auto",
+      "nroSerieArmamento": ""
+    },
+    {
+      "id": "59",
+      "licenseCategory": "comun",
+      "hasDAEO": false,
+      "licenseType": "auto",
+      "daeoExpiration": "",
+      "name": "SGTO. RAMOA DENIS",
+      "legajo": "483803",
+      "turno": 1,
+      "telefono": "",
+      "licenseExpiration": "",
+      "hasLicense": false
+    },
+    {
+      "id": "6",
+      "hasLicense": false,
+      "turno": 1,
+      "name": "SGTO. RODRIGUEZ NOELIA",
+      "legajo": "497990",
+      "daeoExpiration": "",
+      "telefono": "",
+      "licenseExpiration": "",
+      "licenseType": "auto",
+      "hasDAEO": false,
+      "licenseCategory": "comun"
+    },
+    {
+      "id": "60",
+      "hasDAEO": true,
+      "licenseCategory": "profesional",
+      "licenseType": "ambas",
+      "name": "SGTO. GONZALEZ DAMIAN",
+      "turno": 1,
+      "legajo": "485513",
+      "daeoExpiration": "2026-09-09",
+      "licenseExpiration": "2026-09-09",
+      "telefono": "",
+      "hasLicense": true
+    },
+    {
+      "id": "61",
+      "nroSerieChaleco": "",
+      "hasLicense": true,
+      "licenseExpiration": "2028-05-15",
+      "name": "OSA SOSA DAVID",
+      "legajo": "498018",
+      "marcaChaleco": "",
+      "daeoExpiration": "2028-05-15",
+      "marcaArmamento": "",
+      "modeloChaleco": "",
+      "hasDAEO": true,
+      "licenseCategory": "profesional",
+      "domicilio": "Calle 832 N° 2663 - Solano",
+      "telefono": "",
+      "turno": 1,
+      "modeloArmamento": "",
+      "licenseType": "moto",
+      "nroSerieArmamento": ""
+    },
+    {
+      "id": "62",
+      "hasDAEO": false,
+      "licenseCategory": "comun",
+      "licenseType": "auto",
+      "licenseExpiration": "",
+      "telefono": "",
+      "name": "SGTO ROMERO LUCIO",
+      "legajo": "497995",
+      "turno": 1,
+      "daeoExpiration": "",
+      "hasLicense": false
+    },
+    {
+      "id": "64",
+      "hasLicense": true,
+      "nroSerieChaleco": "",
+      "name": "OSA RUIZ JOSE",
+      "legajo": "483813",
+      "marcaChaleco": "",
+      "daeoExpiration": "2027-03-20",
+      "licenseExpiration": "2027-03-20",
+      "modeloChaleco": "",
+      "marcaArmamento": "",
+      "hasDAEO": true,
+      "licenseCategory": "profesional",
+      "turno": 1,
+      "modeloArmamento": "",
+      "domicilio": "Juan Lavalle 667 - Jose Marmol",
+      "telefono": "",
+      "licenseType": "ambas",
+      "nroSerieArmamento": ""
+    },
+    {
+      "id": "65",
+      "turno": 2,
+      "name": "OFL. PPL ACOSTA JORGE",
+      "legajo": ""
+    },
+    {
+      "id": "66",
+      "turno": 2,
+      "legajo": "497944",
+      "name": "SGTO PAVON DEBORA"
+    },
+    {
+      "id": "67",
+      "legajo": "497929",
+      "turno": 2,
+      "name": "OSA OJEDA ANDREA"
+    },
+    {
+      "id": "68",
+      "legajo": "483831",
+      "name": "SGTO TORRENT DANIEL",
+      "turno": 2
+    },
+    {
+      "id": "69",
+      "legajo": "470111",
+      "turno": 2,
+      "name": "SGTO CEPEDA MATIAS"
+    },
+    {
+      "id": "7",
+      "hasLicense": false,
+      "telefono": "",
+      "licenseExpiration": "",
+      "daeoExpiration": "",
+      "name": "SGTO. LEON PABLO",
+      "turno": 1,
+      "legajo": "470263",
+      "licenseType": "auto",
+      "licenseCategory": "comun",
+      "hasDAEO": false
+    },
+    {
+      "id": "70",
+      "turno": 2,
+      "name": "OSA MONTENEGRO ALEJANDRO",
+      "legajo": "470322"
+    },
+    {
+      "id": "71",
+      "name": "SGTO RUIZ DIAZ LUIS",
+      "turno": 2,
+      "legajo": "498001"
+    },
+    {
+      "id": "72",
+      "turno": 2,
+      "name": "SGTO ROCHA ARISPE HERNAN",
+      "legajo": "496069"
+    },
+    {
+      "id": "73",
+      "legajo": "496032",
+      "turno": 2,
+      "name": "OFL MONTANI JONATHAN"
+    },
+    {
+      "id": "74",
+      "name": "SGTO GARCIA BRIAN",
+      "legajo": "497914",
+      "turno": 2
+    },
+    {
+      "id": "75",
+      "turno": 2,
+      "name": "SGTO LAZARTE JESICA",
+      "legajo": "493547"
+    },
+    {
+      "id": "76",
+      "name": "SGTO CORBALAN JORGE",
+      "legajo": "470136",
+      "turno": 2
+    },
+    {
+      "id": "77",
+      "legajo": "470046",
+      "name": "SGTO AYALA MELINA",
+      "turno": 2
+    },
+    {
+      "id": "78",
+      "legajo": "470145",
+      "turno": 2,
+      "name": "SGTO ESCARABELLO BRENDA"
+    },
+    {
+      "id": "79",
+      "legajo": "430552",
+      "turno": 2,
+      "name": "OFL MALDONADO GONZALO"
+    },
+    {
+      "id": "8",
+      "licenseCategory": "comun",
+      "hasDAEO": false,
+      "licenseType": "auto",
+      "daeoExpiration": "",
+      "legajo": "498010",
+      "name": "SGTO. SANCHEZ JAVIER",
+      "turno": 1,
+      "telefono": "",
+      "licenseExpiration": "",
+      "hasLicense": false
+    },
+    {
+      "id": "80",
+      "legajo": "470104",
+      "name": "SGTO CASTILLO MARTIN",
+      "turno": 2
+    },
+    {
+      "id": "81",
+      "legajo": "470205",
+      "turno": 2,
+      "name": "SGTO GONZALEZ FLORENCIA"
+    },
+    {
+      "id": "82",
+      "legajo": "483839",
+      "turno": 2,
+      "name": "SGTO VILLACORTA DIEGO"
+    },
+    {
+      "id": "83",
+      "name": "SGTO PINTOS NATALIA",
+      "legajo": "470382",
+      "turno": 2
+    },
+    {
+      "id": "84",
+      "legajo": "470477",
+      "name": "SGTO TILLERIA ROMINA",
+      "turno": 2
+    },
+    {
+      "id": "85",
+      "legajo": "470200",
+      "name": "SGTO GOMEZ NARA",
+      "turno": 2
+    },
+    {
+      "id": "86",
+      "name": "SGTO PINTOS NANCY",
+      "turno": 2,
+      "legajo": "497956"
+    },
+    {
+      "id": "87",
+      "legajo": "497334",
+      "turno": 2,
+      "name": "SGTO OLIVIERI IGNACIO"
+    },
+    {
+      "id": "88",
+      "name": "SGTO MARTINEZ VICTOR",
+      "legajo": "470299",
+      "turno": 2
+    },
+    {
+      "id": "89",
+      "legajo": "483745",
+      "name": "SGTO LEIS YAMILA",
+      "turno": 2
+    },
+    {
+      "id": "9",
+      "hasDAEO": false,
+      "licenseCategory": "comun",
+      "licenseType": "auto",
+      "telefono": "",
+      "licenseExpiration": "",
+      "legajo": "485511",
+      "turno": 1,
+      "name": "SGTO. DIAZ ROMINA",
+      "daeoExpiration": "",
+      "hasLicense": false
+    },
+    {
+      "id": "90",
+      "turno": 2,
+      "legajo": "470411",
+      "name": "SGTO RODRÍGUEZ MELINA"
+    },
+    {
+      "id": "91",
+      "legajo": "402391",
+      "turno": 2,
+      "name": "SUBTTE PEREYRA DAMIAN"
+    },
+    {
+      "id": "92",
+      "turno": 2,
+      "legajo": "483810",
+      "name": "SGTO ROMERO MÍRIAM"
+    },
+    {
+      "id": "93",
+      "name": "OFL PEREYRA NOELIA",
+      "legajo": "483792",
+      "turno": 2
+    },
+    {
+      "id": "94",
+      "legajo": "470458",
+      "turno": 2,
+      "name": "OFL SEPULVEDA CARLA"
+    },
+    {
+      "id": "95",
+      "name": "SUBTTE ZARATE BELEN",
+      "legajo": "190686",
+      "turno": 2
+    },
+    {
+      "id": "96",
+      "name": "O.A GODOY PATRICIA",
+      "legajo": "493515",
+      "turno": 2
+    },
+    {
+      "id": "97",
+      "turno": 2,
+      "legajo": "470271",
+      "name": "SGTO LOBO NOELIA"
+    },
+    {
+      "id": "98",
+      "name": "SGTO PAIS GUILLERMO",
+      "legajo": "483783",
+      "turno": 2
+    },
+    {
+      "id": "99",
+      "name": "SGTO GARCÍA MARCELA",
+      "legajo": "470174",
+      "turno": 2
+    }
+  ],
+  "infrastructure": {
+    "garitas": [
+      {
+        "id": "g1",
+        "name": "Adrogué: AV. YRIGOYEN Y PINO",
+        "turno": 1
+      },
+      {
+        "id": "g10_t3_628",
+        "name": "Glew: RUTA 210 Y CAP. OLIVERA",
+        "turno": 3
+      },
+      {
+        "id": "g10_t4_653",
+        "name": "Glew: RUTA 210 Y CAP. OLIVERA",
+        "turno": 4
+      },
+      {
+        "id": "g11_t3_963",
+        "turno": 3,
+        "name": "Glew: ESPORA Y REP. ARGENTINA"
+      },
+      {
+        "id": "g11_t4_161",
+        "turno": 4,
+        "name": "Glew: ESPORA Y REP. ARGENTINA"
+      },
+      {
+        "id": "g12",
+        "turno": 1,
+        "name": "José Mármol: CANALE Y MOLINA"
+      },
+      {
+        "id": "g12_t3_472",
+        "name": "José Mármol: CANALE Y MOLINA",
+        "turno": 3
+      },
+      {
+        "id": "g12_t4_303",
+        "turno": 4,
+        "name": "José Mármol: CANALE Y MOLINA"
+      },
+      {
+        "id": "g13",
+        "name": "José Mármol: EREZCANO Y 30 DE SEPTIEMBRE",
+        "turno": 1
+      },
+      {
+        "id": "g13_t3_390",
+        "name": "José Mármol: EREZCANO Y 30 DE SEPTIEMBRE",
+        "turno": 3
+      },
+      {
+        "id": "g13_t4_240",
+        "name": "José Mármol: EREZCANO Y 30 DE SEPTIEMBRE",
+        "turno": 4
+      },
+      {
+        "id": "g14",
+        "turno": 1,
+        "name": "Solano: Av. SAN MARTIN Y EL CONDOR"
+      },
+      {
+        "id": "g14_t3_464",
+        "name": "Solano: Av. SAN MARTIN Y EL CONDOR",
+        "turno": 3
+      },
+      {
+        "id": "g14_t4_933",
+        "turno": 4,
+        "name": "Solano: Av. SAN MARTIN Y EL CONDOR"
+      },
+      {
+        "id": "g15",
+        "turno": 1,
+        "name": "Solano: CHARCAS Y SALABERRY"
+      },
+      {
+        "id": "g15_t2_217",
+        "name": "Solano: CHARCAS Y SALABERRY",
+        "turno": 2
+      },
+      {
+        "id": "g15_t3_974",
+        "name": "Solano: CHARCAS Y SALABERRY",
+        "turno": 3
+      },
+      {
+        "id": "g15_t4_204",
+        "turno": 4,
+        "name": "Solano: CHARCAS Y SALABERRY"
+      },
+      {
+        "id": "g16_t3_847",
+        "name": "Solano: AV LACAZE Y LIRIO",
+        "turno": 3
+      },
+      {
+        "id": "g16_t4_72",
+        "turno": 4,
+        "name": "Solano: AV LACAZE Y LIRIO"
+      },
+      {
+        "id": "g17",
+        "turno": 1,
+        "name": "Malvinas: GUATAMBU Y SERRANO"
+      },
+      {
+        "id": "g17_t2_929",
+        "turno": 2,
+        "name": "Malvinas: GUATAMBU Y SERRANO"
+      },
+      {
+        "id": "g17_t3_352",
+        "name": "Malvinas: GUATAMBU Y SERRANO",
+        "turno": 3
+      },
+      {
+        "id": "g17_t4_863",
+        "name": "Malvinas: GUATAMBU Y SERRANO",
+        "turno": 4
+      },
+      {
+        "id": "g18",
+        "name": "Malvinas: MADARIAGA Y PORTUGAL",
+        "turno": 1
+      },
+      {
+        "id": "g18_t2_12",
+        "name": "Malvinas: MADARIAGA Y PORTUGAL",
+        "turno": 2
+      },
+      {
+        "id": "g18_t3_910",
+        "turno": 3,
+        "name": "Malvinas: MADARIAGA Y PORTUGAL"
+      },
+      {
+        "id": "g18_t4_62",
+        "turno": 4,
+        "name": "Malvinas: MADARIAGA Y PORTUGAL"
+      },
+      {
+        "id": "g1_t2_956",
+        "turno": 2,
+        "name": "Adrogué: AV. YRIGOYEN Y PINO"
+      },
+      {
+        "id": "g1_t3_746",
+        "turno": 3,
+        "name": "Adrogué: AV. YRIGOYEN Y PINO"
+      },
+      {
+        "id": "g1_t4_432",
+        "name": "Adrogué: AV. YRIGOYEN Y PINO",
+        "turno": 4
+      },
+      {
+        "id": "g2",
+        "turno": 1,
+        "name": "Adrogué: JUNCAL Y PAZ"
+      },
+      {
+        "id": "g2_t3_229",
+        "name": "Adrogué: JUNCAL Y PAZ",
+        "turno": 3
+      },
+      {
+        "id": "g2_t4_413",
+        "turno": 4,
+        "name": "Adrogué: JUNCAL Y PAZ"
+      },
+      {
+        "id": "g3",
+        "name": "Burzaco: AV ESPORA Y PODESTA",
+        "turno": 1
+      },
+      {
+        "id": "g3_t3_953",
+        "name": "Burzaco: AV ESPORA Y PODESTA",
+        "turno": 3
+      },
+      {
+        "id": "g3_t4_488",
+        "turno": 4,
+        "name": "Burzaco: AV ESPORA Y PODESTA"
+      },
+      {
+        "id": "g4_t3_244",
+        "turno": 3,
+        "name": "Burzaco: JOSE INGENIEROS Y BLAS PARERA"
+      },
+      {
+        "id": "g4_t4_679",
+        "turno": 4,
+        "name": "Burzaco: JOSE INGENIEROS Y BLAS PARERA"
+      },
+      {
+        "id": "g5",
+        "turno": 1,
+        "name": "San José: SANTA ANA Y AMENEDO"
+      },
+      {
+        "id": "g5_t2_118",
+        "name": "San José: SANTA ANA Y AMENEDO",
+        "turno": 2
+      },
+      {
+        "id": "g5_t3_124",
+        "name": "San José: SANTA ANA Y AMENEDO",
+        "turno": 3
+      },
+      {
+        "id": "g5_t4_189",
+        "turno": 4,
+        "name": "San José: SANTA ANA Y AMENEDO"
+      },
+      {
+        "id": "g6",
+        "turno": 1,
+        "name": "Rafael Calzada: ARIAS Y GUEMES"
+      },
+      {
+        "id": "g6_t3_645",
+        "turno": 3,
+        "name": "Rafael Calzada: ARIAS Y GUEMES"
+      },
+      {
+        "id": "g6_t4_900",
+        "name": "Rafael Calzada: ARIAS Y GUEMES",
+        "turno": 4
+      },
+      {
+        "id": "g7",
+        "turno": 1,
+        "name": "Rafael Calzada: CARRILLO Y RAMIREZ"
+      },
+      {
+        "id": "g7_t2_596",
+        "turno": 2,
+        "name": "Rafael Calzada: CARRILLO Y RAMIREZ"
+      },
+      {
+        "id": "g7_t3_62",
+        "turno": 3,
+        "name": "Rafael Calzada: CARRILLO Y RAMIREZ"
+      },
+      {
+        "id": "g7_t4_844",
+        "turno": 4,
+        "name": "Rafael Calzada: CARRILLO Y RAMIREZ"
+      },
+      {
+        "id": "g8",
+        "name": "Claypole: 17 DE OCTUBRE Y TORRES",
+        "turno": 1
+      },
+      {
+        "id": "g8_t2_70",
+        "name": "Claypole: 17 DE OCTUBRE Y TORRES",
+        "turno": 2
+      },
+      {
+        "id": "g8_t3_61",
+        "name": "Claypole: 17 DE OCTUBRE Y TORRES",
+        "turno": 3
+      },
+      {
+        "id": "g8_t4_937",
+        "name": "Claypole: 17 DE OCTUBRE Y TORRES",
+        "turno": 4
+      },
+      {
+        "id": "g9",
+        "name": "Claypole: 17 DE OCTUBRE Y LACAZE",
+        "turno": 1
+      },
+      {
+        "id": "g9_t3_865",
+        "name": "Claypole: 17 DE OCTUBRE Y LACAZE",
+        "turno": 3
+      },
+      {
+        "id": "g9_t4_83",
+        "name": "Claypole: 17 DE OCTUBRE Y LACAZE",
+        "turno": 4
+      },
+      {
+        "id": "ga_1776349746416_99chq163f",
+        "name": "EREZCANO Y 30 SEPTIEMBRE",
+        "turno": 1
+      },
+      {
+        "id": "ga_1776349746416_99chq163f_t2_151",
+        "name": "EREZCANO Y 30 SEPTIEMBRE",
+        "turno": 2
+      },
+      {
+        "id": "ga_1776349746416_99chq163f_t3_99",
+        "turno": 3,
+        "name": "EREZCANO Y 30 SEPTIEMBRE"
+      },
+      {
+        "id": "ga_1776349746416_99chq163f_t4_164",
+        "name": "EREZCANO Y 30 SEPTIEMBRE",
+        "turno": 4
+      },
+      {
+        "id": "ga_1776349746416_9zncz8kl7_t2_312",
+        "turno": 2,
+        "name": "HIDRAULICA"
+      },
+      {
+        "id": "ga_1776349746416_9zncz8kl7_t3_979",
+        "name": "HIDRAULICA",
+        "turno": 3
+      },
+      {
+        "id": "ga_1776349746416_9zncz8kl7_t4_55",
+        "name": "HIDRAULICA",
+        "turno": 4
+      },
+      {
+        "id": "ga_1776349746416_a176izq05",
+        "turno": 1,
+        "name": "M. MONTEVERDE Y 24"
+      },
+      {
+        "id": "ga_1776349746416_a176izq05_t2_808",
+        "name": "M. MONTEVERDE Y 24",
+        "turno": 2
+      },
+      {
+        "id": "ga_1776349746416_a176izq05_t3_912",
+        "turno": 3,
+        "name": "M. MONTEVERDE Y 24"
+      },
+      {
+        "id": "ga_1776349746416_a176izq05_t4_290",
+        "turno": 4,
+        "name": "M. MONTEVERDE Y 24"
+      },
+      {
+        "id": "ga_1776349746416_b21lpzkb7",
+        "name": "CAPITAN OLIVERA Y RUTA 210",
+        "turno": 1
+      },
+      {
+        "id": "ga_1776349746416_b21lpzkb7_t2_415",
+        "turno": 2,
+        "name": "CAPITAN OLIVERA Y RUTA 210"
+      },
+      {
+        "id": "ga_1776349746416_b21lpzkb7_t3_657",
+        "turno": 3,
+        "name": "CAPITAN OLIVERA Y RUTA 210"
+      },
+      {
+        "id": "ga_1776349746416_b21lpzkb7_t4_585",
+        "name": "CAPITAN OLIVERA Y RUTA 210",
+        "turno": 4
+      },
+      {
+        "id": "ga_1776349746416_bduxv0t7r_t2_902",
+        "description": "",
+        "turno": 2,
+        "name": "ESPORA Y PODESTA"
+      },
+      {
+        "id": "ga_1776349746416_bduxv0t7r_t3_979",
+        "name": "M. ESPORA Y PODESTA",
+        "turno": 3
+      },
+      {
+        "id": "ga_1776349746416_bduxv0t7r_t4_503",
+        "turno": 4,
+        "name": "M. ESPORA Y PODESTA"
+      },
+      {
+        "id": "ga_1776349746416_f33vggdrp_t3_43",
+        "turno": 3,
+        "name": "COLECTORA CLAYPOLE"
+      },
+      {
+        "id": "ga_1776349746416_f33vggdrp_t4_663",
+        "turno": 4,
+        "name": "COLECTORA CLAYPOLE"
+      },
+      {
+        "id": "ga_1776349746416_fot7zmw9m_t2_520",
+        "name": "MOLINA Y CANALE",
+        "turno": 2
+      },
+      {
+        "id": "ga_1776349746416_fot7zmw9m_t3_885",
+        "turno": 3,
+        "name": "MOLINA Y CANALE"
+      },
+      {
+        "id": "ga_1776349746416_fot7zmw9m_t4_248",
+        "turno": 4,
+        "name": "MOLINA Y CANALE"
+      },
+      {
+        "id": "ga_1776349746416_rkotemj6q_t2_152",
+        "name": "SAN MARTIN Y CONDOR",
+        "turno": 2
+      },
+      {
+        "id": "ga_1776349746416_rkotemj6q_t3_406",
+        "turno": 3,
+        "name": "SAN MARTIN Y CONDOR"
+      },
+      {
+        "id": "ga_1776349746416_rkotemj6q_t4_527",
+        "turno": 4,
+        "name": "SAN MARTIN Y CONDOR"
+      },
+      {
+        "id": "ga_1776349746416_yj479olwc_t2_794",
+        "name": "M. PARQUE INDUSTRIAL",
+        "turno": 2
+      },
+      {
+        "id": "ga_1776349746416_yj479olwc_t3_239",
+        "name": "M. PARQUE INDUSTRIAL",
+        "turno": 3
+      },
+      {
+        "id": "ga_1776349746416_yj479olwc_t4_532",
+        "name": "M. PARQUE INDUSTRIAL",
+        "turno": 4
+      },
+      {
+        "id": "ga_1776349746417_49b9iqjk0",
+        "turno": 1,
+        "name": "ESPORA Y REPUBLICA"
+      },
+      {
+        "id": "ga_1776349746417_49b9iqjk0_t2_83",
+        "turno": 2,
+        "name": "ESPORA Y REPUBLICA"
+      },
+      {
+        "id": "ga_1776349746417_49b9iqjk0_t3_890",
+        "turno": 3,
+        "name": "ESPORA Y REPUBLICA"
+      },
+      {
+        "id": "ga_1776349746417_49b9iqjk0_t4_484",
+        "turno": 4,
+        "name": "ESPORA Y REPUBLICA"
+      },
+      {
+        "id": "ga_1776349746418_gd9tooekh",
+        "description": "",
+        "turno": 1,
+        "name": "BLAS PARERA Y JOSE INGENIEROS"
+      },
+      {
+        "id": "ga_1776349746418_gd9tooekh_t3_584",
+        "name": "BLAS PAREDA Y JOSE INGENIEROS",
+        "turno": 3
+      },
+      {
+        "id": "ga_1776349746418_gd9tooekh_t4_696",
+        "turno": 4,
+        "name": "BLAS PAREDA Y JOSE INGENIEROS"
+      },
+      {
+        "id": "ga_1776349746418_wabr7c9zk_t3_783",
+        "name": "RUTA 210 Y CAP. OLMERA",
+        "turno": 3
+      },
+      {
+        "id": "ga_1776349746418_wabr7c9zk_t4_990",
+        "turno": 4,
+        "name": "RUTA 210 Y CAP. OLMERA"
+      }
+    ],
+    "moviles": [
+      {
+        "id": "m1",
+        "ro": "25.051",
+        "name": "ZONA 4",
+        "turno": 1
+      },
+      {
+        "id": "m1_t2_883",
+        "turno": 2,
+        "ro": "25.051",
+        "name": "ZONA 4"
+      },
+      {
+        "id": "m1_t3_276",
+        "turno": 3,
+        "name": "ZONA 4",
+        "ro": "25.051"
+      },
+      {
+        "id": "m1_t4_815",
+        "turno": 4,
+        "name": "ZONA 4",
+        "ro": "25.051"
+      },
+      {
+        "id": "m2",
+        "ro": "25.057",
+        "turno": 1,
+        "name": "ZONA 6"
+      },
+      {
+        "id": "m2_t2_814",
+        "turno": 2,
+        "ro": "25.057",
+        "name": "ZONA 6"
+      },
+      {
+        "id": "m2_t3_52",
+        "turno": 3,
+        "name": "ZONA 6",
+        "ro": "25.057"
+      },
+      {
+        "id": "m2_t4_793",
+        "turno": 4,
+        "name": "ZONA 6",
+        "ro": "25.057"
+      },
+      {
+        "id": "m3",
+        "ro": "25.059",
+        "turno": 1,
+        "name": "ZONA 18"
+      },
+      {
+        "id": "m3_t2_232",
+        "turno": 2,
+        "name": "ZONA 18",
+        "ro": "25.059"
+      },
+      {
+        "id": "m3_t3_281",
+        "turno": 3,
+        "ro": "25.059",
+        "name": "ZONA 18"
+      },
+      {
+        "id": "m3_t4_153",
+        "turno": 4,
+        "name": "ZONA 18",
+        "ro": "25.059"
+      },
+      {
+        "id": "m4",
+        "ro": "25.055",
+        "turno": 1,
+        "name": "ZONA 29"
+      },
+      {
+        "id": "m4_t2_410",
+        "turno": 2,
+        "ro": "25.055",
+        "name": "ZONA 29"
+      },
+      {
+        "id": "m4_t3_32",
+        "turno": 3,
+        "ro": "25.055",
+        "name": "ZONA 29"
+      },
+      {
+        "id": "m4_t4_584",
+        "turno": 4,
+        "ro": "25.055",
+        "name": "ZONA 29"
+      },
+      {
+        "id": "m5",
+        "ro": "25.052",
+        "name": "ZONA 30",
+        "turno": 1
+      },
+      {
+        "id": "m5_t2_71",
+        "name": "ZONA 30",
+        "turno": 2,
+        "ro": "25.052"
+      },
+      {
+        "id": "m5_t3_749",
+        "name": "ZONA 30",
+        "ro": "25.052",
+        "turno": 3
+      },
+      {
+        "id": "m5_t4_913",
+        "name": "ZONA 30",
+        "ro": "25.052",
+        "turno": 4
+      },
+      {
+        "id": "m6",
+        "name": "ZONA 42",
+        "turno": 1,
+        "ro": "31.699"
+      },
+      {
+        "id": "m6_t2_892",
+        "turno": 2,
+        "name": "ZONA 42",
+        "ro": "31.699"
+      },
+      {
+        "id": "m6_t3_449",
+        "turno": 3,
+        "name": "ZONA 42",
+        "ro": "31.699"
+      },
+      {
+        "id": "m6_t4_693",
+        "turno": 4,
+        "ro": "31.699",
+        "name": "ZONA 42"
+      },
+      {
+        "id": "m7",
+        "name": "CUADRANTE 3",
+        "turno": 1,
+        "ro": "25.040"
+      },
+      {
+        "id": "m7_t2_498",
+        "turno": 2,
+        "name": "CUADRANTE 3",
+        "ro": "25.040"
+      },
+      {
+        "id": "m7_t3_858",
+        "turno": 3,
+        "name": "CUADRANTE 3",
+        "ro": "25.040"
+      },
+      {
+        "id": "m7_t4_564",
+        "turno": 4,
+        "name": "CUADRANTE 3",
+        "ro": "25.040"
+      },
+      {
+        "id": "mo_1776349746415_0g86mx3vc",
+        "name": "CUADRANTE ZONA 10",
+        "turno": 1,
+        "ro": "25037"
+      },
+      {
+        "id": "mo_1776349746415_0g86mx3vc_t2_370",
+        "turno": 2,
+        "ro": "25037",
+        "name": "CUADRANTE ZONA 10"
+      },
+      {
+        "id": "mo_1776349746415_0g86mx3vc_t3_673",
+        "turno": 3,
+        "ro": "25037",
+        "name": "CUADRANTE ZONA 10"
+      },
+      {
+        "id": "mo_1776349746415_0g86mx3vc_t4_353",
+        "turno": 4,
+        "ro": "25037",
+        "name": "CUADRANTE ZONA 10"
+      },
+      {
+        "id": "mo_1776349746415_h1nj3yy26",
+        "turno": 1,
+        "name": "CUADRANTE ZONA 11",
+        "ro": "25039"
+      },
+      {
+        "id": "mo_1776349746415_h1nj3yy26_t2_17",
+        "turno": 2,
+        "ro": "25039",
+        "name": "CUADRANTE ZONA 11"
+      },
+      {
+        "id": "mo_1776349746415_h1nj3yy26_t3_180",
+        "turno": 3,
+        "name": "CUADRANTE ZONA 11",
+        "ro": "25039"
+      },
+      {
+        "id": "mo_1776349746415_h1nj3yy26_t4_839",
+        "turno": 4,
+        "ro": "25039",
+        "name": "CUADRANTE ZONA 11"
+      },
+      {
+        "id": "mo_1776349746415_wutbne1zv",
+        "ro": "25059",
+        "name": "CUADRANTE 5 ADROGUE",
+        "turno": 1
+      },
+      {
+        "id": "mo_1776349746415_wutbne1zv_t2_933",
+        "turno": 2,
+        "ro": "25059",
+        "name": "CUADRANTE 5 ADROGUE"
+      },
+      {
+        "id": "mo_1776349746415_wutbne1zv_t3_528",
+        "turno": 3,
+        "ro": "25059",
+        "name": "CUADRANTE 5 ADROGUE"
+      },
+      {
+        "id": "mo_1776349746415_wutbne1zv_t4_172",
+        "turno": 4,
+        "name": "CUADRANTE 5 ADROGUE",
+        "ro": "25059"
+      },
+      {
+        "id": "mo_1776349746418_7p3idwfkh_t3_145",
+        "turno": 3,
+        "ro": "25037",
+        "name": "OS undefined"
+      },
+      {
+        "id": "mo_1776349746418_7p3idwfkh_t4_990",
+        "turno": 4,
+        "ro": "25037",
+        "name": "OS undefined"
+      },
+      {
+        "id": "mo_1776349746418_f89ddydls",
+        "ro": "25058",
+        "name": "Movil control",
+        "turno": 1
+      },
+      {
+        "id": "mo_1776349746418_f89ddydls_t2_833",
+        "ro": "25058",
+        "turno": 2,
+        "name": "Movil control"
+      },
+      {
+        "id": "mo_1776349746418_f89ddydls_t3_824",
+        "ro": "25058",
+        "turno": 3,
+        "name": "Movil control"
+      },
+      {
+        "id": "mo_1776349746418_f89ddydls_t4_575",
+        "ro": "25058",
+        "name": "Movil control",
+        "turno": 4
+      },
+      {
+        "id": "mo_1776349746418_qizxjq7py",
+        "turno": 1,
+        "name": "Cuadrante 1",
+        "ro": "25038"
+      },
+      {
+        "id": "mo_1776349746418_qizxjq7py_t3_298",
+        "name": "Cuadrante 1",
+        "turno": 3,
+        "ro": "25038"
+      },
+      {
+        "id": "mo_1776349746418_qizxjq7py_t4_45",
+        "name": "Cuadrante 1",
+        "turno": 4,
+        "ro": "25038"
+      },
+      {
+        "id": "mo_1776349746420_2krz07te2",
+        "ro": "25.038",
+        "name": "REFUERZO 11 (LONGCHAMPS)",
+        "turno": 1
+      },
+      {
+        "id": "mo_1776349746420_2krz07te2_t2_310",
+        "ro": "25.038",
+        "name": "REFUERZO 11 (LONGCHAMPS)",
+        "turno": 2
+      },
+      {
+        "id": "mo_1776349746420_2krz07te2_t3_817",
+        "ro": "25.038",
+        "name": "REFUERZO 11 (LONGCHAMPS)",
+        "turno": 3
+      },
+      {
+        "id": "mo_1776349746420_2krz07te2_t4_608",
+        "ro": "25.038",
+        "turno": 4,
+        "name": "REFUERZO 11 (LONGCHAMPS)"
+      },
+      {
+        "id": "mo_1776349746420_fxcsc8wds",
+        "name": "REFUERZO 10 (LONGCHAMPS)",
+        "turno": 1,
+        "ro": "25.037"
+      },
+      {
+        "id": "mo_1776349746420_fxcsc8wds_t2_18",
+        "turno": 2,
+        "ro": "25.037",
+        "name": "REFUERZO 10 (LONGCHAMPS)"
+      },
+      {
+        "id": "mo_1776349746420_fxcsc8wds_t3_314",
+        "turno": 3,
+        "name": "REFUERZO 10 (LONGCHAMPS)",
+        "ro": "25.037"
+      },
+      {
+        "id": "mo_1776349746420_fxcsc8wds_t4_389",
+        "turno": 4,
+        "ro": "25.037",
+        "name": "REFUERZO 10 (LONGCHAMPS)"
+      }
+    ],
+    "motos": [
+      {
+        "id": "1779453915654",
+        "description": "",
+        "turno": 1,
+        "name": "R. CALZADA",
+        "ro": "32497"
+      },
+      {
+        "id": "mo1",
+        "turno": 1,
+        "name": "José Mármol (06:00 a 18:00)",
+        "ro": "32.502"
+      },
+      {
+        "id": "mo1_t2_320",
+        "turno": 2,
+        "ro": "32.502",
+        "name": "José Mármol (06:00 a 18:00)"
+      },
+      {
+        "id": "mo1_t3_669",
+        "turno": 3,
+        "name": "José Mármol (06:00 a 18:00)",
+        "ro": "32.502"
+      },
+      {
+        "id": "mo1_t4_156",
+        "turno": 4,
+        "ro": "32.502",
+        "name": "José Mármol (06:00 a 18:00)"
+      },
+      {
+        "id": "mo2_t3_552",
+        "turno": 3,
+        "ro": "32.510",
+        "name": "(sin localidad) (11:00 a 23:00)"
+      },
+      {
+        "id": "mo3",
+        "ro": "32.498",
+        "turno": 1,
+        "name": "(sin localidad)",
+        "description": ""
+      },
+      {
+        "id": "mo3_t2_775",
+        "ro": "32.498",
+        "name": "(sin localidad)",
+        "turno": 2,
+        "description": ""
+      },
+      {
+        "id": "mo3_t3_404",
+        "ro": "32.498",
+        "description": "",
+        "name": "(sin localidad)",
+        "turno": 3
+      },
+      {
+        "id": "mo3_t4_815",
+        "description": "",
+        "turno": 4,
+        "name": "(sin localidad)",
+        "ro": "32.498"
+      },
+      {
+        "id": "mo4",
+        "ro": "32.506",
+        "turno": 1,
+        "name": "(sin localidad)"
+      },
+      {
+        "id": "mo4_t2_636",
+        "name": "(sin localidad)",
+        "ro": "32.506",
+        "turno": 2
+      },
+      {
+        "id": "mo4_t4_96",
+        "name": "(sin localidad)",
+        "ro": "32.506",
+        "turno": 4
+      },
+      {
+        "id": "mo_1776349746420_lcrsbtrww",
+        "name": "ADROGUE",
+        "turno": 1,
+        "ro": "32.510"
+      },
+      {
+        "id": "mo_1776349746420_lcrsbtrww_t2_120",
+        "ro": "32.510",
+        "name": "ADROGUE",
+        "turno": 2
+      },
+      {
+        "id": "mo_1776349746420_lcrsbtrww_t3_156",
+        "ro": "32.510",
+        "name": "ADROGUE",
+        "turno": 3
+      },
+      {
+        "id": "mo_1776349746420_lcrsbtrww_t4_284",
+        "ro": "32.510",
+        "name": "ADROGUE",
+        "turno": 4
+      },
+      {
+        "id": "mo_1776349746420_s1kpoj4j2",
+        "ro": "32.504",
+        "turno": 1,
+        "name": "R.CALZADA"
+      },
+      {
+        "id": "mo_1776349746420_s1kpoj4j2_t2_687",
+        "turno": 2,
+        "ro": "32.504",
+        "name": "R.CALZADA"
+      },
+      {
+        "id": "mo_1776349746420_s1kpoj4j2_t3_64",
+        "turno": 3,
+        "name": "R.CALZADA",
+        "ro": "32.504"
+      },
+      {
+        "id": "mo_1776349746420_s1kpoj4j2_t4_735",
+        "turno": 4,
+        "name": "R.CALZADA",
+        "ro": "32.504"
+      }
+    ],
+    "qths": [
+      {
+        "id": "q1",
+        "turno": 1,
+        "name": "Adrogué: E. de Adrogué y Macias"
+      },
+      {
+        "id": "q10",
+        "turno": 1,
+        "name": "José Mármol: Kellertas y Davel"
+      },
+      {
+        "id": "q10_t2_836",
+        "name": "José Mármol: Kellertas y Davel",
+        "turno": 2
+      },
+      {
+        "id": "q10_t3_674",
+        "turno": 3,
+        "name": "José Mármol: Kellertas y Davel"
+      },
+      {
+        "id": "q10_t4_554",
+        "name": "José Mármol: Kellertas y Davel",
+        "turno": 4
+      },
+      {
+        "id": "q11",
+        "name": "Logchamps: Aviación e/ Rivadavia y Bolívar",
+        "turno": 1
+      },
+      {
+        "id": "q11_t2_25",
+        "turno": 2,
+        "name": "Logchamps: Aviación e/ Rivadavia y Bolívar"
+      },
+      {
+        "id": "q11_t3_26",
+        "name": "Logchamps: Aviación e/ Rivadavia y Bolívar",
+        "turno": 3
+      },
+      {
+        "id": "q11_t4_220",
+        "turno": 4,
+        "name": "Logchamps: Aviación e/ Rivadavia y Bolívar"
+      },
+      {
+        "id": "q12_t2_89",
+        "turno": 2,
+        "name": "Logchamps: Sarmiento y Lorenzini"
+      },
+      {
+        "id": "q12_t3_557",
+        "turno": 3,
+        "name": "Logchamps: Sarmiento y Lorenzini"
+      },
+      {
+        "id": "q12_t4_765",
+        "turno": 4,
+        "name": "Logchamps: Sarmiento y Lorenzini"
+      },
+      {
+        "id": "q13",
+        "description": "",
+        "name": "Burzaco: Plaza Belgrano",
+        "turno": 1
+      },
+      {
+        "id": "q13_t2_308",
+        "name": "Logchamps: Alsina e/ Rivadavia y Aviación",
+        "turno": 2
+      },
+      {
+        "id": "q13_t3_141",
+        "turno": 3,
+        "name": "Logchamps: Alsina e/ Rivadavia y Aviación"
+      },
+      {
+        "id": "q13_t4_59",
+        "turno": 4,
+        "name": "Logchamps: Alsina e/ Rivadavia y Aviación"
+      },
+      {
+        "id": "q14",
+        "turno": 1,
+        "name": "Logchamps: Belgrano y Chiesa"
+      },
+      {
+        "id": "q14_t2_452",
+        "turno": 2,
+        "name": "Logchamps: Belgrano y Chiesa"
+      },
+      {
+        "id": "q14_t3_256",
+        "turno": 3,
+        "name": "Logchamps: Belgrano y Chiesa"
+      },
+      {
+        "id": "q14_t4_639",
+        "name": "Logchamps: Belgrano y Chiesa",
+        "turno": 4
+      },
+      {
+        "id": "q15",
+        "name": "Calzada: Polideportivo ",
+        "turno": 1,
+        "description": ""
+      },
+      {
+        "id": "q15_t2_949",
+        "name": "Logchamps: Burgwardt e/ Chiesa y Diehl",
+        "turno": 2
+      },
+      {
+        "id": "q15_t3_228",
+        "name": "Logchamps: Burgwardt e/ Chiesa y Diehl",
+        "turno": 3
+      },
+      {
+        "id": "q15_t4_808",
+        "name": "Logchamps: Burgwardt e/ Chiesa y Diehl",
+        "turno": 4
+      },
+      {
+        "id": "q16",
+        "name": "Glew: Patria y Justicia",
+        "turno": 1
+      },
+      {
+        "id": "q16_t2_945",
+        "turno": 2,
+        "name": "Glew: Patria y Justicia"
+      },
+      {
+        "id": "q16_t3_427",
+        "turno": 3,
+        "name": "Glew: Patria y Justicia"
+      },
+      {
+        "id": "q16_t4_541",
+        "turno": 4,
+        "name": "Glew: Patria y Justicia"
+      },
+      {
+        "id": "q1_t2_373",
+        "name": "Adrogué: E. de Adrogué y Macias",
+        "turno": 2
+      },
+      {
+        "id": "q1_t3_679",
+        "name": "Adrogué: E. de Adrogué y Macias",
+        "turno": 3
+      },
+      {
+        "id": "q1_t4_981",
+        "turno": 4,
+        "name": "Adrogué: E. de Adrogué y Macias"
+      },
+      {
+        "id": "q2",
+        "name": "Adrogué: E. de Adrogué y Mitre // Mitre 1100",
+        "turno": 1
+      },
+      {
+        "id": "q2_t2_310",
+        "name": "Adrogué: E. de Adrogué y Mitre // Mitre 1100",
+        "turno": 2
+      },
+      {
+        "id": "q2_t3_998",
+        "turno": 3,
+        "name": "Adrogué: E. de Adrogué y Mitre // Mitre 1100"
+      },
+      {
+        "id": "q2_t4_253",
+        "name": "Adrogué: E. de Adrogué y Mitre // Mitre 1100",
+        "turno": 4
+      },
+      {
+        "id": "q3",
+        "description": "",
+        "name": "Rafael Calzada: Arias y Cervantes",
+        "turno": 1
+      },
+      {
+        "id": "q3_t2_43",
+        "turno": 2,
+        "name": "Adrogué: E. de Adrogué e/Spiro y Av Espora"
+      },
+      {
+        "id": "q3_t3_15",
+        "name": "Adrogué: E. de Adrogué e/Spiro y Av Espora",
+        "turno": 3
+      },
+      {
+        "id": "q3_t4_773",
+        "turno": 4,
+        "name": "Adrogué: E. de Adrogué e/Spiro y Av Espora"
+      },
+      {
+        "id": "q4_t2_930",
+        "turno": 2,
+        "name": "Adrogué: Quintana - Rosales - Pellegrini - Nother"
+      },
+      {
+        "id": "q4_t3_796",
+        "turno": 3,
+        "name": "Adrogué: Quintana - Rosales - Pellegrini - Nother"
+      },
+      {
+        "id": "q4_t4_345",
+        "turno": 4,
+        "name": "Adrogué: Quintana - Rosales - Pellegrini - Nother"
+      },
+      {
+        "id": "q5",
+        "name": "Burzaco: E. de Burzaco y Roca",
+        "turno": 1
+      },
+      {
+        "id": "q5_t2_394",
+        "turno": 2,
+        "name": "Burzaco: E. de Burzaco y Roca"
+      },
+      {
+        "id": "q5_t3_261",
+        "turno": 3,
+        "name": "Burzaco: E. de Burzaco y Roca"
+      },
+      {
+        "id": "q5_t4_318",
+        "turno": 4,
+        "name": "Burzaco: E. de Burzaco y Roca"
+      },
+      {
+        "id": "q6",
+        "turno": 1,
+        "name": "Burzaco: 9 de Julio y Roca"
+      },
+      {
+        "id": "q6_t2_352",
+        "name": "Burzaco: 9 de Julio y Roca",
+        "turno": 2
+      },
+      {
+        "id": "q6_t3_39",
+        "turno": 3,
+        "name": "Burzaco: 9 de Julio y Roca"
+      },
+      {
+        "id": "q6_t4_368",
+        "turno": 4,
+        "name": "Burzaco: 9 de Julio y Roca"
+      },
+      {
+        "id": "q7_t2_84",
+        "name": "Burzaco: 25 de Mayo y Lezcano",
+        "turno": 2
+      },
+      {
+        "id": "q7_t3_738",
+        "turno": 3,
+        "name": "Burzaco: 25 de Mayo y Lezcano"
+      },
+      {
+        "id": "q7_t4_59",
+        "name": "Burzaco: 25 de Mayo y Lezcano",
+        "turno": 4
+      },
+      {
+        "id": "q8",
+        "name": "San José: Altamira y Colón",
+        "turno": 1
+      },
+      {
+        "id": "q8_t2_319",
+        "name": "San José: Altamira y Colón",
+        "turno": 2
+      },
+      {
+        "id": "q8_t3_552",
+        "name": "San José: Altamira y Colón",
+        "turno": 3
+      },
+      {
+        "id": "q8_t4_371",
+        "name": "San José: Altamira y Colón",
+        "turno": 4
+      },
+      {
+        "id": "q9",
+        "name": "Longchamps: Burgwardt e/ Chiesa y Diehl",
+        "turno": 1,
+        "description": ""
+      },
+      {
+        "id": "q9_t2_648",
+        "turno": 2,
+        "name": "Rafael Calzada: 20 de Septiembre y San Martín"
+      },
+      {
+        "id": "q9_t3_577",
+        "turno": 3,
+        "name": "Rafael Calzada: 20 de Septiembre y San Martín"
+      },
+      {
+        "id": "q9_t4_863",
+        "turno": 4,
+        "name": "Rafael Calzada: 20 de Septiembre y San Martín"
+      },
+      {
+        "id": "qt_1776349746417_h64fyf7kn_t2_776",
+        "name": "LORENZZINI Y SARMIENTO",
+        "turno": 2
+      },
+      {
+        "id": "qt_1776349746417_h64fyf7kn_t3_461",
+        "turno": 3,
+        "name": "LORENZZINI Y SARMIENTO"
+      },
+      {
+        "id": "qt_1776349746417_h64fyf7kn_t4_987",
+        "name": "LORENZZINI Y SARMIENTO",
+        "turno": 4
+      },
+      {
+        "id": "qt_1776349746417_jbqy3aanb_t3_440",
+        "turno": 3,
+        "name": "UPC"
+      },
+      {
+        "id": "qt_1776349746417_jbqy3aanb_t4_270",
+        "turno": 4,
+        "name": "UPC"
+      },
+      {
+        "id": "qt_1776349746417_jd6yoyins",
+        "name": "HOGAR ISRAELITA",
+        "turno": 1
+      },
+      {
+        "id": "qt_1776349746417_jd6yoyins_t2_736",
+        "turno": 2,
+        "name": "HOGAR ISRAELITA"
+      },
+      {
+        "id": "qt_1776349746417_jd6yoyins_t3_743",
+        "turno": 3,
+        "name": "HOGAR ISRAELITA"
+      },
+      {
+        "id": "qt_1776349746417_jd6yoyins_t4_452",
+        "name": "HOGAR ISRAELITA",
+        "turno": 4
+      },
+      {
+        "id": "qt_1776349746417_jfgh55zcv_t3_386",
+        "name": "PERSONAL RADIO / GABINETE",
+        "turno": 3
+      },
+      {
+        "id": "qt_1776349746418_3orw9dm9n_t2_107",
+        "name": "E. de Adrogue y Mitre",
+        "turno": 2
+      },
+      {
+        "id": "qt_1776349746418_3orw9dm9n_t3_53",
+        "name": "E. de Adrogue y Mitre",
+        "turno": 3
+      },
+      {
+        "id": "qt_1776349746418_3orw9dm9n_t4_704",
+        "turno": 4,
+        "name": "E. de Adrogue y Mitre"
+      },
+      {
+        "id": "qt_1776349746418_4sc90k05z_t2_311",
+        "turno": 2,
+        "name": "Somellera y Spiro"
+      },
+      {
+        "id": "qt_1776349746418_4sc90k05z_t3_850",
+        "turno": 3,
+        "name": "Somellera y Spiro"
+      },
+      {
+        "id": "qt_1776349746418_4sc90k05z_t4_561",
+        "name": "Somellera y Spiro",
+        "turno": 4
+      },
+      {
+        "id": "qt_1776349746418_6u1mhjdxt",
+        "name": "Alsina y Garibaldi ",
+        "turno": 1,
+        "description": ""
+      },
+      {
+        "id": "qt_1776349746418_6u1mhjdxt_t2_857",
+        "turno": 2,
+        "name": "Nother y Somellera"
+      },
+      {
+        "id": "qt_1776349746418_6u1mhjdxt_t3_509",
+        "name": "Nother y Somellera",
+        "turno": 3
+      },
+      {
+        "id": "qt_1776349746418_6u1mhjdxt_t4_189",
+        "name": "Nother y Somellera",
+        "turno": 4
+      },
+      {
+        "id": "qt_1776349746418_hvz3pbd5d_t2_54",
+        "name": "E. de Adrogue y Macias",
+        "turno": 2
+      },
+      {
+        "id": "qt_1776349746418_hvz3pbd5d_t3_950",
+        "turno": 3,
+        "name": "E. de Adrogue y Macias"
+      },
+      {
+        "id": "qt_1776349746418_hvz3pbd5d_t4_900",
+        "name": "E. de Adrogue y Macias",
+        "turno": 4
+      },
+      {
+        "id": "qt_1776349746418_kr874ygs1",
+        "turno": 1,
+        "name": "Plaza Brown"
+      },
+      {
+        "id": "qt_1776349746418_kr874ygs1_t2_772",
+        "name": "Plaza Brown",
+        "turno": 2
+      },
+      {
+        "id": "qt_1776349746418_kr874ygs1_t3_629",
+        "turno": 3,
+        "name": "Plaza Brown"
+      },
+      {
+        "id": "qt_1776349746418_kr874ygs1_t4_272",
+        "name": "Plaza Brown",
+        "turno": 4
+      },
+      {
+        "id": "qt_1776349746418_sgwfps6dh_t2_474",
+        "turno": 2,
+        "name": "E. de Adrogue Spiro y Espora"
+      },
+      {
+        "id": "qt_1776349746418_sgwfps6dh_t3_877",
+        "name": "E. de Adrogue Spiro y Espora",
+        "turno": 3
+      },
+      {
+        "id": "qt_1776349746418_sgwfps6dh_t4_328",
+        "turno": 4,
+        "name": "E. de Adrogue Spiro y Espora"
+      },
+      {
+        "id": "qt_1776349746418_ty369xfw3_t2_853",
+        "name": "Solier y Nother",
+        "turno": 2
+      },
+      {
+        "id": "qt_1776349746418_ty369xfw3_t3_724",
+        "name": "Solier y Nother",
+        "turno": 3
+      },
+      {
+        "id": "qt_1776349746418_ty369xfw3_t4_603",
+        "name": "Solier y Nother",
+        "turno": 4
+      },
+      {
+        "id": "qt_1776349746418_v6uryq7m3_t2_42",
+        "turno": 2,
+        "name": "E. de Adrogue 1100"
+      },
+      {
+        "id": "qt_1776349746418_v6uryq7m3_t3_253",
+        "turno": 3,
+        "name": "E. de Adrogue 1100"
+      },
+      {
+        "id": "qt_1776349746418_v6uryq7m3_t4_490",
+        "name": "E. de Adrogue 1100",
+        "turno": 4
+      },
+      {
+        "id": "qt_1776349746419_2zwsxw697_t2_292",
+        "name": "Alsina y Garibaldi",
+        "turno": 2
+      },
+      {
+        "id": "qt_1776349746419_2zwsxw697_t3_857",
+        "name": "Alsina y Garibaldi",
+        "turno": 3
+      },
+      {
+        "id": "qt_1776349746419_2zwsxw697_t4_534",
+        "name": "Alsina y Garibaldi",
+        "turno": 4
+      },
+      {
+        "id": "qt_1776349746419_3fq1vrlxk",
+        "turno": 1,
+        "name": "Salta y Vertiz"
+      },
+      {
+        "id": "qt_1776349746419_3fq1vrlxk_t2_296",
+        "name": "Salta y Vertiz",
+        "turno": 2
+      },
+      {
+        "id": "qt_1776349746419_3fq1vrlxk_t3_611",
+        "turno": 3,
+        "name": "Salta y Vertiz"
+      },
+      {
+        "id": "qt_1776349746419_3fq1vrlxk_t4_556",
+        "name": "Salta y Vertiz",
+        "turno": 4
+      },
+      {
+        "id": "qt_1776349746419_4144ztmoy_t2_714",
+        "turno": 2,
+        "name": "Spiro Cordero Avellaneda Segui"
+      },
+      {
+        "id": "qt_1776349746419_4144ztmoy_t3_785",
+        "turno": 3,
+        "name": "Spiro Cordero Avellaneda Segui"
+      },
+      {
+        "id": "qt_1776349746419_4144ztmoy_t4_840",
+        "name": "Spiro Cordero Avellaneda Segui",
+        "turno": 4
+      },
+      {
+        "id": "qt_1776349746419_46whuznm7_t2_42",
+        "name": "O.S 132/26 Centro Comunitario",
+        "turno": 2
+      },
+      {
+        "id": "qt_1776349746419_46whuznm7_t3_399",
+        "name": "O.S 132/26 Centro Comunitario",
+        "turno": 3
+      },
+      {
+        "id": "qt_1776349746419_46whuznm7_t4_166",
+        "turno": 4,
+        "name": "O.S 132/26 Centro Comunitario"
+      },
+      {
+        "id": "qt_1776349746419_4v2wf68lz_t2_166",
+        "turno": 2,
+        "name": "Quintana Rosales Pellegrini Nother"
+      },
+      {
+        "id": "qt_1776349746419_4v2wf68lz_t3_701",
+        "turno": 3,
+        "name": "Quintana Rosales Pellegrini Nother"
+      },
+      {
+        "id": "qt_1776349746419_4v2wf68lz_t4_508",
+        "name": "Quintana Rosales Pellegrini Nother",
+        "turno": 4
+      },
+      {
+        "id": "qt_1776349746419_5bkmq0lpo",
+        "ro": "",
+        "description": "",
+        "turno": 1,
+        "name": "Longchamps: Alsina e/ Rivadavia y Aviacion"
+      },
+      {
+        "id": "qt_1776349746419_5bkmq0lpo_t2_249",
+        "turno": 2,
+        "name": "20 de Septiembre y San Martin"
+      },
+      {
+        "id": "qt_1776349746419_5bkmq0lpo_t3_833",
+        "turno": 3,
+        "name": "20 de Septiembre y San Martin"
+      },
+      {
+        "id": "qt_1776349746419_5bkmq0lpo_t4_17",
+        "name": "20 de Septiembre y San Martin",
+        "turno": 4
+      },
+      {
+        "id": "qt_1776349746419_8om0ycahx_t2_972",
+        "name": "Aviacion y davel",
+        "turno": 2
+      },
+      {
+        "id": "qt_1776349746419_8om0ycahx_t3_89",
+        "turno": 3,
+        "name": "Aviacion y davel"
+      },
+      {
+        "id": "qt_1776349746419_8om0ycahx_t4_487",
+        "turno": 4,
+        "name": "Aviacion y davel"
+      },
+      {
+        "id": "qt_1776349746419_ae7b60mt2_t2_615",
+        "turno": 2,
+        "name": "17 de Octubre y Rucci"
+      },
+      {
+        "id": "qt_1776349746419_ae7b60mt2_t3_829",
+        "turno": 3,
+        "name": "17 de Octubre y Rucci"
+      },
+      {
+        "id": "qt_1776349746419_ae7b60mt2_t4_780",
+        "turno": 4,
+        "name": "17 de Octubre y Rucci"
+      },
+      {
+        "id": "qt_1776349746419_ckaym5mzz_t2_347",
+        "turno": 2,
+        "name": "Alsina roca y 25 de Mayo"
+      },
+      {
+        "id": "qt_1776349746419_ckaym5mzz_t3_575",
+        "name": "Alsina roca y 25 de Mayo",
+        "turno": 3
+      },
+      {
+        "id": "qt_1776349746419_ckaym5mzz_t4_837",
+        "name": "Alsina roca y 25 de Mayo",
+        "turno": 4
+      },
+      {
+        "id": "qt_1776349746419_dhnfocp4c_t2_401",
+        "turno": 2,
+        "name": "Pte Peron Illia Obligado"
+      },
+      {
+        "id": "qt_1776349746419_dhnfocp4c_t3_545",
+        "name": "Pte Peron Illia Obligado",
+        "turno": 3
+      },
+      {
+        "id": "qt_1776349746419_dhnfocp4c_t4_381",
+        "turno": 4,
+        "name": "Pte Peron Illia Obligado"
+      },
+      {
+        "id": "qt_1776349746419_l5rykfpip_t2_473",
+        "name": "Dr. Chiesa, Gral. San Martín, C. Bregi, Simon Bolivar, Pcia de Buenos Aires, M. Belgrano (Zona 11)",
+        "turno": 2
+      },
+      {
+        "id": "qt_1776349746419_l5rykfpip_t3_465",
+        "name": "Dr. Chiesa, Gral. San Martín, C. Bregi, Simon Bolivar, Pcia de Buenos Aires, M. Belgrano (Zona 11)",
+        "turno": 3
+      },
+      {
+        "id": "qt_1776349746419_l5rykfpip_t4_787",
+        "turno": 4,
+        "name": "Dr. Chiesa, Gral. San Martín, C. Bregi, Simon Bolivar, Pcia de Buenos Aires, M. Belgrano (Zona 11)"
+      },
+      {
+        "id": "qt_1776349746419_vvg6exps8_t2_689",
+        "turno": 2,
+        "name": "Ruta 210, Yrigoyen, Gob. Arias, Francia y La Aviacion (Zona 10)"
+      },
+      {
+        "id": "qt_1776349746419_vvg6exps8_t3_227",
+        "turno": 3,
+        "name": "Ruta 210, Yrigoyen, Gob. Arias, Francia y La Aviacion (Zona 10)"
+      },
+      {
+        "id": "qt_1776349746419_vvg6exps8_t4_743",
+        "turno": 4,
+        "name": "Ruta 210, Yrigoyen, Gob. Arias, Francia y La Aviacion (Zona 10)"
+      },
+      {
+        "id": "qt_1776349746419_z5mvrdaqy_t2_48",
+        "turno": 2,
+        "name": "Mitre Espora Sanchez Estrada"
+      },
+      {
+        "id": "qt_1776349746419_z5mvrdaqy_t3_313",
+        "name": "Mitre Espora Sanchez Estrada",
+        "turno": 3
+      },
+      {
+        "id": "qt_1776349746419_z5mvrdaqy_t4_429",
+        "turno": 4,
+        "name": "Mitre Espora Sanchez Estrada"
+      },
+      {
+        "id": "qt_1776349746419_zf12rqhd3_t2_593",
+        "name": "R. Rojas Y Pellegrini Y Espora",
+        "turno": 2
+      },
+      {
+        "id": "qt_1776349746419_zf12rqhd3_t3_788",
+        "turno": 3,
+        "name": "R. Rojas Y Pellegrini Y Espora"
+      },
+      {
+        "id": "qt_1776349746419_zf12rqhd3_t4_474",
+        "name": "R. Rojas Y Pellegrini Y Espora",
+        "turno": 4
+      },
+      {
+        "id": "qt_1776349746420_2maejlr4m_t2_695",
+        "name": "Calle Garibaldi Nro1856",
+        "turno": 2
+      },
+      {
+        "id": "qt_1776349746420_2maejlr4m_t3_331",
+        "name": "Calle Garibaldi Nro1856",
+        "turno": 3
+      },
+      {
+        "id": "qt_1776349746420_2maejlr4m_t4_634",
+        "turno": 4,
+        "name": "Calle Garibaldi Nro1856"
+      }
+    ],
+    "ordenes": [
+      {
+        "id": "1779304842778",
+        "numero": "171/26",
+        "name": "OS 171/26",
+        "turno": 1,
+        "horario": "",
+        "ubicacion": "SARMIENTO Y LORENZINI",
+        "description": "LORENZINI"
+      },
+      {
+        "id": "1779305022118",
+        "numero": "172/26",
+        "ubicacion": "25 DE MAYO Y LEZCANO",
+        "description": "LEZCANO",
+        "horario": "",
+        "turno": 1,
+        "name": "OS 172/26"
+      },
+      {
+        "id": "os_1776349746417_0taz2wrh6",
+        "name": "OS 132/26",
+        "turno": 1,
+        "horario": "",
+        "ubicacion": "AV. EVA PERON Y MARECHAL",
+        "description": "DON ORIONE - AV. EVA PERON Y MARECHAL",
+        "numero": "132/26"
+      },
+      {
+        "id": "os_1776349746417_0taz2wrh6_t2_655",
+        "description": "CENTRO COMUNITARIO GLEW GARIBALDI 1856",
+        "name": "OS 132/26",
+        "turno": 2,
+        "numero": "132/26"
+      },
+      {
+        "id": "os_1776349746417_0taz2wrh6_t3_88",
+        "numero": "132/26",
+        "description": "CENTRO COMUNITARIO GLEW GARIBALDI 1856",
+        "turno": 3,
+        "name": "OS 132/26"
+      },
+      {
+        "id": "os_1776349746417_0taz2wrh6_t4_982",
+        "numero": "132/26",
+        "turno": 4,
+        "name": "OS 132/26",
+        "description": "CENTRO COMUNITARIO GLEW GARIBALDI 1856"
+      },
+      {
+        "id": "os_1776349746417_2jxz96hw5",
+        "description": "PREVENCION DE DELITOS PREDIO PRES. PERON Y OBLIGADO - ADROGUE",
+        "ubicacion": "",
+        "turno": 1,
+        "horario": "",
+        "name": "OS 66/26",
+        "numero": "66/26"
+      },
+      {
+        "id": "os_1776349746417_2jxz96hw5_t2_807",
+        "numero": "66/26",
+        "description": "PREVENCION DE DELITOS PREDIO PRES. PERON Y OBLIGADO - ADROGUE",
+        "name": "OS 66/26",
+        "turno": 2
+      },
+      {
+        "id": "os_1776349746417_2jxz96hw5_t3_881",
+        "turno": 3,
+        "name": "OS 66/26",
+        "description": "PREVENCION DE DELITOS PREDIO PRES. PERON Y OBLIGADO - ADROGUE",
+        "numero": "66/26"
+      },
+      {
+        "id": "os_1776349746417_2jxz96hw5_t4_521",
+        "description": "PREVENCION DE DELITOS PREDIO PRES. PERON Y OBLIGADO - ADROGUE",
+        "turno": 4,
+        "name": "OS 66/26",
+        "numero": "66/26"
+      },
+      {
+        "id": "os_1776349746417_6ipqtw7s8",
+        "description": "OPERATIVO DINAMICO RUTA 4",
+        "horario": "19 a 23 HS",
+        "turno": 1,
+        "name": "OS 005/26",
+        "numero": "005/26"
+      },
+      {
+        "id": "os_1776349746417_6ipqtw7s8_t2_318",
+        "numero": "005/26",
+        "name": "OS 005/26",
+        "horario": "19 a 23 HS",
+        "turno": 2,
+        "description": "OPERATIVO DINAMICO RUTA 4"
+      },
+      {
+        "id": "os_1776349746417_6ipqtw7s8_t3_703",
+        "numero": "005/26",
+        "description": "OPERATIVO DINAMICO RUTA 4",
+        "horario": "19 a 23 HS",
+        "name": "OS 005/26",
+        "turno": 3
+      },
+      {
+        "id": "os_1776349746417_6ipqtw7s8_t4_52",
+        "numero": "005/26",
+        "turno": 4,
+        "horario": "19 a 23 HS",
+        "name": "OS 005/26",
+        "description": "OPERATIVO DINAMICO RUTA 4"
+      },
+      {
+        "id": "os_1776349746421_isctjcq88",
+        "numero": "RAD 31/26",
+        "turno": 1,
+        "name": "OS RAD 31/26",
+        "description": "EFECTIVO (CHOFER) LOS M, M, J Y D. 19:00 HS., AL ASIENTO DE LA ESTACION DE POLICÍA DE SEGURIDAD DEPARTAMENTAL ALTE. BROWN, CALLE RICA N°969, BURZACO"
+      },
+      {
+        "id": "os_1776349746421_isctjcq88_t2_425",
+        "turno": 2,
+        "name": "OS RAD 31/26",
+        "description": "EFECTIVO (CHOFER) LOS M, M, J Y D. 19:00 HS., AL ASIENTO DE LA ESTACION DE POLICÍA DE SEGURIDAD DEPARTAMENTAL ALTE. BROWN, CALLE RICA N°969, BURZACO",
+        "numero": "RAD 31/26"
+      },
+      {
+        "id": "os_1776349746421_isctjcq88_t3_192",
+        "numero": "RAD 31/26",
+        "name": "OS RAD 31/26",
+        "turno": 3,
+        "description": "EFECTIVO (CHOFER) LOS M, M, J Y D. 19:00 HS., AL ASIENTO DE LA ESTACION DE POLICÍA DE SEGURIDAD DEPARTAMENTAL ALTE. BROWN, CALLE RICA N°969, BURZACO"
+      },
+      {
+        "id": "os_1776349746421_isctjcq88_t4_297",
+        "name": "OS RAD 31/26",
+        "turno": 4,
+        "description": "EFECTIVO (CHOFER) LOS M, M, J Y D. 19:00 HS., AL ASIENTO DE LA ESTACION DE POLICÍA DE SEGURIDAD DEPARTAMENTAL ALTE. BROWN, CALLE RICA N°969, BURZACO",
+        "numero": "RAD 31/26"
+      },
+      {
+        "id": "os_1776349746421_w4545v5s5",
+        "turno": 1,
+        "name": "OS 1119/25",
+        "description": "CUSTODIA PREDIO, PREVENCION DE SEGURIDAD ANTES HECHOS ILICITOS Y POSIBLE USURPACION, EN LAS ARTERIAS PETIRIBI, LAPACHO, AV. ARGENTINA Y ARENALES (BURZACO)",
+        "numero": "1119/25"
+      },
+      {
+        "id": "os_1776349746421_w4545v5s5_t2_479",
+        "numero": "1119/25",
+        "turno": 2,
+        "name": "OS 1119/25",
+        "description": "CUSTODIA PREDIO, PREVENCION DE SEGURIDAD ANTES HECHOS ILICITOS Y POSIBLE USURPACION, EN LAS ARTERIAS PETIRIBI, LAPACHO, AV. ARGENTINA Y ARENALES (BURZACO)"
+      },
+      {
+        "id": "os_1776349746421_w4545v5s5_t3_68",
+        "numero": "1119/25",
+        "name": "OS 1119/25",
+        "turno": 3,
+        "description": "CUSTODIA PREDIO, PREVENCION DE SEGURIDAD ANTES HECHOS ILICITOS Y POSIBLE USURPACION, EN LAS ARTERIAS PETIRIBI, LAPACHO, AV. ARGENTINA Y ARENALES (BURZACO)"
+      },
+      {
+        "id": "os_1776349746421_w4545v5s5_t4_936",
+        "name": "OS 1119/25",
+        "turno": 4,
+        "description": "CUSTODIA PREDIO, PREVENCION DE SEGURIDAD ANTES HECHOS ILICITOS Y POSIBLE USURPACION, EN LAS ARTERIAS PETIRIBI, LAPACHO, AV. ARGENTINA Y ARENALES (BURZACO)",
+        "numero": "1119/25"
+      }
+    ],
+    "comisiones": [
+      {
+        "id": "1779302742962",
+        "turno": 1,
+        "name": "CRIA 9NA JOSE MARMOL",
+        "description": "",
+        "ro": ""
+      },
+      {
+        "id": "1779316433281",
+        "name": "CRIA 8VA. DON ORIONE",
+        "turno": 1,
+        "description": "",
+        "ro": ""
+      },
+      {
+        "id": "1779316741472",
+        "ro": "",
+        "description": "",
+        "name": "CRIA 4TA LONGCHAMPS",
+        "turno": 1
+      },
+      {
+        "id": "1779316866058",
+        "ro": "",
+        "description": "",
+        "turno": 1,
+        "name": "CRIA 6TA CLAYPOLE"
+      },
+      {
+        "id": "1779317200492",
+        "ro": "",
+        "description": "",
+        "turno": 1,
+        "name": "RADIO/CEPAID"
+      },
+      {
+        "id": "co_1776349746417_1nhtyqwhx",
+        "name": "CRIA 2DA BURZACO",
+        "turno": 1
+      },
+      {
+        "id": "co_1776349746417_1nhtyqwhx_t2_30",
+        "turno": 2,
+        "name": "CRIA 2DA BURZACO"
+      },
+      {
+        "id": "co_1776349746417_1nhtyqwhx_t3_5",
+        "turno": 3,
+        "name": "CRIA 2DA BURZACO"
+      },
+      {
+        "id": "co_1776349746417_1nhtyqwhx_t4_432",
+        "turno": 4,
+        "name": "CRIA 2DA BURZACO"
+      },
+      {
+        "id": "co_1776349746417_cqfwlxmqs",
+        "ro": "",
+        "description": "",
+        "name": "CRIA 1RA ADROGUE",
+        "turno": 1
+      },
+      {
+        "id": "co_1776349746417_cqfwlxmqs_t2_175",
+        "turno": 2,
+        "name": "CRIA 1RA ADROGUE",
+        "description": "",
+        "ro": ""
+      },
+      {
+        "id": "co_1776349746417_cqfwlxmqs_t3_967",
+        "ro": "",
+        "description": "",
+        "name": "CRIA 1RA ADROGUE",
+        "turno": 3
+      },
+      {
+        "id": "co_1776349746417_cqfwlxmqs_t4_544",
+        "ro": "",
+        "description": "",
+        "turno": 4,
+        "name": "CRIA 1RA ADROGUE"
+      },
+      {
+        "id": "co_1776349746417_k6nvulk04",
+        "turno": 1,
+        "name": "DESTACAMENTO MINISTRO RIVADAVIA"
+      },
+      {
+        "id": "co_1776349746417_k6nvulk04_t2_234",
+        "name": "DESTACAMENTO MINISTRO RIVADAVIA",
+        "turno": 2
+      },
+      {
+        "id": "co_1776349746417_k6nvulk04_t3_593",
+        "name": "DESTACAMENTO MINISTRO RIVADAVIA",
+        "turno": 3
+      },
+      {
+        "id": "co_1776349746417_k6nvulk04_t4_434",
+        "name": "DESTACAMENTO MINISTRO RIVADAVIA",
+        "turno": 4
+      },
+      {
+        "id": "co_1776349746417_ud4xrw6h8",
+        "name": "CRIA 5TA CALZADA",
+        "turno": 1
+      },
+      {
+        "id": "co_1776349746417_ud4xrw6h8_t2_25",
+        "turno": 2,
+        "name": "CRIA 5TA CALZADA"
+      },
+      {
+        "id": "co_1776349746417_ud4xrw6h8_t3_586",
+        "turno": 3,
+        "name": "CRIA 5TA CALZADA"
+      },
+      {
+        "id": "co_1776349746417_ud4xrw6h8_t4_885",
+        "turno": 4,
+        "name": "CRIA 5TA CALZADA"
+      },
+      {
+        "id": "co_1776349746421_gers5m2vq",
+        "turno": 1,
+        "name": "H. LUCIO MELENDEZ"
+      },
+      {
+        "id": "co_1776349746421_gers5m2vq_t2_802",
+        "name": "H. LUCIO MELENDEZ",
+        "turno": 2
+      },
+      {
+        "id": "co_1776349746421_gers5m2vq_t3_620",
+        "name": "H. LUCIO MELENDEZ",
+        "turno": 3
+      },
+      {
+        "id": "co_1776349746421_gers5m2vq_t4_932",
+        "name": "H. LUCIO MELENDEZ",
+        "turno": 4
+      }
+    ]
+  },
+  "schedules": [
+    {
+      "id": "100",
+      "shift": "turno2",
+      "endTime": "09:00",
+      "agentId": "103",
+      "role": "garita",
+      "startTime": "21:00",
+      "targetId": "ga_1776349746416_b21lpzkb7_t2_415"
+    },
+    {
+      "id": "101",
+      "shift": "turno2",
+      "endTime": "09:00",
+      "targetId": "ga_1776349746416_b21lpzkb7_t2_415",
+      "startTime": "21:00",
+      "role": "garita",
+      "agentId": "104"
+    },
+    {
+      "id": "102",
+      "endTime": "09:00",
+      "shift": "turno2",
+      "agentId": "105",
+      "role": "garita",
+      "startTime": "21:00",
+      "targetId": "ga_1776349746416_9zncz8kl7_t2_312"
+    },
+    {
+      "id": "103",
+      "targetId": "ga_1776349746417_49b9iqjk0_t2_83",
+      "startTime": "21:00",
+      "role": "garita",
+      "agentId": "106",
+      "endTime": "09:00",
+      "shift": "turno2"
+    },
+    {
+      "id": "104",
+      "endTime": "09:00",
+      "shift": "turno2",
+      "agentId": "107",
+      "role": "caminante",
+      "startTime": "21:00",
+      "targetId": "qt_1776349746417_h64fyf7kn_t2_776"
+    },
+    {
+      "id": "105",
+      "endTime": "09:00",
+      "shift": "turno2",
+      "agentId": "108",
+      "role": "caminante",
+      "startTime": "21:00",
+      "targetId": "qt_1776349746417_jd6yoyins_t2_736"
+    },
+    {
+      "id": "109",
+      "shift": "turno2",
+      "endTime": "09:00",
+      "startTime": "21:00",
+      "targetId": "co_1776349746417_cqfwlxmqs_t2_175",
+      "agentId": "112",
+      "role": "comision"
+    },
+    {
+      "id": "110",
+      "shift": "turno2",
+      "endTime": "09:00",
+      "role": "comision",
+      "agentId": "113",
+      "targetId": "co_1776349746417_1nhtyqwhx_t2_30",
+      "startTime": "21:00"
+    },
+    {
+      "id": "111",
+      "startTime": "21:00",
+      "targetId": "co_1776349746417_1nhtyqwhx_t2_30",
+      "role": "comision",
+      "agentId": "114",
+      "endTime": "09:00",
+      "shift": "turno2"
+    },
+    {
+      "id": "112",
+      "endTime": "09:00",
+      "shift": "turno2",
+      "startTime": "21:00",
+      "targetId": "co_1776349746417_ud4xrw6h8_t2_25",
+      "agentId": "115",
+      "role": "comision"
+    },
+    {
+      "id": "113",
+      "agentId": "116",
+      "role": "comision",
+      "startTime": "21:00",
+      "targetId": "co_1776349746417_k6nvulk04_t2_234",
+      "shift": "turno2",
+      "endTime": "09:00"
+    },
+    {
+      "id": "114",
+      "role": "orden_servicio",
+      "agentId": "117",
+      "startTime": "21:00",
+      "targetId": "os_1776349746417_2jxz96hw5_t2_807",
+      "shift": "turno2",
+      "endTime": "09:00"
+    },
+    {
+      "id": "115",
+      "shift": "turno2",
+      "endTime": "09:00",
+      "startTime": "21:00",
+      "targetId": "os_1776349746417_0taz2wrh6_t2_655",
+      "role": "orden_servicio",
+      "agentId": "118"
+    },
+    {
+      "id": "116",
+      "shift": "turno2",
+      "endTime": "09:00",
+      "role": "orden_servicio",
+      "agentId": "119",
+      "targetId": "os_1776349746417_0taz2wrh6_t2_655",
+      "startTime": "21:00"
+    },
+    {
+      "id": "119",
+      "agentId": "122",
+      "role": "movil",
+      "startTime": "09:00",
+      "targetId": "m1_t3_276",
+      "shift": "turno3",
+      "endTime": "21:00"
+    },
+    {
+      "id": "120",
+      "endTime": "21:00",
+      "shift": "turno3",
+      "startTime": "09:00",
+      "targetId": "m1_t3_276",
+      "agentId": "123",
+      "role": "movil"
+    },
+    {
+      "id": "121",
+      "shift": "turno3",
+      "endTime": "21:00",
+      "startTime": "09:00",
+      "targetId": "m2_t3_52",
+      "agentId": "124",
+      "role": "movil"
+    },
+    {
+      "id": "122",
+      "startTime": "09:00",
+      "targetId": "m2_t3_52",
+      "agentId": "125",
+      "role": "movil",
+      "shift": "turno3",
+      "endTime": "21:00"
+    },
+    {
+      "id": "123",
+      "endTime": "21:00",
+      "shift": "turno3",
+      "role": "movil",
+      "agentId": "126",
+      "startTime": "09:00",
+      "targetId": "m3_t3_281"
+    },
+    {
+      "id": "124",
+      "shift": "turno3",
+      "endTime": "21:00",
+      "startTime": "09:00",
+      "targetId": "m3_t3_281",
+      "role": "movil",
+      "agentId": "127"
+    },
+    {
+      "id": "125",
+      "startTime": "09:00",
+      "targetId": "m4_t3_32",
+      "agentId": "128",
+      "role": "movil",
+      "shift": "turno3",
+      "endTime": "21:00"
+    },
+    {
+      "id": "126",
+      "shift": "turno3",
+      "endTime": "21:00",
+      "agentId": "129",
+      "role": "movil",
+      "startTime": "09:00",
+      "targetId": "m4_t3_32"
+    },
+    {
+      "id": "127",
+      "shift": "turno3",
+      "endTime": "21:00",
+      "agentId": "130",
+      "role": "movil",
+      "startTime": "09:00",
+      "targetId": "m5_t3_749"
+    },
+    {
+      "id": "128",
+      "role": "movil",
+      "agentId": "131",
+      "startTime": "09:00",
+      "targetId": "m5_t3_749",
+      "endTime": "21:00",
+      "shift": "turno3"
+    },
+    {
+      "id": "129",
+      "startTime": "09:00",
+      "targetId": "m1_t3_276",
+      "role": "movil",
+      "agentId": "132",
+      "shift": "turno3",
+      "endTime": "21:00"
+    },
+    {
+      "id": "130",
+      "shift": "turno3",
+      "endTime": "21:00",
+      "role": "movil",
+      "agentId": "133",
+      "startTime": "09:00",
+      "targetId": "m1_t3_276"
+    },
+    {
+      "id": "131",
+      "startTime": "09:00",
+      "targetId": "mo_1776349746418_7p3idwfkh_t3_145",
+      "agentId": "134",
+      "role": "movil",
+      "endTime": "21:00",
+      "shift": "turno3"
+    },
+    {
+      "id": "132",
+      "role": "movil",
+      "agentId": "135",
+      "targetId": "mo_1776349746418_7p3idwfkh_t3_145",
+      "startTime": "09:00",
+      "shift": "turno3",
+      "endTime": "21:00"
+    },
+    {
+      "id": "133",
+      "startTime": "09:00",
+      "targetId": "mo_1776349746418_qizxjq7py_t3_298",
+      "agentId": "136",
+      "role": "movil",
+      "shift": "turno3",
+      "endTime": "21:00"
+    },
+    {
+      "id": "134",
+      "endTime": "21:00",
+      "shift": "turno3",
+      "startTime": "09:00",
+      "targetId": "mo_1776349746418_qizxjq7py_t3_298",
+      "agentId": "137",
+      "role": "movil"
+    },
+    {
+      "id": "135",
+      "startTime": "09:00",
+      "targetId": "mo_1776349746418_f89ddydls_t3_824",
+      "agentId": "138",
+      "role": "movil",
+      "shift": "turno3",
+      "endTime": "21:00"
+    },
+    {
+      "id": "136",
+      "shift": "turno3",
+      "endTime": "21:00",
+      "targetId": "mo_1776349746418_f89ddydls_t3_824",
+      "startTime": "09:00",
+      "role": "movil",
+      "agentId": "139"
+    },
+    {
+      "id": "137",
+      "endTime": "21:00",
+      "shift": "turno3",
+      "role": "garita",
+      "agentId": "140",
+      "startTime": "09:00",
+      "targetId": "g1_t3_746"
+    },
+    {
+      "id": "138",
+      "agentId": "141",
+      "role": "garita",
+      "targetId": "g2_t3_229",
+      "startTime": "09:00",
+      "endTime": "21:00",
+      "shift": "turno3"
+    },
+    {
+      "id": "139",
+      "targetId": "g3_t3_953",
+      "startTime": "09:00",
+      "role": "garita",
+      "agentId": "142",
+      "shift": "turno3",
+      "endTime": "21:00"
+    },
+    {
+      "id": "140",
+      "targetId": "ga_1776349746418_gd9tooekh_t3_584",
+      "startTime": "09:00",
+      "agentId": "143",
+      "role": "garita",
+      "endTime": "21:00",
+      "shift": "turno3"
+    },
+    {
+      "id": "141",
+      "shift": "turno3",
+      "endTime": "21:00",
+      "startTime": "09:00",
+      "targetId": "g5_t3_124",
+      "agentId": "144",
+      "role": "garita"
+    },
+    {
+      "id": "142",
+      "endTime": "21:00",
+      "shift": "turno3",
+      "role": "garita",
+      "agentId": "145",
+      "startTime": "09:00",
+      "targetId": "g6_t3_645"
+    },
+    {
+      "id": "143",
+      "role": "garita",
+      "agentId": "146",
+      "startTime": "09:00",
+      "targetId": "g7_t3_62",
+      "shift": "turno3",
+      "endTime": "21:00"
+    },
+    {
+      "id": "144",
+      "shift": "turno3",
+      "endTime": "21:00",
+      "role": "garita",
+      "agentId": "147",
+      "targetId": "g8_t3_61",
+      "startTime": "09:00"
+    },
+    {
+      "id": "145",
+      "shift": "turno3",
+      "endTime": "21:00",
+      "targetId": "g9_t3_865",
+      "startTime": "09:00",
+      "agentId": "148",
+      "role": "garita"
+    },
+    {
+      "id": "146",
+      "role": "garita",
+      "agentId": "149",
+      "startTime": "09:00",
+      "targetId": "ga_1776349746418_wabr7c9zk_t3_783",
+      "shift": "turno3",
+      "endTime": "21:00"
+    },
+    {
+      "id": "147",
+      "endTime": "21:00",
+      "shift": "turno3",
+      "targetId": "g11_t3_963",
+      "startTime": "09:00",
+      "role": "garita",
+      "agentId": "150"
+    },
+    {
+      "id": "148",
+      "endTime": "21:00",
+      "shift": "turno3",
+      "agentId": "151",
+      "role": "garita",
+      "startTime": "09:00",
+      "targetId": "g12_t3_472"
+    },
+    {
+      "id": "149",
+      "startTime": "09:00",
+      "targetId": "g13_t3_390",
+      "role": "garita",
+      "agentId": "152",
+      "shift": "turno3",
+      "endTime": "21:00"
+    },
+    {
+      "id": "150",
+      "shift": "turno3",
+      "endTime": "21:00",
+      "role": "garita",
+      "agentId": "153",
+      "startTime": "09:00",
+      "targetId": "g14_t3_464"
+    },
+    {
+      "id": "151",
+      "shift": "turno3",
+      "endTime": "21:00",
+      "agentId": "154",
+      "role": "garita",
+      "startTime": "09:00",
+      "targetId": "g15_t3_974"
+    },
+    {
+      "id": "152",
+      "endTime": "21:00",
+      "shift": "turno3",
+      "role": "garita",
+      "agentId": "155",
+      "startTime": "09:00",
+      "targetId": "g16_t3_847"
+    },
+    {
+      "id": "153",
+      "targetId": "g17_t3_352",
+      "startTime": "09:00",
+      "agentId": "156",
+      "role": "garita",
+      "endTime": "21:00",
+      "shift": "turno3"
+    },
+    {
+      "id": "154",
+      "endTime": "21:00",
+      "shift": "turno3",
+      "agentId": "157",
+      "role": "garita",
+      "targetId": "g18_t3_910",
+      "startTime": "09:00"
+    },
+    {
+      "id": "155",
+      "targetId": "qt_1776349746418_hvz3pbd5d_t3_950",
+      "startTime": "09:00",
+      "role": "caminante",
+      "agentId": "158",
+      "endTime": "21:00",
+      "shift": "turno3"
+    },
+    {
+      "id": "156",
+      "shift": "turno3",
+      "endTime": "21:00",
+      "role": "caminante",
+      "agentId": "159",
+      "startTime": "09:00",
+      "targetId": "qt_1776349746418_hvz3pbd5d_t3_950"
+    },
+    {
+      "id": "157",
+      "endTime": "21:00",
+      "shift": "turno3",
+      "startTime": "09:00",
+      "targetId": "qt_1776349746418_v6uryq7m3_t3_253",
+      "role": "caminante",
+      "agentId": "158"
+    },
+    {
+      "id": "158",
+      "targetId": "qt_1776349746418_v6uryq7m3_t3_253",
+      "startTime": "09:00",
+      "role": "caminante",
+      "agentId": "159",
+      "endTime": "21:00",
+      "shift": "turno3"
+    },
+    {
+      "id": "159",
+      "role": "caminante",
+      "agentId": "160",
+      "targetId": "qt_1776349746418_3orw9dm9n_t3_53",
+      "startTime": "09:00",
+      "endTime": "21:00",
+      "shift": "turno3"
+    },
+    {
+      "id": "160",
+      "endTime": "21:00",
+      "shift": "turno3",
+      "role": "caminante",
+      "agentId": "161",
+      "startTime": "09:00",
+      "targetId": "qt_1776349746418_3orw9dm9n_t3_53"
+    },
+    {
+      "id": "161",
+      "targetId": "qt_1776349746418_sgwfps6dh_t3_877",
+      "startTime": "09:00",
+      "role": "caminante",
+      "agentId": "160",
+      "endTime": "21:00",
+      "shift": "turno3"
+    },
+    {
+      "id": "162",
+      "startTime": "09:00",
+      "targetId": "qt_1776349746418_sgwfps6dh_t3_877",
+      "agentId": "161",
+      "role": "caminante",
+      "endTime": "21:00",
+      "shift": "turno3"
+    },
+    {
+      "id": "163",
+      "endTime": "21:00",
+      "shift": "turno3",
+      "targetId": "qt_1776349746419_dhnfocp4c_t3_545",
+      "startTime": "09:00",
+      "agentId": "162",
+      "role": "caminante"
+    },
+    {
+      "id": "164",
+      "endTime": "21:00",
+      "shift": "turno3",
+      "startTime": "09:00",
+      "targetId": "q7_t3_738",
+      "agentId": "163",
+      "role": "caminante"
+    },
+    {
+      "id": "165",
+      "agentId": "164",
+      "role": "caminante",
+      "startTime": "09:00",
+      "targetId": "q10_t3_674",
+      "shift": "turno3",
+      "endTime": "21:00"
+    },
+    {
+      "id": "166",
+      "startTime": "09:00",
+      "targetId": "qt_1776349746419_vvg6exps8_t3_227",
+      "role": "caminante",
+      "agentId": "165",
+      "endTime": "21:00",
+      "shift": "turno3"
+    },
+    {
+      "id": "167",
+      "role": "caminante",
+      "agentId": "166",
+      "targetId": "qt_1776349746419_vvg6exps8_t3_227",
+      "startTime": "09:00",
+      "shift": "turno3",
+      "endTime": "21:00"
+    },
+    {
+      "id": "168",
+      "agentId": "167",
+      "role": "caminante",
+      "targetId": "qt_1776349746419_vvg6exps8_t3_227",
+      "startTime": "09:00",
+      "endTime": "21:00",
+      "shift": "turno3"
+    },
+    {
+      "id": "169",
+      "endTime": "21:00",
+      "shift": "turno3",
+      "agentId": "168",
+      "role": "caminante",
+      "startTime": "09:00",
+      "targetId": "qt_1776349746419_vvg6exps8_t3_227"
+    },
+    {
+      "id": "170",
+      "endTime": "21:00",
+      "shift": "turno3",
+      "agentId": "169",
+      "role": "caminante",
+      "startTime": "09:00",
+      "targetId": "qt_1776349746419_l5rykfpip_t3_465"
+    },
+    {
+      "id": "171",
+      "startTime": "09:00",
+      "targetId": "qt_1776349746419_l5rykfpip_t3_465",
+      "role": "caminante",
+      "agentId": "170",
+      "shift": "turno3",
+      "endTime": "21:00"
+    },
+    {
+      "id": "172",
+      "role": "caminante",
+      "agentId": "171",
+      "startTime": "09:00",
+      "targetId": "qt_1776349746419_l5rykfpip_t3_465",
+      "shift": "turno3",
+      "endTime": "21:00"
+    },
+    {
+      "id": "173",
+      "targetId": "qt_1776349746419_l5rykfpip_t3_465",
+      "startTime": "09:00",
+      "role": "caminante",
+      "agentId": "172",
+      "endTime": "21:00",
+      "shift": "turno3"
+    },
+    {
+      "id": "174",
+      "targetId": "q12_t3_557",
+      "startTime": "09:00",
+      "role": "caminante",
+      "agentId": "173",
+      "endTime": "21:00",
+      "shift": "turno3"
+    },
+    {
+      "id": "175",
+      "role": "caminante",
+      "agentId": "174",
+      "startTime": "09:00",
+      "targetId": "qt_1776349746419_46whuznm7_t3_399",
+      "endTime": "21:00",
+      "shift": "turno3"
+    },
+    {
+      "id": "176",
+      "targetId": "qt_1776349746420_2maejlr4m_t3_331",
+      "startTime": "09:00",
+      "role": "caminante",
+      "agentId": "175",
+      "endTime": "21:00",
+      "shift": "turno3"
+    },
+    {
+      "id": "1779292856875",
+      "shift": "turno1",
+      "endTime": "21:00",
+      "role": "garita",
+      "agentId": "42",
+      "startTime": "09:00",
+      "targetId": "g2"
+    },
+    {
+      "id": "1779292896449",
+      "agentId": "48",
+      "role": "garita",
+      "targetId": "g8",
+      "startTime": "09:00",
+      "endTime": "21:00",
+      "shift": "turno1"
+    },
+    {
+      "id": "1779292923329",
+      "role": "garita",
+      "agentId": "50",
+      "startTime": "09:00",
+      "targetId": "ga_1776349746416_b21lpzkb7",
+      "shift": "turno1",
+      "endTime": "21:00"
+    },
+    {
+      "id": "1779292943476",
+      "targetId": "ga_1776349746417_49b9iqjk0",
+      "startTime": "09:00",
+      "agentId": "51",
+      "role": "garita",
+      "shift": "turno1",
+      "endTime": "21:00"
+    },
+    {
+      "id": "1779292973115",
+      "agentId": "52",
+      "role": "garita",
+      "startTime": "09:00",
+      "targetId": "g12",
+      "endTime": "21:00",
+      "shift": "turno1"
+    },
+    {
+      "id": "1779293237179",
+      "shift": "turno1",
+      "endTime": "21:00",
+      "agentId": "57",
+      "role": "garita",
+      "startTime": "09:00",
+      "targetId": "ga_1776349746416_a176izq05"
+    },
+    {
+      "id": "1779293300730",
+      "shift": "turno1",
+      "endTime": "21:00",
+      "startTime": "09:00",
+      "targetId": "g7",
+      "agentId": "47",
+      "role": "garita"
+    },
+    {
+      "id": "1779293312960",
+      "endTime": "21:00",
+      "shift": "turno1",
+      "targetId": "g5",
+      "startTime": "09:00",
+      "agentId": "45",
+      "role": "garita"
+    },
+    {
+      "id": "1779293621550",
+      "targetId": "q11",
+      "startTime": "09:00",
+      "agentId": "17",
+      "role": "caminante",
+      "endTime": "21:00",
+      "shift": "turno1"
+    },
+    {
+      "id": "1779293633262",
+      "role": "caminante",
+      "agentId": "16",
+      "startTime": "09:00",
+      "targetId": "q11",
+      "shift": "turno1",
+      "endTime": "21:00"
+    },
+    {
+      "id": "1779293652391",
+      "startTime": "09:00",
+      "targetId": "q14",
+      "role": "caminante",
+      "agentId": "21",
+      "shift": "turno1",
+      "endTime": "21:00"
+    },
+    {
+      "id": "1779293662710",
+      "shift": "turno1",
+      "endTime": "21:00",
+      "startTime": "09:00",
+      "targetId": "q14",
+      "agentId": "22",
+      "role": "caminante"
+    },
+    {
+      "id": "1779294194032",
+      "targetId": "m3",
+      "startTime": "09:00",
+      "role": "movil",
+      "agentId": "31",
+      "endTime": "21:00",
+      "shift": "turno1"
+    },
+    {
+      "id": "1779294200423",
+      "targetId": "m3",
+      "startTime": "09:00",
+      "agentId": "32",
+      "role": "movil",
+      "shift": "turno1",
+      "endTime": "21:00"
+    },
+    {
+      "id": "1779294233349",
+      "targetId": "m6",
+      "startTime": "09:00",
+      "role": "movil",
+      "agentId": "29",
+      "shift": "turno1",
+      "endTime": "21:00"
+    },
+    {
+      "id": "1779294324007",
+      "endTime": "21:00",
+      "shift": "turno1",
+      "role": "movil",
+      "agentId": "35",
+      "targetId": "m7",
+      "startTime": "09:00"
+    },
+    {
+      "id": "1779294381227",
+      "endTime": "21:00",
+      "shift": "turno1",
+      "agentId": "26",
+      "role": "caminante",
+      "targetId": "q16",
+      "startTime": "09:00"
+    },
+    {
+      "id": "1779294399313",
+      "targetId": "q10",
+      "startTime": "09:00",
+      "agentId": "15",
+      "role": "caminante",
+      "shift": "turno1",
+      "endTime": "21:00"
+    },
+    {
+      "id": "1779295562370",
+      "startTime": "09:00",
+      "targetId": "g6",
+      "role": "garita",
+      "agentId": "46",
+      "endTime": "21:00",
+      "shift": "turno1"
+    },
+    {
+      "id": "1779296407924",
+      "endTime": "21:00",
+      "shift": "turno1",
+      "targetId": "q16",
+      "startTime": "09:00",
+      "agentId": "1779294974173",
+      "role": "caminante"
+    },
+    {
+      "id": "1779296432720",
+      "targetId": "g9",
+      "startTime": "09:00",
+      "agentId": "1779295008749",
+      "role": "garita",
+      "endTime": "21:00",
+      "shift": "turno1"
+    },
+    {
+      "id": "1779296489603",
+      "shift": "turno1",
+      "endTime": "21:00",
+      "startTime": "09:00",
+      "targetId": "g18",
+      "role": "garita",
+      "agentId": "1779295041937"
+    },
+    {
+      "id": "1779296576644",
+      "shift": "turno1",
+      "endTime": "21:00",
+      "startTime": "09:00",
+      "targetId": "m7",
+      "role": "movil",
+      "agentId": "1779295096598"
+    },
+    {
+      "id": "1779299298390",
+      "shift": "turno2",
+      "endTime": "09:00",
+      "role": "ausente",
+      "agentId": "91",
+      "startTime": "21:00"
+    },
+    {
+      "id": "1779301975483",
+      "shift": "turno1",
+      "endTime": "21:00",
+      "startTime": "09:00",
+      "agentId": "1779301946159",
+      "role": "montada"
+    },
+    {
+      "id": "1779301977612",
+      "startTime": "09:00",
+      "agentId": "1779301938492",
+      "role": "correo",
+      "shift": "turno1",
+      "endTime": "21:00"
+    },
+    {
+      "id": "1779301979660",
+      "startTime": "09:00",
+      "role": "montada",
+      "agentId": "1779301954192",
+      "shift": "turno1",
+      "endTime": "21:00"
+    },
+    {
+      "id": "1779301982075",
+      "shift": "turno1",
+      "endTime": "21:00",
+      "role": "montada",
+      "agentId": "1779301961023",
+      "startTime": "09:00"
+    },
+    {
+      "id": "1779301985080",
+      "shift": "turno1",
+      "endTime": "21:00",
+      "startTime": "09:00",
+      "role": "montada",
+      "agentId": "1779301968764"
+    },
+    {
+      "id": "1779302022265",
+      "shift": "turno1",
+      "endTime": "21:00",
+      "role": "comision",
+      "agentId": "1779301767243",
+      "startTime": "09:00",
+      "targetId": "co_1776349746417_cqfwlxmqs"
+    },
+    {
+      "id": "1779302033647",
+      "shift": "turno1",
+      "endTime": "21:00",
+      "agentId": "1779301725818",
+      "role": "comision",
+      "targetId": "co_1776349746417_cqfwlxmqs",
+      "startTime": "09:00"
+    },
+    {
+      "id": "1779302047856",
+      "startTime": "09:00",
+      "targetId": "co_1776349746417_ud4xrw6h8",
+      "role": "comision",
+      "agentId": "1779301669808",
+      "shift": "turno1",
+      "endTime": "21:00"
+    },
+    {
+      "id": "1779302057583",
+      "startTime": "09:00",
+      "targetId": "co_1776349746421_gers5m2vq",
+      "role": "comision",
+      "agentId": "43",
+      "shift": "turno1",
+      "endTime": "21:00"
+    },
+    {
+      "id": "1779302096634",
+      "shift": "turno1",
+      "endTime": "21:00",
+      "role": "comision",
+      "agentId": "1779301704373",
+      "startTime": "09:00",
+      "targetId": "co_1776349746417_k6nvulk04"
+    },
+    {
+      "id": "1779302103952",
+      "shift": "turno1",
+      "endTime": "21:00",
+      "agentId": "1779302070643",
+      "role": "comision",
+      "targetId": "co_1776349746421_gers5m2vq",
+      "startTime": "09:00"
+    },
+    {
+      "id": "1779302154744",
+      "shift": "turno1",
+      "endTime": "21:00",
+      "agentId": "1779302079319",
+      "role": "comision",
+      "startTime": "09:00",
+      "targetId": "co_1776349746421_gers5m2vq"
+    },
+    {
+      "id": "1779302561687",
+      "agentId": "1779302538765",
+      "role": "caminante",
+      "startTime": "09:00",
+      "targetId": "qt_1776349746417_jd6yoyins",
+      "shift": "turno1",
+      "endTime": "21:00"
+    },
+    {
+      "id": "1779302752706",
+      "shift": "turno1",
+      "endTime": "21:00",
+      "startTime": "09:00",
+      "targetId": "1779302742962",
+      "role": "comision",
+      "agentId": "1779301680630"
+    },
+    {
+      "id": "1779302759967",
+      "shift": "turno1",
+      "endTime": "21:00",
+      "agentId": "1779301691605",
+      "role": "comision",
+      "targetId": "1779302742962",
+      "startTime": "09:00"
+    },
+    {
+      "id": "1779302901058",
+      "startTime": "09:00",
+      "role": "ayte_guardia",
+      "agentId": "1779302809873",
+      "shift": "turno1",
+      "endTime": "21:00"
+    },
+    {
+      "id": "1779302910940",
+      "startTime": "09:00",
+      "agentId": "1779302789694",
+      "role": "ofl_servicio",
+      "shift": "turno1",
+      "endTime": "21:00"
+    },
+    {
+      "id": "1779302922344",
+      "shift": "turno1",
+      "endTime": "21:00",
+      "startTime": "09:00",
+      "role": "logistica",
+      "agentId": "1779302834993"
+    },
+    {
+      "id": "1779302932008",
+      "role": "personal",
+      "agentId": "1779302868234",
+      "startTime": "09:00",
+      "shift": "turno1",
+      "endTime": "21:00"
+    },
+    {
+      "id": "1779302940239",
+      "startTime": "09:00",
+      "agentId": "1779302875761",
+      "role": "operaciones",
+      "shift": "turno1",
+      "endTime": "21:00"
+    },
+    {
+      "id": "1779302947225",
+      "shift": "turno1",
+      "endTime": "21:00",
+      "startTime": "09:00",
+      "agentId": "1779302802786",
+      "role": "operaciones"
+    },
+    {
+      "id": "1779302956082",
+      "startTime": "09:00",
+      "role": "personal",
+      "agentId": "1779302858368",
+      "shift": "turno1",
+      "endTime": "21:00"
+    },
+    {
+      "id": "1779302964231",
+      "startTime": "09:00",
+      "agentId": "1779302827386",
+      "role": "judiciales",
+      "shift": "turno1",
+      "endTime": "21:00"
+    },
+    {
+      "id": "1779302973659",
+      "shift": "turno1",
+      "endTime": "21:00",
+      "agentId": "1779302818487",
+      "role": "judiciales",
+      "startTime": "09:00"
+    },
+    {
+      "id": "1779302985259",
+      "startTime": "09:00",
+      "agentId": "1779302847035",
+      "role": "logistica",
+      "shift": "turno1",
+      "endTime": "21:00"
+    },
+    {
+      "id": "1779303005024",
+      "shift": "turno1",
+      "endTime": "21:00",
+      "targetId": "mo_1776349746418_f89ddydls",
+      "startTime": "09:00",
+      "agentId": "1779302886418",
+      "role": "movil"
+    },
+    {
+      "id": "1779303031876",
+      "shift": "turno1",
+      "endTime": "21:00",
+      "agentId": "1779303016344",
+      "role": "movil",
+      "targetId": "mo_1776349746418_f89ddydls",
+      "startTime": "09:00"
+    },
+    {
+      "id": "1779303137084",
+      "shift": "turno1",
+      "endTime": "21:00",
+      "agentId": "1779295268493",
+      "role": "motorizada",
+      "startTime": "09:00",
+      "targetId": "mo_1776349746420_lcrsbtrww"
+    },
+    {
+      "id": "1779303141140",
+      "startTime": "09:00",
+      "targetId": "mo_1776349746420_lcrsbtrww",
+      "role": "motorizada",
+      "agentId": "1779295281855",
+      "shift": "turno1",
+      "endTime": "21:00"
+    },
+    {
+      "id": "1779304919001",
+      "shift": "turno1",
+      "endTime": "21:00",
+      "agentId": "19",
+      "role": "orden_servicio",
+      "startTime": "09:00",
+      "targetId": "1779304842778"
+    },
+    {
+      "id": "1779310013850",
+      "shift": "turno1",
+      "endTime": "21:00",
+      "startTime": "09:00",
+      "role": "no_disponible",
+      "agentId": "1779309958541"
+    },
+    {
+      "id": "1779310035451",
+      "startTime": "09:00",
+      "role": "no_disponible",
+      "agentId": "1779309993799",
+      "shift": "turno1",
+      "endTime": "21:00"
+    },
+    {
+      "id": "1779310041989",
+      "role": "no_disponible",
+      "agentId": "1779309986850",
+      "startTime": "09:00",
+      "shift": "turno1",
+      "endTime": "21:00"
+    },
+    {
+      "id": "1779310049177",
+      "shift": "turno1",
+      "endTime": "21:00",
+      "startTime": "09:00",
+      "role": "no_disponible",
+      "agentId": "1779309976500"
+    },
+    {
+      "id": "1779310056248",
+      "shift": "turno1",
+      "endTime": "21:00",
+      "startTime": "09:00",
+      "agentId": "1779309967984",
+      "role": "no_disponible"
+    },
+    {
+      "id": "1779316441882",
+      "targetId": "1779316433281",
+      "startTime": "09:00",
+      "agentId": "1779316399808",
+      "role": "comision",
+      "shift": "turno1",
+      "endTime": "21:00"
+    },
+    {
+      "id": "1779316483727",
+      "startTime": "09:00",
+      "targetId": "co_1776349746417_cqfwlxmqs",
+      "role": "comision",
+      "agentId": "1779316470230",
+      "shift": "turno1",
+      "endTime": "21:00"
+    },
+    {
+      "id": "1779316533778",
+      "shift": "turno1",
+      "endTime": "21:00",
+      "startTime": "09:00",
+      "targetId": "co_1776349746417_ud4xrw6h8",
+      "role": "comision",
+      "agentId": "1779316526757"
+    },
+    {
+      "id": "1779316651121",
+      "agentId": "1779316636462",
+      "role": "comision",
+      "startTime": "09:00",
+      "targetId": "co_1776349746417_cqfwlxmqs",
+      "shift": "turno1",
+      "endTime": "21:00"
+    },
+    {
+      "id": "1779316704159",
+      "shift": "turno1",
+      "endTime": "21:00",
+      "targetId": "co_1776349746417_ud4xrw6h8",
+      "startTime": "09:00",
+      "agentId": "1779316696611",
+      "role": "comision"
+    },
+    {
+      "id": "1779316753941",
+      "shift": "turno1",
+      "endTime": "21:00",
+      "startTime": "09:00",
+      "targetId": "1779316741472",
+      "agentId": "1779316729163",
+      "role": "comision"
+    },
+    {
+      "id": "1779316876718",
+      "shift": "turno1",
+      "endTime": "21:00",
+      "targetId": "1779316866058",
+      "startTime": "09:00",
+      "agentId": "1779316856683",
+      "role": "comision"
+    },
+    {
+      "id": "1779316917650",
+      "agentId": "1779316910891",
+      "role": "no_disponible",
+      "startTime": "09:00",
+      "shift": "turno1",
+      "endTime": "21:00"
+    },
+    {
+      "id": "1779316993780",
+      "shift": "turno1",
+      "endTime": "21:00",
+      "startTime": "09:00",
+      "targetId": "co_1776349746417_ud4xrw6h8",
+      "role": "comision",
+      "agentId": "1779316985236"
+    },
+    {
+      "id": "1779317045941",
+      "shift": "turno1",
+      "endTime": "21:00",
+      "startTime": "09:00",
+      "targetId": "co_1776349746417_ud4xrw6h8",
+      "role": "comision",
+      "agentId": "1779317037526"
+    },
+    {
+      "id": "1779317114747",
+      "shift": "turno1",
+      "endTime": "21:00",
+      "role": "no_disponible",
+      "agentId": "1779317103729",
+      "startTime": "09:00"
+    },
+    {
+      "id": "1779317148584",
+      "shift": "turno1",
+      "endTime": "21:00",
+      "role": "comision",
+      "agentId": "1779317135658",
+      "startTime": "09:00",
+      "targetId": "1779316741472"
+    },
+    {
+      "id": "1779317228878",
+      "shift": "turno1",
+      "endTime": "21:00",
+      "role": "comision",
+      "agentId": "1779317011670",
+      "startTime": "09:00",
+      "targetId": "1779317200492"
+    },
+    {
+      "id": "1779317232769",
+      "shift": "turno1",
+      "endTime": "21:00",
+      "role": "comision",
+      "agentId": "1779317212060",
+      "startTime": "09:00",
+      "targetId": "1779317200492"
+    },
+    {
+      "id": "1779453593306",
+      "shift": "turno1",
+      "endTime": "21:00",
+      "role": "garita",
+      "agentId": "59",
+      "startTime": "09:00",
+      "targetId": "g3"
+    },
+    {
+      "id": "1779453729061",
+      "shift": "turno1",
+      "endTime": "21:00",
+      "agentId": "30",
+      "role": "movil",
+      "targetId": "m2",
+      "startTime": "09:00"
+    },
+    {
+      "id": "1779453733512",
+      "shift": "turno1",
+      "endTime": "21:00",
+      "agentId": "1779295111354",
+      "role": "movil",
+      "targetId": "m2",
+      "startTime": "09:00"
+    },
+    {
+      "id": "1779453768012",
+      "shift": "turno1",
+      "endTime": "21:00",
+      "startTime": "09:00",
+      "agentId": "1779294915700",
+      "role": "no_disponible"
+    },
+    {
+      "id": "1779453813678",
+      "agentId": "1779295305814",
+      "role": "vacaciones",
+      "startTime": "09:00",
+      "shift": "turno1",
+      "endTime": "21:00"
+    },
+    {
+      "id": "1779453842342",
+      "startTime": "09:00",
+      "agentId": "1",
+      "role": "no_disponible",
+      "shift": "turno1",
+      "endTime": "21:00"
+    },
+    {
+      "id": "1779626874713",
+      "role": "movil",
+      "agentId": "1779295084467",
+      "startTime": "09:00",
+      "targetId": "m6",
+      "shift": "turno1",
+      "endTime": "21:00"
+    },
+    {
+      "id": "1779627196273",
+      "startTime": "09:00",
+      "targetId": "q1",
+      "role": "caminante",
+      "agentId": "20",
+      "shift": "turno1",
+      "endTime": "21:00"
+    },
+    {
+      "id": "1779627308618",
+      "startTime": "09:00",
+      "targetId": "m4",
+      "role": "movil",
+      "agentId": "33",
+      "shift": "turno1",
+      "endTime": "21:00"
+    },
+    {
+      "id": "1779627323413",
+      "startTime": "09:00",
+      "targetId": "m4",
+      "agentId": "1779295058689",
+      "role": "movil",
+      "shift": "turno1",
+      "endTime": "21:00"
+    },
+    {
+      "id": "1779798417817",
+      "targetId": "g1",
+      "startTime": "09:00",
+      "agentId": "1779295072626",
+      "role": "garita",
+      "shift": "turno1",
+      "endTime": "21:00"
+    },
+    {
+      "id": "1779798427253",
+      "role": "ausente",
+      "agentId": "1779627150558",
+      "startTime": "09:00",
+      "shift": "turno1",
+      "endTime": "21:00"
+    },
+    {
+      "id": "1779798462438",
+      "shift": "turno1",
+      "endTime": "21:00",
+      "role": "garita",
+      "agentId": "44",
+      "startTime": "09:00",
+      "targetId": "ga_1776349746418_gd9tooekh"
+    },
+    {
+      "id": "1779798497110",
+      "role": "garita",
+      "agentId": "25",
+      "startTime": "09:00",
+      "targetId": "ga_1776349746416_b21lpzkb7",
+      "shift": "turno1",
+      "endTime": "21:00"
+    },
+    {
+      "id": "1779798538147",
+      "targetId": "g8",
+      "startTime": "09:00",
+      "agentId": "1779294999224",
+      "role": "garita",
+      "shift": "turno1",
+      "endTime": "21:00"
+    },
+    {
+      "id": "1779798552763",
+      "shift": "turno1",
+      "endTime": "21:00",
+      "targetId": "q8",
+      "startTime": "09:00",
+      "agentId": "5",
+      "role": "caminante"
+    },
+    {
+      "id": "1779798568072",
+      "startTime": "09:00",
+      "targetId": "q8",
+      "role": "caminante",
+      "agentId": "1779294881647",
+      "shift": "turno1",
+      "endTime": "21:00"
+    },
+    {
+      "id": "1779798573699",
+      "agentId": "14",
+      "role": "ausente",
+      "startTime": "09:00",
+      "shift": "turno1",
+      "endTime": "21:00"
+    },
+    {
+      "id": "1779798578093",
+      "shift": "turno1",
+      "endTime": "21:00",
+      "targetId": "ga_1776349746416_99chq163f",
+      "startTime": "09:00",
+      "agentId": "53",
+      "role": "garita"
+    },
+    {
+      "id": "1779798644880",
+      "agentId": "6",
+      "role": "caminante",
+      "targetId": "q2",
+      "startTime": "09:00",
+      "shift": "turno1",
+      "endTime": "21:00"
+    },
+    {
+      "id": "1779798661069",
+      "agentId": "23",
+      "role": "caminante",
+      "targetId": "q2",
+      "startTime": "09:00",
+      "shift": "turno1",
+      "endTime": "21:00"
+    },
+    {
+      "id": "1779798678779",
+      "agentId": "1779294985434",
+      "role": "garita",
+      "targetId": "ga_1776349746417_49b9iqjk0",
+      "startTime": "09:00",
+      "shift": "turno1",
+      "endTime": "21:00"
+    },
+    {
+      "id": "1779798698117",
+      "shift": "turno1",
+      "endTime": "21:00",
+      "agentId": "58",
+      "role": "garita",
+      "targetId": "g17",
+      "startTime": "09:00"
+    },
+    {
+      "id": "1779798717065",
+      "startTime": "09:00",
+      "targetId": "q1",
+      "agentId": "2",
+      "role": "caminante",
+      "shift": "turno1",
+      "endTime": "21:00"
+    },
+    {
+      "id": "1779798792571",
+      "shift": "turno1",
+      "endTime": "21:00",
+      "role": "caminante",
+      "agentId": "10",
+      "startTime": "09:00",
+      "targetId": "q6"
+    },
+    {
+      "id": "1779798811012",
+      "shift": "turno1",
+      "endTime": "21:00",
+      "agentId": "1779627185149",
+      "role": "caminante",
+      "targetId": "q6",
+      "startTime": "09:00"
+    },
+    {
+      "id": "1779798828946",
+      "shift": "turno1",
+      "endTime": "21:00",
+      "agentId": "8",
+      "role": "caminante",
+      "targetId": "q5",
+      "startTime": "09:00"
+    },
+    {
+      "id": "1779798844237",
+      "role": "caminante",
+      "agentId": "1779627479096",
+      "startTime": "09:00",
+      "targetId": "q5",
+      "shift": "turno1",
+      "endTime": "21:00"
+    },
+    {
+      "id": "1779798865885",
+      "shift": "turno1",
+      "endTime": "21:00",
+      "agentId": "1779295022612",
+      "role": "garita",
+      "targetId": "g14",
+      "startTime": "09:00"
+    },
+    {
+      "id": "1779798874253",
+      "agentId": "49",
+      "role": "garita",
+      "targetId": "g14",
+      "startTime": "09:00",
+      "shift": "turno1",
+      "endTime": "21:00"
+    },
+    {
+      "id": "1779798878819",
+      "shift": "turno1",
+      "endTime": "21:00",
+      "startTime": "09:00",
+      "role": "no_disponible",
+      "agentId": "7"
+    },
+    {
+      "id": "1779798896099",
+      "shift": "turno1",
+      "endTime": "21:00",
+      "startTime": "09:00",
+      "role": "vacaciones",
+      "agentId": "55"
+    },
+    {
+      "id": "1779798910684",
+      "shift": "turno1",
+      "endTime": "21:00",
+      "role": "garita",
+      "agentId": "56",
+      "startTime": "09:00",
+      "targetId": "g15"
+    },
+    {
+      "id": "1779798934773",
+      "startTime": "09:00",
+      "agentId": "1779301790911",
+      "role": "montada",
+      "shift": "turno1",
+      "endTime": "21:00"
+    },
+    {
+      "id": "1779798949101",
+      "shift": "turno1",
+      "endTime": "21:00",
+      "agentId": "1779315987016",
+      "role": "orden_servicio",
+      "targetId": "os_1776349746417_0taz2wrh6",
+      "startTime": "09:00"
+    },
+    {
+      "id": "1779798953258",
+      "role": "ausente",
+      "agentId": "54",
+      "startTime": "09:00",
+      "shift": "turno1",
+      "endTime": "21:00"
+    },
+    {
+      "id": "1779798962496",
+      "shift": "turno1",
+      "endTime": "21:00",
+      "targetId": "os_1776349746417_0taz2wrh6",
+      "startTime": "09:00",
+      "agentId": "13",
+      "role": "orden_servicio"
+    },
+    {
+      "id": "1779798967996",
+      "startTime": "09:00",
+      "role": "ausente",
+      "agentId": "9",
+      "shift": "turno1",
+      "endTime": "21:00"
+    },
+    {
+      "id": "1779798988260",
+      "shift": "turno1",
+      "endTime": "21:00",
+      "agentId": "1779302229716",
+      "role": "orden_servicio",
+      "targetId": "1779305022118",
+      "startTime": "09:00"
+    },
+    {
+      "id": "1779799123606",
+      "shift": "turno1",
+      "endTime": "21:00",
+      "agentId": "28",
+      "role": "caminante",
+      "targetId": "qt_1776349746418_6u1mhjdxt",
+      "startTime": "09:00"
+    },
+    {
+      "id": "1779799140991",
+      "agentId": "1779627168626",
+      "role": "caminante",
+      "startTime": "09:00",
+      "targetId": "qt_1776349746418_6u1mhjdxt",
+      "shift": "turno1",
+      "endTime": "21:00"
+    },
+    {
+      "id": "1779800307148",
+      "shift": "turno1",
+      "endTime": "21:00",
+      "startTime": "09:00",
+      "targetId": "q9",
+      "role": "caminante",
+      "agentId": "1779294951112"
+    },
+    {
+      "id": "1779800314120",
+      "shift": "turno1",
+      "endTime": "21:00",
+      "agentId": "1779294930607",
+      "role": "caminante",
+      "startTime": "09:00",
+      "targetId": "q9"
+    },
+    {
+      "id": "1779800372644",
+      "startTime": "09:00",
+      "targetId": "qt_1776349746419_5bkmq0lpo",
+      "agentId": "1779294962564",
+      "role": "caminante",
+      "shift": "turno1",
+      "endTime": "21:00"
+    },
+    {
+      "id": "1779800380716",
+      "targetId": "qt_1776349746419_5bkmq0lpo",
+      "startTime": "09:00",
+      "agentId": "1779294902634",
+      "role": "caminante",
+      "shift": "turno1",
+      "endTime": "21:00"
+    },
+    {
+      "id": "1779800407512",
+      "shift": "turno1",
+      "endTime": "21:00",
+      "role": "orden_servicio",
+      "agentId": "41",
+      "startTime": "09:00",
+      "targetId": "os_1776349746417_2jxz96hw5"
+    },
+    {
+      "id": "1779800429844",
+      "shift": "turno1",
+      "endTime": "21:00",
+      "agentId": "12",
+      "role": "garita",
+      "targetId": "g1",
+      "startTime": "09:00"
+    },
+    {
+      "id": "1779800440881",
+      "shift": "turno1",
+      "endTime": "21:00",
+      "agentId": "18",
+      "role": "garita",
+      "startTime": "09:00",
+      "targetId": "g3"
+    },
+    {
+      "id": "1779800487145",
+      "agentId": "1779301780862",
+      "role": "caminante",
+      "targetId": "q3",
+      "startTime": "09:00",
+      "shift": "turno1",
+      "endTime": "21:00"
+    },
+    {
+      "id": "1779800495589",
+      "agentId": "1779301774577",
+      "role": "caminante",
+      "targetId": "q3",
+      "startTime": "09:00",
+      "shift": "turno1",
+      "endTime": "21:00"
+    },
+    {
+      "id": "1779800511858",
+      "shift": "turno1",
+      "endTime": "21:00",
+      "startTime": "09:00",
+      "targetId": "1779317200492",
+      "agentId": "1779301743833",
+      "role": "comision"
+    },
+    {
+      "id": "1779800514445",
+      "shift": "turno1",
+      "endTime": "21:00",
+      "agentId": "1779301758476",
+      "role": "comision",
+      "targetId": "1779317200492",
+      "startTime": "09:00"
+    },
+    {
+      "id": "1779800543480",
+      "shift": "turno1",
+      "endTime": "21:00",
+      "role": "motorizada",
+      "agentId": "61",
+      "startTime": "09:00",
+      "targetId": "mo_1776349746420_s1kpoj4j2"
+    },
+    {
+      "id": "1779800560872",
+      "agentId": "62",
+      "role": "motorizada",
+      "startTime": "09:00",
+      "targetId": "mo_1776349746420_s1kpoj4j2",
+      "shift": "turno1",
+      "endTime": "21:00"
+    },
+    {
+      "id": "1779800650131",
+      "agentId": "60",
+      "role": "motorizada",
+      "targetId": "1779453915654",
+      "startTime": "09:00",
+      "shift": "turno1",
+      "endTime": "21:00"
+    },
+    {
+      "id": "1779800662103",
+      "shift": "turno1",
+      "endTime": "21:00",
+      "targetId": "mo4",
+      "startTime": "09:00",
+      "agentId": "64",
+      "role": "motorizada"
+    },
+    {
+      "id": "1779800832622",
+      "targetId": "m1",
+      "startTime": "09:00",
+      "agentId": "39",
+      "role": "movil",
+      "shift": "turno1",
+      "endTime": "21:00"
+    },
+    {
+      "id": "1779800856261",
+      "agentId": "27",
+      "role": "movil",
+      "startTime": "09:00",
+      "targetId": "m5",
+      "shift": "turno1",
+      "endTime": "21:00"
+    },
+    {
+      "id": "1779800859241",
+      "targetId": "m1",
+      "startTime": "09:00",
+      "agentId": "40",
+      "role": "movil",
+      "shift": "turno1",
+      "endTime": "21:00"
+    },
+    {
+      "id": "1779800888967",
+      "agentId": "37",
+      "role": "movil",
+      "targetId": "mo_1776349746420_2krz07te2",
+      "startTime": "09:00",
+      "shift": "turno1",
+      "endTime": "21:00"
+    },
+    {
+      "id": "1779800894295",
+      "shift": "turno1",
+      "endTime": "21:00",
+      "role": "movil",
+      "agentId": "38",
+      "startTime": "09:00",
+      "targetId": "mo_1776349746420_2krz07te2"
+    },
+    {
+      "id": "1779800900320",
+      "shift": "turno1",
+      "endTime": "21:00",
+      "targetId": "m5",
+      "startTime": "09:00",
+      "agentId": "34",
+      "role": "movil"
+    },
+    {
+      "id": "1779807989062",
+      "shift": "turno3",
+      "endTime": "21:00",
+      "targetId": "mo2_t3_552",
+      "startTime": "09:00",
+      "agentId": "180",
+      "role": "motorizada"
+    },
+    {
+      "id": "1779809002041",
+      "startTime": "09:00",
+      "agentId": "183",
+      "role": "ausente",
+      "shift": "turno3",
+      "endTime": "21:00"
+    },
+    {
+      "id": "187",
+      "shift": "turno4",
+      "endTime": "09:00",
+      "role": "movil",
+      "agentId": "190",
+      "startTime": "21:00",
+      "targetId": "m4_t4_584"
+    },
+    {
+      "id": "188",
+      "startTime": "21:00",
+      "targetId": "m4_t4_584",
+      "role": "movil",
+      "agentId": "191",
+      "shift": "turno4",
+      "endTime": "09:00"
+    },
+    {
+      "id": "189",
+      "agentId": "192",
+      "role": "movil",
+      "targetId": "m5_t4_913",
+      "startTime": "21:00",
+      "endTime": "09:00",
+      "shift": "turno4"
+    },
+    {
+      "id": "190",
+      "role": "movil",
+      "agentId": "193",
+      "startTime": "21:00",
+      "targetId": "m5_t4_913",
+      "endTime": "09:00",
+      "shift": "turno4"
+    },
+    {
+      "id": "191",
+      "endTime": "09:00",
+      "shift": "turno4",
+      "startTime": "21:00",
+      "targetId": "mo_1776349746420_fxcsc8wds_t4_389",
+      "role": "movil",
+      "agentId": "194"
+    },
+    {
+      "id": "192",
+      "role": "movil",
+      "agentId": "195",
+      "targetId": "mo_1776349746420_fxcsc8wds_t4_389",
+      "startTime": "21:00",
+      "endTime": "09:00",
+      "shift": "turno4"
+    },
+    {
+      "id": "193",
+      "shift": "turno4",
+      "endTime": "09:00",
+      "startTime": "21:00",
+      "targetId": "mo_1776349746420_2krz07te2_t4_608",
+      "role": "movil",
+      "agentId": "196"
+    },
+    {
+      "id": "194",
+      "role": "movil",
+      "agentId": "197",
+      "startTime": "21:00",
+      "targetId": "mo_1776349746420_2krz07te2_t4_608",
+      "shift": "turno4",
+      "endTime": "09:00"
+    },
+    {
+      "id": "198",
+      "endTime": "09:00",
+      "shift": "turno4",
+      "agentId": "201",
+      "role": "garita",
+      "startTime": "21:00",
+      "targetId": "ga_1776349746416_fot7zmw9m_t4_248"
+    },
+    {
+      "id": "199",
+      "endTime": "09:00",
+      "shift": "turno4",
+      "agentId": "202",
+      "role": "garita",
+      "targetId": "ga_1776349746416_99chq163f_t4_164",
+      "startTime": "21:00"
+    },
+    {
+      "id": "200",
+      "agentId": "203",
+      "role": "garita",
+      "targetId": "g14_t4_933",
+      "startTime": "21:00",
+      "endTime": "09:00",
+      "shift": "turno4"
+    },
+    {
+      "id": "201",
+      "shift": "turno4",
+      "endTime": "09:00",
+      "startTime": "21:00",
+      "targetId": "g14_t4_933",
+      "role": "garita",
+      "agentId": "204"
+    },
+    {
+      "id": "202",
+      "endTime": "09:00",
+      "shift": "turno4",
+      "targetId": "ga_1776349746416_a176izq05_t4_290",
+      "startTime": "21:00",
+      "role": "garita",
+      "agentId": "205"
+    },
+    {
+      "id": "203",
+      "shift": "turno4",
+      "endTime": "09:00",
+      "role": "garita",
+      "agentId": "206",
+      "startTime": "21:00",
+      "targetId": "g15_t4_204"
+    },
+    {
+      "id": "204",
+      "endTime": "09:00",
+      "shift": "turno4",
+      "startTime": "21:00",
+      "targetId": "g15_t4_204",
+      "role": "garita",
+      "agentId": "207"
+    },
+    {
+      "id": "205",
+      "endTime": "09:00",
+      "shift": "turno4",
+      "role": "garita",
+      "agentId": "208",
+      "startTime": "21:00",
+      "targetId": "g8_t4_937"
+    },
+    {
+      "id": "206",
+      "role": "garita",
+      "agentId": "209",
+      "startTime": "21:00",
+      "targetId": "g8_t4_937",
+      "shift": "turno4",
+      "endTime": "09:00"
+    },
+    {
+      "id": "207",
+      "endTime": "09:00",
+      "shift": "turno4",
+      "agentId": "210",
+      "role": "garita",
+      "startTime": "21:00",
+      "targetId": "g9_t4_83"
+    },
+    {
+      "id": "208",
+      "startTime": "21:00",
+      "targetId": "g9_t4_83",
+      "role": "garita",
+      "agentId": "211",
+      "endTime": "09:00",
+      "shift": "turno4"
+    },
+    {
+      "id": "209",
+      "agentId": "212",
+      "role": "garita",
+      "startTime": "21:00",
+      "targetId": "g5_t4_189",
+      "endTime": "09:00",
+      "shift": "turno4"
+    },
+    {
+      "id": "210",
+      "agentId": "213",
+      "role": "garita",
+      "startTime": "21:00",
+      "targetId": "g5_t4_189",
+      "shift": "turno4",
+      "endTime": "09:00"
+    },
+    {
+      "id": "211",
+      "agentId": "214",
+      "role": "garita",
+      "startTime": "21:00",
+      "targetId": "g17_t4_863",
+      "shift": "turno4",
+      "endTime": "09:00"
+    },
+    {
+      "id": "212",
+      "endTime": "09:00",
+      "shift": "turno4",
+      "targetId": "g17_t4_863",
+      "startTime": "21:00",
+      "role": "garita",
+      "agentId": "215"
+    },
+    {
+      "id": "213",
+      "shift": "turno4",
+      "endTime": "09:00",
+      "role": "garita",
+      "agentId": "216",
+      "targetId": "g18_t4_62",
+      "startTime": "21:00"
+    },
+    {
+      "id": "214",
+      "targetId": "g18_t4_62",
+      "startTime": "21:00",
+      "agentId": "217",
+      "role": "garita",
+      "endTime": "09:00",
+      "shift": "turno4"
+    },
+    {
+      "id": "215",
+      "agentId": "218",
+      "role": "garita",
+      "startTime": "21:00",
+      "targetId": "ga_1776349746416_yj479olwc_t4_532",
+      "shift": "turno4",
+      "endTime": "09:00"
+    },
+    {
+      "id": "216",
+      "agentId": "219",
+      "role": "garita",
+      "startTime": "21:00",
+      "targetId": "g1_t4_432",
+      "endTime": "09:00",
+      "shift": "turno4"
+    },
+    {
+      "id": "217",
+      "startTime": "21:00",
+      "targetId": "ga_1776349746416_bduxv0t7r_t4_503",
+      "role": "garita",
+      "agentId": "220",
+      "endTime": "09:00",
+      "shift": "turno4"
+    },
+    {
+      "id": "218",
+      "shift": "turno4",
+      "endTime": "09:00",
+      "role": "garita",
+      "agentId": "221",
+      "startTime": "21:00",
+      "targetId": "ga_1776349746416_bduxv0t7r_t4_503"
+    },
+    {
+      "id": "219",
+      "role": "garita",
+      "agentId": "222",
+      "targetId": "ga_1776349746416_bduxv0t7r_t4_503",
+      "startTime": "21:00",
+      "shift": "turno4",
+      "endTime": "09:00"
+    },
+    {
+      "id": "220",
+      "role": "garita",
+      "agentId": "223",
+      "startTime": "21:00",
+      "targetId": "ga_1776349746416_b21lpzkb7_t4_585",
+      "endTime": "09:00",
+      "shift": "turno4"
+    },
+    {
+      "id": "221",
+      "shift": "turno4",
+      "endTime": "09:00",
+      "agentId": "224",
+      "role": "garita",
+      "startTime": "21:00",
+      "targetId": "ga_1776349746416_b21lpzkb7_t4_585"
+    },
+    {
+      "id": "222",
+      "agentId": "225",
+      "role": "garita",
+      "targetId": "ga_1776349746416_9zncz8kl7_t4_55",
+      "startTime": "21:00",
+      "shift": "turno4",
+      "endTime": "09:00"
+    },
+    {
+      "id": "223",
+      "shift": "turno4",
+      "endTime": "09:00",
+      "role": "garita",
+      "agentId": "226",
+      "startTime": "21:00",
+      "targetId": "ga_1776349746417_49b9iqjk0_t4_484"
+    },
+    {
+      "id": "224",
+      "role": "garita",
+      "agentId": "227",
+      "startTime": "21:00",
+      "targetId": "ga_1776349746417_49b9iqjk0_t4_484",
+      "endTime": "09:00",
+      "shift": "turno4"
+    },
+    {
+      "id": "225",
+      "endTime": "09:00",
+      "shift": "turno4",
+      "role": "caminante",
+      "agentId": "228",
+      "startTime": "21:00",
+      "targetId": "qt_1776349746417_h64fyf7kn_t4_987"
+    },
+    {
+      "id": "226",
+      "endTime": "09:00",
+      "shift": "turno4",
+      "agentId": "229",
+      "role": "caminante",
+      "startTime": "21:00",
+      "targetId": "qt_1776349746417_jd6yoyins_t4_452"
+    },
+    {
+      "id": "227",
+      "startTime": "21:00",
+      "targetId": "qt_1776349746417_jbqy3aanb_t4_270",
+      "agentId": "230",
+      "role": "caminante",
+      "shift": "turno4",
+      "endTime": "09:00"
+    },
+    {
+      "id": "229",
+      "role": "comision",
+      "agentId": "232",
+      "targetId": "co_1776349746421_gers5m2vq_t4_932",
+      "startTime": "21:00",
+      "shift": "turno4",
+      "endTime": "09:00"
+    },
+    {
+      "id": "230",
+      "agentId": "233",
+      "role": "orden_servicio",
+      "targetId": "os_1776349746417_2jxz96hw5_t4_521",
+      "startTime": "21:00",
+      "endTime": "09:00",
+      "shift": "turno4"
+    },
+    {
+      "id": "231",
+      "agentId": "234",
+      "role": "orden_servicio",
+      "startTime": "21:00",
+      "targetId": "os_1776349746421_w4545v5s5_t4_936",
+      "shift": "turno4",
+      "endTime": "09:00"
+    },
+    {
+      "id": "232",
+      "shift": "turno4",
+      "endTime": "09:00",
+      "startTime": "21:00",
+      "targetId": "os_1776349746421_w4545v5s5_t4_936",
+      "role": "orden_servicio",
+      "agentId": "235"
+    },
+    {
+      "id": "233",
+      "role": "orden_servicio",
+      "agentId": "236",
+      "targetId": "os_1776349746417_0taz2wrh6_t4_982",
+      "startTime": "21:00",
+      "endTime": "09:00",
+      "shift": "turno4"
+    },
+    {
+      "id": "234",
+      "startTime": "21:00",
+      "targetId": "os_1776349746417_0taz2wrh6_t4_982",
+      "agentId": "237",
+      "role": "orden_servicio",
+      "endTime": "09:00",
+      "shift": "turno4"
+    },
+    {
+      "id": "235",
+      "role": "orden_servicio",
+      "agentId": "238",
+      "startTime": "21:00",
+      "targetId": "os_1776349746421_isctjcq88_t4_297",
+      "endTime": "09:00",
+      "shift": "turno4"
+    },
+    {
+      "id": "65",
+      "targetId": "mo_1776349746415_wutbne1zv_t2_933",
+      "startTime": "21:00",
+      "role": "movil",
+      "agentId": "68",
+      "shift": "turno2",
+      "endTime": "09:00"
+    },
+    {
+      "id": "66",
+      "startTime": "21:00",
+      "targetId": "mo_1776349746415_wutbne1zv_t2_933",
+      "agentId": "69",
+      "role": "movil",
+      "shift": "turno2",
+      "endTime": "09:00"
+    },
+    {
+      "id": "67",
+      "endTime": "09:00",
+      "shift": "turno2",
+      "agentId": "70",
+      "role": "movil",
+      "targetId": "m1_t2_883",
+      "startTime": "21:00"
+    },
+    {
+      "id": "68",
+      "endTime": "09:00",
+      "shift": "turno2",
+      "agentId": "71",
+      "role": "movil",
+      "startTime": "21:00",
+      "targetId": "m1_t2_883"
+    },
+    {
+      "id": "69",
+      "shift": "turno2",
+      "endTime": "09:00",
+      "startTime": "21:00",
+      "targetId": "m2_t2_814",
+      "agentId": "72",
+      "role": "movil"
+    },
+    {
+      "id": "70",
+      "shift": "turno2",
+      "endTime": "09:00",
+      "targetId": "m2_t2_814",
+      "startTime": "21:00",
+      "agentId": "73",
+      "role": "movil"
+    },
+    {
+      "id": "71",
+      "agentId": "74",
+      "role": "movil",
+      "startTime": "21:00",
+      "targetId": "m4_t2_410",
+      "endTime": "09:00",
+      "shift": "turno2"
+    },
+    {
+      "id": "72",
+      "shift": "turno2",
+      "endTime": "09:00",
+      "targetId": "m4_t2_410",
+      "startTime": "21:00",
+      "role": "movil",
+      "agentId": "75"
+    },
+    {
+      "id": "73",
+      "agentId": "76",
+      "role": "movil",
+      "startTime": "21:00",
+      "targetId": "m5_t2_71",
+      "shift": "turno2",
+      "endTime": "09:00"
+    },
+    {
+      "id": "74",
+      "role": "movil",
+      "agentId": "77",
+      "targetId": "m5_t2_71",
+      "startTime": "21:00",
+      "endTime": "09:00",
+      "shift": "turno2"
+    },
+    {
+      "id": "75",
+      "endTime": "09:00",
+      "shift": "turno2",
+      "role": "movil",
+      "agentId": "78",
+      "startTime": "21:00",
+      "targetId": "mo_1776349746415_0g86mx3vc_t2_370"
+    },
+    {
+      "id": "76",
+      "endTime": "09:00",
+      "shift": "turno2",
+      "startTime": "21:00",
+      "targetId": "mo_1776349746415_0g86mx3vc_t2_370",
+      "role": "movil",
+      "agentId": "79"
+    },
+    {
+      "id": "77",
+      "endTime": "09:00",
+      "shift": "turno2",
+      "startTime": "21:00",
+      "targetId": "mo_1776349746415_h1nj3yy26_t2_17",
+      "agentId": "80",
+      "role": "movil"
+    },
+    {
+      "id": "78",
+      "shift": "turno2",
+      "endTime": "09:00",
+      "targetId": "mo_1776349746415_h1nj3yy26_t2_17",
+      "startTime": "21:00",
+      "role": "movil",
+      "agentId": "81"
+    },
+    {
+      "id": "82",
+      "shift": "turno2",
+      "endTime": "09:00",
+      "startTime": "21:00",
+      "targetId": "ga_1776349746416_99chq163f_t2_151",
+      "agentId": "85",
+      "role": "garita"
+    },
+    {
+      "id": "83",
+      "shift": "turno2",
+      "endTime": "09:00",
+      "agentId": "86",
+      "role": "garita",
+      "startTime": "21:00",
+      "targetId": "ga_1776349746416_99chq163f_t2_151"
+    },
+    {
+      "id": "84",
+      "shift": "turno2",
+      "endTime": "09:00",
+      "agentId": "87",
+      "role": "garita",
+      "startTime": "21:00",
+      "targetId": "ga_1776349746416_rkotemj6q_t2_152"
+    },
+    {
+      "id": "85",
+      "role": "garita",
+      "agentId": "88",
+      "startTime": "21:00",
+      "targetId": "ga_1776349746416_a176izq05_t2_808",
+      "shift": "turno2",
+      "endTime": "09:00"
+    },
+    {
+      "id": "86",
+      "endTime": "09:00",
+      "shift": "turno2",
+      "role": "garita",
+      "agentId": "89",
+      "startTime": "21:00",
+      "targetId": "g15_t2_217"
+    },
+    {
+      "id": "87",
+      "startTime": "21:00",
+      "targetId": "g8_t2_70",
+      "role": "garita",
+      "agentId": "90",
+      "endTime": "09:00",
+      "shift": "turno2"
+    },
+    {
+      "id": "89",
+      "endTime": "09:00",
+      "shift": "turno2",
+      "role": "garita",
+      "agentId": "92",
+      "startTime": "21:00",
+      "targetId": "g5_t2_118"
+    },
+    {
+      "id": "90",
+      "agentId": "93",
+      "role": "garita",
+      "targetId": "g5_t2_118",
+      "startTime": "21:00",
+      "endTime": "09:00",
+      "shift": "turno2"
+    },
+    {
+      "id": "91",
+      "shift": "turno2",
+      "endTime": "09:00",
+      "targetId": "g17_t2_929",
+      "startTime": "21:00",
+      "agentId": "94",
+      "role": "garita"
+    },
+    {
+      "id": "92",
+      "targetId": "g17_t2_929",
+      "startTime": "21:00",
+      "agentId": "95",
+      "role": "garita",
+      "shift": "turno2",
+      "endTime": "09:00"
+    },
+    {
+      "id": "93",
+      "startTime": "21:00",
+      "targetId": "g18_t2_12",
+      "role": "garita",
+      "agentId": "96",
+      "shift": "turno2",
+      "endTime": "09:00"
+    },
+    {
+      "id": "94",
+      "role": "garita",
+      "agentId": "97",
+      "startTime": "21:00",
+      "targetId": "ga_1776349746416_yj479olwc_t2_794",
+      "endTime": "09:00",
+      "shift": "turno2"
+    },
+    {
+      "id": "95",
+      "startTime": "21:00",
+      "targetId": "ga_1776349746416_fot7zmw9m_t2_520",
+      "agentId": "98",
+      "role": "garita",
+      "shift": "turno2",
+      "endTime": "09:00"
+    },
+    {
+      "id": "96",
+      "targetId": "g1_t2_956",
+      "startTime": "21:00",
+      "role": "garita",
+      "agentId": "99",
+      "shift": "turno2",
+      "endTime": "09:00"
+    },
+    {
+      "id": "97",
+      "targetId": "ga_1776349746416_bduxv0t7r_t2_902",
+      "startTime": "21:00",
+      "agentId": "100",
+      "role": "garita",
+      "shift": "turno2",
+      "endTime": "09:00"
+    },
+    {
+      "id": "98",
+      "shift": "turno2",
+      "endTime": "09:00",
+      "agentId": "101",
+      "role": "garita",
+      "startTime": "21:00",
+      "targetId": "ga_1776349746416_bduxv0t7r_t2_902"
+    },
+    {
+      "id": "99",
+      "endTime": "09:00",
+      "shift": "turno2",
+      "startTime": "21:00",
+      "targetId": "ga_1776349746416_b21lpzkb7_t2_415",
+      "role": "garita",
+      "agentId": "102"
+    }
+  ]
+}
