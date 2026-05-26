@@ -73,6 +73,20 @@ function Dashboard() {
   const [currentTime, setCurrentTime] = useState(new Date());
   const [dragOverTarget, setDragOverTarget] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
+  const [reportIncludeHeader, setReportIncludeHeader] = useState(true);
+  const [reportSections, setReportSections] = useState({
+    base: true,
+    garita: true,
+    movil: true,
+    motorizada: true,
+    caminante: true,
+    orden_servicio: true,
+    comision: true,
+    disponibles: false,
+    ausentes: false,
+    no_disponibles: false,
+    vacaciones: false
+  });
   const [lastCleared, setLastCleared] = useState<{ role: RoleType, shift: Shift, schedules: Schedule[] } | null>(null);
   const [showScrollTop, setShowScrollTop] = useState(false);
 
@@ -546,53 +560,132 @@ function Dashboard() {
       return a ? a.name : '';
     };
 
-    let text = `*S.S.R.A.S II - E.P.D.S. ALTE. BROWN-U.P.P.L. ALTE. BROWN.* -
-*CCA: PCIR INFORME*
-LLEVO A CONOCIMIENTO SR JEFE QUE ESTA UPPL CUENTA EN EL DIA DE LA FECHA CON LA SIGUIENTE DISTRIBUCION DEL PERSONAL: 
-*Dependencia: U.P.P.L Almirante Brown. Turno: ${shiftNumber}-*
-Fecha: ${dayName} ${formattedDate} ${shiftTimes} horas. - 
-Ofl. de control: ${getAgentName('ofl_control')}
-Ofl. de servicio: ${getAgentName('ofl_servicio')}
-Operaciones: ${getAgentName('operaciones')}
-Ayte. de guardia: ${getAgentName('ayte_guardia')}
+    let text = '';
 
-`;
+    if (reportIncludeHeader) {
+      text += `*S.S.R.A.S II - E.P.D.S. ALTE. BROWN-U.P.P.L. ALTE. BROWN.* -\n`;
+      text += `*CCA: PCIR INFORME*\n`;
+      text += `LLEVO A CONOCIMIENTO SR JEFE QUE ESTA UPPL CUENTA EN EL DIA DE LA FECHA CON LA SIGUIENTE DISTRIBUCION DEL PERSONAL: \n`;
+    }
+    text += `*Dependencia: U.P.P.L Almirante Brown. Turno: ${shiftNumber}-*\n`;
+    text += `Fecha: ${dayName} ${formattedDate} ${shiftTimes} horas. - \n`;
+    if (reportSections.base) {
+      text += `Ofl. de control: ${getAgentName('ofl_control')}\n`;
+      text += `Ofl. de servicio: ${getAgentName('ofl_servicio')}\n`;
+      text += `Operaciones: ${getAgentName('operaciones')}\n`;
+      text += `Ayte. de guardia: ${getAgentName('ayte_guardia')}\n`;
+    }
+    text += `\n`;
 
-    const rolesToInclude = [
-      { id: 'garita', title: 'MÓDULOS', items: filterByShift(state.infrastructure.garitas) },
-      { id: 'movil', title: 'MÓVILES', items: filterByShift(state.infrastructure.moviles) },
-      { id: 'motorizada', title: 'MOTOS', items: filterByShift(state.infrastructure.motos) },
-      { id: 'caminante', title: 'CAMINANTES', items: filterByShift(state.infrastructure.qths) },
-      { id: 'orden_servicio', title: 'ÓRDENES DE SERVICIO', items: filterByShift(state.infrastructure.ordenes) },
-      { id: 'comision', title: 'COMISIONES', items: filterByShift(state.infrastructure.comisiones) }
-    ];
-
-    rolesToInclude.forEach(roleGroup => {
-      const schedulesForRole = currentSchedules.filter(s => s.role === roleGroup.id);
-      if (schedulesForRole.length === 0) return;
-
-      text += `${roleGroup.title}:\n`;
-
-      roleGroup.items.forEach(item => {
-        const occupants = schedulesForRole.filter(s => s.targetId === item.id);
+    // 1. BASE SECTION
+    if (reportSections.base) {
+      const baseRoles = [
+        { id: 'ofl_control', label: 'Ofl. de control' },
+        { id: 'ofl_servicio', label: 'Ofl. de servicio' },
+        { id: 'operaciones', label: 'Operaciones' },
+        { id: 'ayte_guardia', label: 'Ayte. de guardia' },
+        { id: 'logistica', label: 'Logística' },
+        { id: 'personal', label: 'Personal' },
+        { id: 'judiciales', label: 'Judiciales' }
+      ];
+      
+      let baseText = '';
+      baseRoles.forEach(roleInfo => {
+        const occupants = currentSchedules.filter(s => s.role === roleInfo.id);
         if (occupants.length > 0) {
-          let itemName = item.name;
-          if (roleGroup.id === 'orden_servicio') itemName = `OS ${(item as any).numero} - ${(item as any).ubicacion}`;
-          else if ((item as any).ro) itemName += ` (${(item as any).ro})`;
-
-          text += `  - ${itemName}:\n`;
           occupants.forEach(occ => {
             const agent = state.agents.find(a => a.id === occ.agentId);
             if (agent) {
-              const isHabitual = (occ.startTime === '09:00' && occ.endTime === '21:00') || (occ.startTime === '21:00' && occ.endTime === '09:00');
-              const scheduleText = isHabitual ? '' : ` (${occ.startTime} - ${occ.endTime})`;
-              text += `      * ${agent.name}${scheduleText}\n`;
+              baseText += `  - ${roleInfo.label}: ${agent.name}\n`;
             }
           });
         }
       });
-      text += `\n`;
+      if (baseText) {
+        text += `BASE:\n${baseText}\n`;
+      }
+    }
+
+    // 2. INFRASTRUCTURE SECTIONS
+    const infraRoles = [
+      { key: 'garita', id: 'garita', title: 'MÓDULOS', items: filterByShift(state.infrastructure.garitas) },
+      { key: 'movil', id: 'movil', title: 'MÓVILES', items: filterByShift(state.infrastructure.moviles) },
+      { key: 'motorizada', id: 'motorizada', title: 'MOTOS', items: filterByShift(state.infrastructure.motos) },
+      { key: 'caminante', id: 'caminante', title: 'CAMINANTES', items: filterByShift(state.infrastructure.qths) },
+      { key: 'orden_servicio', id: 'orden_servicio', title: 'ÓRDENES DE SERVICIO', items: filterByShift(state.infrastructure.ordenes) },
+      { key: 'comision', id: 'comision', title: 'COMISIONES', items: filterByShift(state.infrastructure.comisiones) }
+    ];
+
+    infraRoles.forEach(roleGroup => {
+      if (reportSections[roleGroup.key as keyof typeof reportSections]) {
+        const schedulesForRole = currentSchedules.filter(s => s.role === roleGroup.id);
+        let sectionText = '';
+
+        roleGroup.items.forEach(item => {
+          const occupants = schedulesForRole.filter(s => s.targetId === item.id);
+          if (occupants.length > 0) {
+            let itemName = item.name;
+            if (roleGroup.id === 'orden_servicio') itemName = `OS ${(item as any).numero} - ${(item as any).ubicacion}`;
+            else if ((item as any).ro) itemName += ` (${(item as any).ro})`;
+
+            sectionText += `  - ${itemName}:\n`;
+            occupants.forEach(occ => {
+              const agent = state.agents.find(a => a.id === occ.agentId);
+              if (agent) {
+                const isHabitual = (occ.startTime === '09:00' && occ.endTime === '21:00') || (occ.startTime === '21:00' && occ.endTime === '09:00');
+                const scheduleText = isHabitual ? '' : ` (${occ.startTime} - ${occ.endTime})`;
+                sectionText += `      * ${agent.name}${scheduleText}\n`;
+              }
+            });
+          }
+        });
+
+        if (sectionText) {
+          text += `${roleGroup.title}:\n${sectionText}\n`;
+        }
+      }
     });
+
+    // 3. AGENT STATUS SECTIONS
+    if (reportSections.disponibles) {
+      if (availableAgents.length > 0) {
+        text += `EFECTIVOS DISPONIBLES:\n`;
+        availableAgents.forEach(agent => {
+          text += `  - ${agent.name}\n`;
+        });
+        text += `\n`;
+      }
+    }
+
+    if (reportSections.ausentes) {
+      if (ausenteAgents.length > 0) {
+        text += `EFECTIVOS AUSENTES:\n`;
+        ausenteAgents.forEach(agent => {
+          text += `  - ${agent.name}\n`;
+        });
+        text += `\n`;
+      }
+    }
+
+    if (reportSections.no_disponibles) {
+      if (noDisponibleAgents.length > 0) {
+        text += `EFECTIVOS NO DISPONIBLES:\n`;
+        noDisponibleAgents.forEach(agent => {
+          text += `  - ${agent.name}\n`;
+        });
+        text += `\n`;
+      }
+    }
+
+    if (reportSections.vacaciones) {
+      if (vacacionesAgents.length > 0) {
+        text += `EFECTIVOS EN VACACIONES:\n`;
+        vacacionesAgents.forEach(agent => {
+          text += `  - ${agent.name}\n`;
+        });
+        text += `\n`;
+      }
+    }
 
     return text;
   };
@@ -624,83 +717,142 @@ Ayte. de guardia: ${getAgentName('ayte_guardia')}
         <head>
           <title>Informe de Dotaciones</title>
           <style>
-            @page { margin: 25mm; }
-            body { font-family: Arial, sans-serif; line-height: 1.15; color: #000; font-size: 11px; padding: 0 15px; }
+            @page { margin: 20mm; }
+            body { font-family: Arial, sans-serif; line-height: 1.2; color: #000; font-size: 11px; padding: 0 15px; }
             .header-container { border-bottom: 2px solid #000; padding-bottom: 10px; margin-bottom: 12px; }
             .header-logos { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px; }
             .header-logos img { height: 1.3cm; width: auto; object-fit: contain; }
             .header-text { font-weight: bold; white-space: pre-wrap; font-size: 11px; text-align: left; }
-            h2 { font-size: 12px; margin-top: 12px; margin-bottom: 8px; color: #000; border-bottom: 1px solid #aaa; padding-bottom: 3px; text-transform: uppercase; }
+            h2 { font-size: 12px; margin-top: 14px; margin-bottom: 6px; color: #000; border-bottom: 1px solid #aaa; padding-bottom: 3px; text-transform: uppercase; }
             .columns-container { column-count: 2; column-gap: 20px; }
             .item-container { margin-bottom: 6px; break-inside: avoid; page-break-inside: avoid; }
             .item-title { font-weight: bold; font-size: 11px; }
             .agent-list { margin: 2px 0 0 15px; padding-left: 15px; }
             .agent-item { font-size: 11px; }
+            .flat-list { margin: 4px 0 12px 10px; padding-left: 15px; }
+            .flat-item { font-size: 11px; margin-bottom: 3px; }
           </style>
         </head>
         <body>
-          <div class="header-container">
-            <div class="header-logos">
-              <img src="${logoMinisterio}" alt="Ministerio de Seguridad" />
-              <img src="${logoProvincia}" alt="Gobierno de la Provincia de Buenos Aires" />
-            </div>
-            <div class="header-text">S.S.R.A.S II - E.P.D.S. ALTE. BROWN-U.P.P.L. ALTE. BROWN. -
+    `;
+
+    html += `
+        <div class="header-container">
+          <div class="header-logos">
+            <img src="${logoMinisterio}" alt="Ministerio de Seguridad" />
+            <img src="${logoProvincia}" alt="Gobierno de la Provincia de Buenos Aires" />
+          </div>
+          <div class="header-text">${reportIncludeHeader ? `S.S.R.A.S II - E.P.D.S. ALTE. BROWN-U.P.P.L. ALTE. BROWN. -
 CCA: PCIR INFORME
-LLEVO A CONOCIMIENTO SR JEFE QUE ESTA UPPL CUENTA EN EL DIA DE LA FECHA CON LA SIGUIENTE DISTRIBUCION DEL PERSONAL: 
-Dependencia: U.P.P.L Almirante Brown. Turno: ${shiftNumber}-
-Fecha: ${dayName} ${formattedDate} ${shiftTimes} horas. - 
+LLEVO A CONOCIMIENTO SR JEFE QUE ESTA UPPL CUENTA EN EL DIA DE LA FECHA CON LA SIGUIENTE DISTRIBUCION DEL PERSONAL: \n` : ''}Dependencia: U.P.P.L Almirante Brown. Turno: ${shiftNumber}-
+Fecha: ${dayName} ${formattedDate} ${shiftTimes} horas. - ${reportSections.base ? `
 Ofl. de control: ${getAgentName('ofl_control')}
 Ofl. de servicio: ${getAgentName('ofl_servicio')}
 Operaciones: ${getAgentName('operaciones')}
-Ayte. de guardia: ${getAgentName('ayte_guardia')}</div>
-          </div>
+Ayte. de guardia: ${getAgentName('ayte_guardia')}` : ''}</div>
+        </div>
     `;
 
-    const rolesToInclude = [
-      { id: 'garita', title: 'MÓDULOS', items: filterByShift(state.infrastructure.garitas) },
-      { id: 'movil', title: 'MÓVILES', items: filterByShift(state.infrastructure.moviles) },
-      { id: 'motorizada', title: 'MOTOS', items: filterByShift(state.infrastructure.motos) },
-      { id: 'caminante', title: 'CAMINANTES', items: filterByShift(state.infrastructure.qths) },
-      { id: 'orden_servicio', title: 'ÓRDENES DE SERVICIO', items: filterByShift(state.infrastructure.ordenes) },
-      { id: 'comision', title: 'COMISIONES', items: filterByShift(state.infrastructure.comisiones) }
-    ];
+    // 1. BASE SECTION
+    if (reportSections.base) {
+      const baseRoles = [
+        { id: 'ofl_control', label: 'Ofl. de control' },
+        { id: 'ofl_servicio', label: 'Ofl. de servicio' },
+        { id: 'operaciones', label: 'Operaciones' },
+        { id: 'ayte_guardia', label: 'Ayte. de guardia' },
+        { id: 'logistica', label: 'Logística' },
+        { id: 'personal', label: 'Personal' },
+        { id: 'judiciales', label: 'Judiciales' }
+      ];
 
-    rolesToInclude.forEach(roleGroup => {
-      const schedulesForRole = currentSchedules.filter(s => s.role === roleGroup.id);
-      if (schedulesForRole.length === 0) return;
-
-      html += `<h2>${roleGroup.title}</h2>`;
-      
-      const isTwoColumns = roleGroup.id === 'garita' || roleGroup.id === 'caminante';
-      if (isTwoColumns) {
-        html += `<div class="columns-container">`;
-      }
-
-      roleGroup.items.forEach(item => {
-        const occupants = schedulesForRole.filter(s => s.targetId === item.id);
+      let baseHtml = '';
+      baseRoles.forEach(roleInfo => {
+        const occupants = currentSchedules.filter(s => s.role === roleInfo.id);
         if (occupants.length > 0) {
-          let itemName = item.name;
-          if (roleGroup.id === 'orden_servicio') itemName = `OS ${(item as any).numero} - ${(item as any).ubicacion}`;
-          else if ((item as any).ro) itemName += ` (${(item as any).ro})`;
-
-          html += `<div class="item-container">
-                     <div class="item-title">${itemName}</div>
-                     <ul class="agent-list">`;
           occupants.forEach(occ => {
             const agent = state.agents.find(a => a.id === occ.agentId);
             if (agent) {
-              const isHabitual = (occ.startTime === '09:00' && occ.endTime === '21:00') || (occ.startTime === '21:00' && occ.endTime === '09:00');
-              const scheduleText = isHabitual ? '' : ` (${occ.startTime} - ${occ.endTime})`;
-              html += `<li class="agent-item">${agent.name}${scheduleText}</li>`;
+              baseHtml += `<li class="flat-item"><strong>${roleInfo.label}:</strong> ${agent.name}</li>`;
             }
           });
-          html += `  </ul>
-                   </div>`;
         }
       });
-      
-      if (isTwoColumns) {
-        html += `</div>`;
+
+      if (baseHtml) {
+        html += `<h2>BASE</h2>
+                 <ul class="flat-list">
+                   ${baseHtml}
+                 </ul>`;
+      }
+    }
+
+    // 2. INFRASTRUCTURE SECTIONS
+    const rolesToInclude = [
+      { key: 'garita', id: 'garita', title: 'MÓDULOS', items: filterByShift(state.infrastructure.garitas) },
+      { key: 'movil', id: 'movil', title: 'MÓVILES', items: filterByShift(state.infrastructure.moviles) },
+      { key: 'motorizada', id: 'motorizada', title: 'MOTOS', items: filterByShift(state.infrastructure.motos) },
+      { key: 'caminante', id: 'caminante', title: 'CAMINANTES', items: filterByShift(state.infrastructure.qths) },
+      { key: 'orden_servicio', id: 'orden_servicio', title: 'ÓRDENES DE SERVICIO', items: filterByShift(state.infrastructure.ordenes) },
+      { key: 'comision', id: 'comision', title: 'COMISIONES', items: filterByShift(state.infrastructure.comisiones) }
+    ];
+
+    rolesToInclude.forEach(roleGroup => {
+      if (reportSections[roleGroup.key as keyof typeof reportSections]) {
+        const schedulesForRole = currentSchedules.filter(s => s.role === roleGroup.id);
+        if (schedulesForRole.length === 0) return;
+
+        html += `<h2>${roleGroup.title}</h2>`;
+        
+        const isTwoColumns = roleGroup.id === 'garita' || roleGroup.id === 'caminante';
+        if (isTwoColumns) {
+          html += `<div class="columns-container">`;
+        }
+
+        roleGroup.items.forEach(item => {
+          const occupants = schedulesForRole.filter(s => s.targetId === item.id);
+          if (occupants.length > 0) {
+            let itemName = item.name;
+            if (roleGroup.id === 'orden_servicio') itemName = `OS ${(item as any).numero} - ${(item as any).ubicacion}`;
+            else if ((item as any).ro) itemName += ` (${(item as any).ro})`;
+
+            html += `<div class="item-container">
+                       <div class="item-title">${itemName}</div>
+                       <ul class="agent-list">`;
+            occupants.forEach(occ => {
+              const agent = state.agents.find(a => a.id === occ.agentId);
+              if (agent) {
+                const isHabitual = (occ.startTime === '09:00' && occ.endTime === '21:00') || (occ.startTime === '21:00' && occ.endTime === '09:00');
+                const scheduleText = isHabitual ? '' : ` (${occ.startTime} - ${occ.endTime})`;
+                html += `<li class="agent-item">${agent.name}${scheduleText}</li>`;
+              }
+            });
+            html += `  </ul>
+                     </div>`;
+          }
+        });
+        
+        if (isTwoColumns) {
+          html += `</div>`;
+        }
+      }
+    });
+
+    // 3. AGENT STATUS SECTIONS
+    const statusGroups = [
+      { key: 'disponibles', title: 'EFECTIVOS DISPONIBLES', agents: availableAgents },
+      { key: 'ausentes', title: 'EFECTIVOS AUSENTES', agents: ausenteAgents },
+      { key: 'no_disponibles', title: 'EFECTIVOS NO DISPONIBLES', agents: noDisponibleAgents },
+      { key: 'vacaciones', title: 'EFECTIVOS EN VACACIONES', agents: vacacionesAgents }
+    ];
+
+    statusGroups.forEach(grp => {
+      if (reportSections[grp.key as keyof typeof reportSections] && grp.agents.length > 0) {
+        html += `<h2>${grp.title}</h2>
+                 <ul class="flat-list">`;
+        grp.agents.forEach(agent => {
+          html += `<li class="flat-item">${agent.name}</li>`;
+        });
+        html += `</ul>`;
       }
     });
 
@@ -1675,16 +1827,17 @@ Ayte. de guardia: ${getAgentName('ayte_guardia')}</div>
       {
         isReportModalOpen && (
           <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-[9998] p-4">
-            <div className="bg-slate-900 border border-slate-700 rounded-xl max-w-sm w-full p-6 shadow-2xl max-h-[85vh] overflow-y-auto relative z-[9999]">
+            <div className="bg-slate-900 border border-slate-700 rounded-xl max-w-md w-full p-6 shadow-2xl max-h-[85vh] overflow-y-auto relative z-[9999]">
               <div className="flex justify-between items-center mb-6 sticky top-0 bg-slate-900 z-10 pb-2 border-b border-slate-800">
                 <h2 className="text-xl font-bold text-white flex items-center">
-                  <Calendar className="mr-2 text-yellow-500" /> Fecha del Informe
+                  <FileText className="mr-2 text-yellow-500" /> Configurar Informe
                 </h2>
                 <button onClick={() => setIsReportModalOpen(false)} className="text-slate-400 hover:text-white transition-colors">
                   <X size={24} />
                 </button>
               </div>
-              <div className="mb-6">
+              
+              <div className="mb-4">
                 <label className="block text-sm font-medium text-slate-400 mb-2">Seleccione la fecha para el informe:</label>
                 <input
                   type="date"
@@ -1693,19 +1846,82 @@ Ayte. de guardia: ${getAgentName('ayte_guardia')}</div>
                   className="w-full bg-slate-800 border border-slate-700 rounded-lg p-3 text-white focus:border-yellow-500 outline-none"
                 />
               </div>
-              <div className="flex justify-end gap-3">
+
+              {/* Header selection */}
+              <div className="mb-4 border-t border-slate-800 pt-4">
+                <h3 className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-3">Encabezado</h3>
+                <label className="flex items-center gap-2.5 p-2 bg-slate-800/30 hover:bg-slate-800/60 rounded-lg cursor-pointer transition-all border border-slate-800/50 hover:border-slate-700/50 text-sm text-slate-200">
+                  <input
+                    type="checkbox"
+                    checked={reportIncludeHeader}
+                    onChange={(e) => setReportIncludeHeader(e.target.checked)}
+                    className="w-4 h-4 rounded text-yellow-600 focus:ring-yellow-500 bg-slate-700 border-slate-600"
+                  />
+                  <span>Incluir encabezado institucional</span>
+                </label>
+              </div>
+
+              {/* Sections selection */}
+              <div className="mb-6 border-t border-slate-800 pt-4">
+                <h3 className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-3">Secciones a Incluir</h3>
+                
+                <h4 className="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-2">Asignaciones / Distribución</h4>
+                <div className="grid grid-cols-2 gap-2 mb-4">
+                  {[
+                    { key: 'base', label: 'Base (Oficinas)' },
+                    { key: 'garita', label: 'Módulos (Garitas)' },
+                    { key: 'movil', label: 'Móviles' },
+                    { key: 'motorizada', label: 'Motos' },
+                    { key: 'caminante', label: 'Caminantes' },
+                    { key: 'orden_servicio', label: 'Órdenes de Servicio' },
+                    { key: 'comision', label: 'Comisiones' }
+                  ].map(sec => (
+                    <label key={sec.key} className="flex items-center gap-2.5 p-2 bg-slate-800/30 hover:bg-slate-800/60 rounded-lg cursor-pointer transition-all border border-slate-800/50 hover:border-slate-700/50 text-xs text-slate-200">
+                      <input
+                        type="checkbox"
+                        checked={reportSections[sec.key as keyof typeof reportSections]}
+                        onChange={(e) => setReportSections({ ...reportSections, [sec.key]: e.target.checked })}
+                        className="w-3.5 h-3.5 rounded text-yellow-600 focus:ring-yellow-500 bg-slate-700 border-slate-600"
+                      />
+                      <span>{sec.label}</span>
+                    </label>
+                  ))}
+                </div>
+
+                <h4 className="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-2">Estado del Personal</h4>
+                <div className="grid grid-cols-2 gap-2">
+                  {[
+                    { key: 'disponibles', label: 'Disponibles' },
+                    { key: 'ausentes', label: 'Ausentes / Franco' },
+                    { key: 'no_disponibles', label: 'No Disponibles' },
+                    { key: 'vacaciones', label: 'En Vacaciones' }
+                  ].map(sec => (
+                    <label key={sec.key} className="flex items-center gap-2.5 p-2 bg-slate-800/30 hover:bg-slate-800/60 rounded-lg cursor-pointer transition-all border border-slate-800/50 hover:border-slate-700/50 text-xs text-slate-200">
+                      <input
+                        type="checkbox"
+                        checked={reportSections[sec.key as keyof typeof reportSections]}
+                        onChange={(e) => setReportSections({ ...reportSections, [sec.key]: e.target.checked })}
+                        className="w-3.5 h-3.5 rounded text-yellow-600 focus:ring-yellow-500 bg-slate-700 border-slate-600"
+                      />
+                      <span>{sec.label}</span>
+                    </label>
+                  ))}
+                </div>
+              </div>
+
+              <div className="flex justify-end gap-3 border-t border-slate-800 pt-4 sticky bottom-0 bg-slate-900 z-10">
                 <button
                   onClick={() => setIsReportModalOpen(false)}
-                  className="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-white rounded-lg transition-colors"
+                  className="px-4 py-2.5 bg-slate-800 hover:bg-slate-700 text-white rounded-lg transition-colors text-sm"
                 >
                   Cancelar
                 </button>
                 <button
                   onClick={executeReportAction}
-                  className="px-4 py-2 bg-yellow-600 hover:bg-yellow-500 text-white font-bold rounded-lg transition-colors flex items-center"
+                  className="px-4 py-2.5 bg-yellow-600 hover:bg-yellow-500 text-white font-bold rounded-lg transition-colors flex items-center text-sm"
                 >
-                  {reportAction === 'copy' ? <ClipboardCopy size={18} className="mr-2" /> : <Printer size={18} className="mr-2" />}
-                  Confirmar
+                  {reportAction === 'copy' ? <ClipboardCopy size={16} className="mr-2" /> : <Printer size={16} className="mr-2" />}
+                  {reportAction === 'copy' ? 'Copiar Informe' : 'Generar PDF'}
                 </button>
               </div>
             </div>
