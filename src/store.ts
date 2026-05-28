@@ -49,7 +49,8 @@ export function useStore() {
             ...data,
             nombre,
             apellido,
-            localidad: data.localidad || ''
+            localidad: data.localidad || '',
+            jerarquia: (data.jerarquia || '').toUpperCase()
           } as Agent;
         })
         .filter(agent => !agent.isDeleted)
@@ -133,14 +134,18 @@ export function useStore() {
       marcaArmamento,
       modeloArmamento,
       nroSerieArmamento,
-      jerarquia,
+      jerarquia: (jerarquia || '').toUpperCase(),
       escalafon
     };
     setDoc(doc(db, 'agents', id), newAgent).catch(console.error);
   };
 
   const updateAgent = (id: string, updates: Partial<Agent>) => {
-    updateDoc(doc(db, 'agents', id), updates).catch(console.error);
+    const finalUpdates = { ...updates };
+    if (finalUpdates.jerarquia !== undefined) {
+      finalUpdates.jerarquia = finalUpdates.jerarquia.toUpperCase();
+    }
+    updateDoc(doc(db, 'agents', id), finalUpdates).catch(console.error);
   };
 
   const removeAgent = async (id: string) => {

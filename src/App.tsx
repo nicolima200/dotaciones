@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import JSZip from 'jszip';
 import { useStore } from './store';
 import { Shift, RoleType, Agent, Schedule, InfrastructureItem, Infrastructure } from './types';
 import { Shield, MapPin, Car, Bike, Mail, Users, Download, Upload, Settings, Calendar, Clock, X, Plus, Trash2, AlertCircle, ClipboardList, UserMinus, ClipboardCopy, Printer, Check, FileText, Undo2, LogOut, ArrowUp, Search, ChevronUp, ChevronDown, Edit2, Menu, RefreshCw } from 'lucide-react';
@@ -15,22 +16,22 @@ import { signOut } from 'firebase/auth';
 import logoMinisterio from './assets/logo_ministerio.png';
 import logoProvincia from './assets/logo_provincia.png';
 const validRanks = [
-  'Crio. Gral.',
-  'Crio. Mayor',
-  'Crio. Insp.',
-  'Crio.',
-  'Subcrio.',
-  'Ppal.',
+  'CRIO. GRAL.',
+  'CRIO. MAYOR',
+  'CRIO. INSP.',
+  'CRIO.',
+  'SUBCRIO.',
+  'PPAL.',
   'OI.',
   'OSI.',
   'OA.',
   'OSA.',
-  'Mayor',
-  'Cap.',
-  'Tte. 1ro.',
-  'Tte.',
-  'Subtte.',
-  'Sgto.',
+  'MAYOR',
+  'CAP.',
+  'TTE. 1RO.',
+  'TTE.',
+  'SUBTTE.',
+  'SGTO.',
   'OFL.'
 ];
 
@@ -74,6 +75,24 @@ function Dashboard() {
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isReportSubmenuOpen, setIsReportSubmenuOpen] = useState(false);
+  const [isNoteSubmenuOpen, setIsNoteSubmenuOpen] = useState(false);
+  const [isDJModalOpen, setIsDJModalOpen] = useState(false);
+  const [toastMessage, setToastMessage] = useState<string | null>(null);
+
+  // DJ ausente form states
+  const [djSelectedAgentId, setDjSelectedAgentId] = useState('');
+  const [djJerarquia, setDjJerarquia] = useState('');
+  const [djEscalafon, setDjEscalafon] = useState('');
+  const [djLegajo, setDjLegajo] = useState('');
+  const [djApellido, setDjApellido] = useState('');
+  const [djNombre, setDjNombre] = useState('');
+  const [djDomicilio, setDjDomicilio] = useState('');
+  const [djLocalidad, setDjLocalidad] = useState('');
+  const [djSearchQuery, setDjSearchQuery] = useState('');
+  const [isDjSearchDropdownOpen, setIsDjSearchDropdownOpen] = useState(false);
+  const [djJerarquiaError, setDjJerarquiaError] = useState<string | null>(null);
+  const [djEscalafonError, setDjEscalafonError] = useState<string | null>(null);
+
   const menuRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -89,6 +108,7 @@ function Dashboard() {
   useEffect(() => {
     if (!isMenuOpen) {
       setIsReportSubmenuOpen(false);
+      setIsNoteSubmenuOpen(false);
     }
   }, [isMenuOpen]);
 
@@ -136,6 +156,90 @@ function Dashboard() {
       setShowScrollTop(true);
     } else {
       setShowScrollTop(false);
+    }
+  };
+
+  const showToast = (message: string) => {
+    setToastMessage(message);
+    setTimeout(() => {
+      setToastMessage(prev => prev === message ? null : prev);
+    }, 4000);
+  };
+
+  const getEscalafonAbbrev = (esc: string) => {
+    switch (esc.toUpperCase()) {
+      case 'COMANDO': return 'CDO.';
+      case 'GENERAL': return 'E.G.';
+      case 'PROFESIONAL': return 'PROF.';
+      case 'TÉCNICO': return 'TEC.';
+      case 'ADMINISTRATIVO': return 'ADM.';
+      case 'SCIOS. GENERALES': return 'SCIOS. GLES.';
+      case 'EMERGENCIAS TELEFONICAS': return 'EM. TEL.';
+      default: return esc;
+    }
+  };
+
+  const handleGenerateDJ = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!djJerarquia || !djEscalafon || !djLegajo || !djApellido || !djNombre || !djDomicilio || !djLocalidad) {
+      alert("Por favor, complete todos los campos. Son obligatorios.");
+      return;
+    }
+
+    try {
+      const response = await fetch('/dj_ausente.docx');
+      if (!response.ok) {
+        throw new Error("No se pudo cargar la plantilla dj_ausente.docx.");
+      }
+      const arrayBuffer = await response.arrayBuffer();
+
+      const zip = await JSZip.loadAsync(arrayBuffer);
+
+      const docEntry = zip.file("word/document.xml");
+      if (!docEntry) {
+        throw new Error("El archivo de plantilla no tiene un formato válido (falta word/document.xml).");
+      }
+      let xmlText = await docEntry.async("string");
+
+      const finalJerarquia = djJerarquia.trim().toUpperCase();
+      const finalEscalafon = getEscalafonAbbrev(djEscalafon);
+      const finalLegajo = djLegajo.trim();
+      const finalApellido = djApellido.trim().toUpperCase();
+      const finalNombre = djNombre.trim().toUpperCase();
+      const finalDomicilio = djDomicilio.trim();
+      const finalLocalidad = djLocalidad.trim().toUpperCase();
+      
+      const months = [
+        "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
+        "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
+      ];
+      const today = new Date();
+      const finalFechaSubrayado = `${today.getDate()} de ${months[today.getMonth()]} de ${today.getFullYear()}`;
+      const finalAnio = today.getFullYear().toString();
+
+      xmlText = xmlText.replace(/\[JERARQUIA\]/g, finalJerarquia);
+      xmlText = xmlText.replace(/\[ESCALAFON\]/g, finalEscalafon);
+      xmlText = xmlText.replace(/\[LEGAJO\]/g, finalLegajo);
+      xmlText = xmlText.replace(/\[APELLIDO\]/g, finalApellido);
+      xmlText = xmlText.replace(/\[NOMBRES\]/g, finalNombre);
+      xmlText = xmlText.replace(/\[DOMICILIO\]/g, finalDomicilio);
+      xmlText = xmlText.replace(/\[LOCALIDAD\]/g, finalLocalidad);
+      xmlText = xmlText.replace(/\[FECHA_SUBRAYADO\]/g, finalFechaSubrayado);
+      xmlText = xmlText.replace(/\[ANIO\]/g, finalAnio);
+
+      zip.file("word/document.xml", xmlText);
+      const blob = await zip.generateAsync({ type: 'blob' });
+      
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = `DJ_Ausente_${finalApellido}_${finalLegajo}.docx`;
+      link.click();
+
+      setIsDJModalOpen(false);
+      showToast("Nota DJ ausente generada con éxito.");
+    } catch (err: any) {
+      console.error(err);
+      alert("Error al generar la nota: " + err.message);
     }
   };
 
@@ -1092,6 +1196,57 @@ Ayte. de guardia: ${getAgentName('ayte_guardia')}` : ''}</div>
                       >
                         <Printer size={16} className="text-slate-400" />
                         <span>PDF</span>
+                      </button>
+                    </div>
+                  )}
+
+                  <div className="h-px bg-slate-700 my-1"></div>
+
+                  {/* Generar nota collapsible menu option */}
+                  <button 
+                    onClick={(e) => { 
+                      e.stopPropagation(); 
+                      setIsNoteSubmenuOpen(!isNoteSubmenuOpen); 
+                    }} 
+                    className="flex items-center justify-between w-full px-4 py-3 hover:bg-slate-700 text-slate-200 transition-colors text-sm text-left"
+                  >
+                    <span className="flex items-center gap-3">
+                      <FileText size={18} className="text-slate-400" /> Generar nota
+                    </span>
+                    {isNoteSubmenuOpen ? <ChevronUp size={16} className="text-slate-400" /> : <ChevronDown size={16} className="text-slate-400" />}
+                  </button>
+                  
+                  {isNoteSubmenuOpen && (
+                    <div className="bg-slate-900/40 border-y border-slate-700/50 flex flex-col py-1">
+                      <button 
+                        onClick={() => { 
+                          setIsMenuOpen(false); 
+                          setDjSelectedAgentId('');
+                          setDjJerarquia('');
+                          setDjEscalafon('');
+                          setDjLegajo('');
+                          setDjApellido('');
+                          setDjNombre('');
+                          setDjDomicilio('');
+                          setDjLocalidad('');
+                          setDjSearchQuery('');
+                          setIsDjSearchDropdownOpen(false);
+                          setDjJerarquiaError(null);
+                          setDjEscalafonError(null);
+                          setIsDJModalOpen(true); 
+                        }} 
+                        className="flex items-center gap-3 pl-8 pr-4 py-2.5 hover:bg-slate-700 text-slate-300 hover:text-white transition-colors text-sm text-left"
+                      >
+                        <span>DJ ausente</span>
+                      </button>
+                      <button 
+                        onClick={() => { 
+                          setIsMenuOpen(false); 
+                          showToast("Función no disponible por el momento...");
+                        }} 
+                        className="flex items-center gap-3 pl-8 pr-4 py-2.5 hover:bg-slate-700 text-slate-300 hover:text-white transition-colors text-sm text-left"
+                      >
+                        <span>Retiro arma</span>
                       </button>
                     </div>
                   )}
@@ -2153,6 +2308,265 @@ Ayte. de guardia: ${getAgentName('ayte_guardia')}` : ''}</div>
         )
       }
 
+      {/* DJ Ausente Modal */}
+      {isDJModalOpen && (
+        <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-[9998] p-4">
+          <div className="bg-slate-900 border border-slate-700 rounded-xl max-w-lg w-full p-6 shadow-2xl max-h-[90vh] overflow-y-auto relative z-[9999]">
+            <div className="flex justify-between items-center mb-6 pb-2 border-b border-slate-800">
+              <h2 className="text-xl font-bold text-white flex items-center">
+                <FileText className="mr-2 text-yellow-500" /> Generar DJ Ausente
+              </h2>
+              <button 
+                onClick={() => setIsDJModalOpen(false)} 
+                className="text-slate-400 hover:text-white transition-colors"
+              >
+                <X size={24} />
+              </button>
+            </div>
+
+            {/* Agent Search Auto-fill */}
+            <div className="mb-5 relative">
+              <label className="block text-xs font-semibold text-slate-400 mb-1.5 uppercase tracking-wider">
+                Autocompletar con Efectivo
+              </label>
+              <div className="relative">
+                <input
+                  type="text"
+                  placeholder="Buscar efectivo por apellido, nombre o legajo..."
+                  value={djSearchQuery}
+                  onChange={(e) => {
+                    setDjSearchQuery(e.target.value);
+                    setIsDjSearchDropdownOpen(true);
+                  }}
+                  onFocus={() => setIsDjSearchDropdownOpen(true)}
+                  className="w-full bg-slate-800 border border-slate-700 rounded p-2.5 pl-9 text-white text-sm focus:outline-none focus:border-yellow-500 transition-colors"
+                />
+                <Search size={16} className="absolute left-3 top-3.5 text-slate-400" />
+                {djSearchQuery && (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setDjSearchQuery('');
+                      setIsDjSearchDropdownOpen(false);
+                    }}
+                    className="absolute right-3 top-3.5 text-slate-400 hover:text-white"
+                  >
+                    <X size={16} />
+                  </button>
+                )}
+              </div>
+
+              {isDjSearchDropdownOpen && djSearchQuery.trim().length > 0 && (
+                <div className="absolute w-full mt-1 bg-slate-800 border border-slate-700 rounded-lg shadow-xl max-h-48 overflow-y-auto z-[10000]">
+                  {state.agents
+                    .filter((a: Agent) => {
+                      const searchStr = `${a.apellido || ''} ${a.nombre || ''} ${a.name || ''} ${a.legajo || ''}`.toLowerCase();
+                      return searchStr.includes(djSearchQuery.toLowerCase());
+                    })
+                    .slice(0, 5)
+                    .map((a: Agent) => (
+                      <button
+                        key={a.id}
+                        type="button"
+                        onClick={() => {
+                          setDjSelectedAgentId(a.id);
+                          setDjJerarquia(a.jerarquia || '');
+                          setDjEscalafon(a.escalafon || '');
+                          setDjLegajo(a.legajo || '');
+                          setDjApellido(a.apellido || '');
+                          setDjNombre(a.nombre || '');
+                          setDjDomicilio(a.domicilio || '');
+                          setDjLocalidad(a.localidad || '');
+                          setDjSearchQuery('');
+                          setIsDjSearchDropdownOpen(false);
+                          setDjJerarquiaError(null);
+                          setDjEscalafonError(null);
+                        }}
+                        className="w-full text-left px-4 py-2 hover:bg-slate-700 text-slate-200 hover:text-white transition-colors text-sm border-b border-slate-700/50 last:border-0"
+                      >
+                        <div className="font-semibold">
+                          {a.jerarquia ? `${a.jerarquia} ` : ''}{a.apellido || ''} {a.nombre || a.name || ''}
+                        </div>
+                        <div className="text-xs text-slate-400">
+                          Legajo: {a.legajo || 'N/A'} | Escalafón: {a.escalafon || 'N/A'}
+                        </div>
+                      </button>
+                    ))}
+                  {state.agents.filter((a: Agent) => {
+                    const searchStr = `${a.apellido || ''} ${a.nombre || ''} ${a.name || ''} ${a.legajo || ''}`.toLowerCase();
+                    return searchStr.includes(djSearchQuery.toLowerCase());
+                  }).length === 0 && (
+                    <div className="px-4 py-3 text-sm text-slate-400 italic text-center">
+                      No se encontraron efectivos
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
+
+            <div className="h-px bg-slate-800 my-4"></div>
+
+            <form onSubmit={handleGenerateDJ} className="space-y-4">
+              {/* Jerarquía and Legajo */}
+              <div className="grid grid-cols-[130px_1fr] gap-3">
+                <div>
+                  <label className="block text-xs text-slate-500 mb-1">Jerarquía</label>
+                  <input
+                    type="text"
+                    list="dj-ranks-list"
+                    value={djJerarquia}
+                    onChange={(e) => {
+                      setDjJerarquia(e.target.value.toUpperCase());
+                      setDjJerarquiaError(null);
+                    }}
+                    onBlur={() => {
+                      const t = djJerarquia.trim().toUpperCase();
+                      if (t !== '' && !validRanks.includes(t)) {
+                        setDjJerarquia('');
+                        setDjJerarquiaError('Invalido');
+                      } else {
+                        setDjJerarquiaError(null);
+                      }
+                    }}
+                    className={`w-full bg-slate-800 border ${
+                      djJerarquiaError ? 'border-red-500 ring-1 ring-red-500' : 'border-slate-700'
+                    } rounded p-2 text-white text-sm`}
+                    placeholder="Elegir..."
+                    required
+                  />
+                  <datalist id="dj-ranks-list">
+                    {validRanks.map((r) => (
+                      <option key={r} value={r} />
+                    ))}
+                  </datalist>
+                </div>
+                <div>
+                  <label className="block text-xs text-slate-500 mb-1">Legajo</label>
+                  <input
+                    type="text"
+                    value={djLegajo}
+                    onChange={(e) => setDjLegajo(e.target.value.replace(/\D/g, ''))}
+                    className="w-full bg-slate-800 border border-slate-700 rounded p-2 text-white text-sm"
+                    placeholder="Legajo..."
+                    required
+                  />
+                </div>
+              </div>
+
+              {/* Escalafón */}
+              <div>
+                <label className="block text-xs text-slate-500 mb-1">Escalafón</label>
+                <input
+                  type="text"
+                  list="dj-branches-list"
+                  value={djEscalafon}
+                  onChange={(e) => {
+                    setDjEscalafon(e.target.value);
+                    setDjEscalafonError(null);
+                  }}
+                  onBlur={() => {
+                    const t = djEscalafon.trim();
+                    if (t !== '' && !validEscalafones.includes(t)) {
+                      setDjEscalafon('');
+                      setDjEscalafonError('Escalafón no válido');
+                    } else {
+                      setDjEscalafonError(null);
+                    }
+                  }}
+                  className={`w-full bg-slate-800 border ${
+                    djEscalafonError ? 'border-red-500 ring-1 ring-red-500' : 'border-slate-700'
+                  } rounded p-2 text-white text-sm`}
+                  placeholder="Escalafón..."
+                  required
+                />
+                <datalist id="dj-branches-list">
+                  {validEscalafones.map((b) => (
+                    <option key={b} value={b} />
+                  ))}
+                </datalist>
+              </div>
+
+              {/* Apellido and Nombre */}
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label className="block text-xs text-slate-500 mb-1">Apellido/s</label>
+                  <input
+                    type="text"
+                    value={djApellido}
+                    onChange={(e) => setDjApellido(e.target.value)}
+                    className="w-full bg-slate-800 border border-slate-700 rounded p-2 text-white text-sm"
+                    placeholder="Apellido..."
+                    required
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs text-slate-500 mb-1">Nombre/s</label>
+                  <input
+                    type="text"
+                    value={djNombre}
+                    onChange={(e) => setDjNombre(e.target.value)}
+                    className="w-full bg-slate-800 border border-slate-700 rounded p-2 text-white text-sm"
+                    placeholder="Nombre..."
+                    required
+                  />
+                </div>
+              </div>
+
+              {/* Domicilio */}
+              <div>
+                <label className="block text-xs text-slate-500 mb-1">Domicilio</label>
+                <input
+                  type="text"
+                  value={djDomicilio}
+                  onChange={(e) => setDjDomicilio(e.target.value)}
+                  className="w-full bg-slate-800 border border-slate-700 rounded p-2 text-white text-sm"
+                  placeholder="Calle, Número, Depto..."
+                  required
+                />
+              </div>
+
+              {/* Localidad */}
+              <div>
+                <label className="block text-xs text-slate-500 mb-1">Localidad</label>
+                <input
+                  type="text"
+                  value={djLocalidad}
+                  onChange={(e) => setDjLocalidad(e.target.value)}
+                  className="w-full bg-slate-800 border border-slate-700 rounded p-2 text-white text-sm"
+                  placeholder="Localidad..."
+                  required
+                />
+              </div>
+
+              {/* Action Buttons */}
+              <div className="flex justify-end gap-3 border-t border-slate-800 pt-4 mt-6">
+                <button
+                  type="button"
+                  onClick={() => setIsDJModalOpen(false)}
+                  className="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg transition-colors text-sm font-medium"
+                >
+                  Cancelar
+                </button>
+                <button
+                  type="submit"
+                  className="px-5 py-2 bg-yellow-600 hover:bg-yellow-500 text-white font-bold rounded-lg transition-colors flex items-center gap-2 text-sm"
+                >
+                  <Download size={16} /> Generar Nota
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* Toast Notification */}
+      {toastMessage && (
+        <div className="fixed bottom-6 right-6 bg-slate-900 border border-slate-700/80 border-l-4 border-l-yellow-500 text-white px-4 py-3 rounded-lg shadow-2xl flex items-center gap-3 z-[9999] animate-fade-in-up">
+          <Check size={18} className="text-yellow-500" />
+          <span className="text-sm font-medium">{toastMessage}</span>
+        </div>
+      )}
+
       <button
         className={`fab-scroll ${showScrollTop ? 'visible' : ''}`}
         onClick={() => document.querySelector('.app-board')?.scrollTo({ top: 0, behavior: 'smooth' })}
@@ -2422,7 +2836,7 @@ function AgentInfoModal({ agent, onClose, state, getInfraName, updateAgent, soft
   }, [agent, isEditing]);
 
   const handleSave = () => {
-    const trimmedJ = jerarquia.trim();
+    const trimmedJ = jerarquia.trim().toUpperCase();
     if (trimmedJ !== '' && !validRanks.includes(trimmedJ)) {
       setJerarquia('');
       setJerarquiaError('La jerarquía ingresada no es válida. Debe elegir una de la lista.');
@@ -2483,9 +2897,9 @@ function AgentInfoModal({ agent, onClose, state, getInfraName, updateAgent, soft
                       type="text"
                       list="ranks-list"
                       value={jerarquia}
-                      onChange={e => { setJerarquia(e.target.value); setJerarquiaError(null); }}
+                      onChange={e => { setJerarquia(e.target.value.toUpperCase()); setJerarquiaError(null); }}
                       onBlur={() => {
-                        const t = jerarquia.trim();
+                        const t = jerarquia.trim().toUpperCase();
                         if (t !== '' && !validRanks.includes(t)) {
                           setJerarquia('');
                           setJerarquiaError('La jerarquía ingresada no es válida. Debe elegir una de la lista.');
@@ -3154,7 +3568,7 @@ function SettingsModal({ onClose, state, addAgent, removeAgent, addInfra, remove
   const handleAddAgent = (e: React.FormEvent) => {
     e.preventDefault();
     if (newAgentNombre.trim() && newAgentApellido.trim()) {
-      const trimmedJ = newAgentJerarquia.trim();
+      const trimmedJ = newAgentJerarquia.trim().toUpperCase();
       if (trimmedJ !== '' && !validRanks.includes(trimmedJ)) {
         setNewAgentJerarquia('');
         setNewAgentJerarquiaError('La jerarquía ingresada no es válida. Debe elegir una de la lista.');
@@ -3280,9 +3694,9 @@ function SettingsModal({ onClose, state, addAgent, removeAgent, addInfra, remove
                       type="text"
                       list="ranks-list-settings"
                       value={newAgentJerarquia}
-                      onChange={e => { setNewAgentJerarquia(e.target.value); setNewAgentJerarquiaError(null); }}
+                      onChange={e => { setNewAgentJerarquia(e.target.value.toUpperCase()); setNewAgentJerarquiaError(null); }}
                       onBlur={() => {
-                        const t = newAgentJerarquia.trim();
+                        const t = newAgentJerarquia.trim().toUpperCase();
                         if (t !== '' && !validRanks.includes(t)) {
                           setNewAgentJerarquia('');
                           setNewAgentJerarquiaError('La jerarquía ingresada no es válida. Debe elegir una de la lista.');

@@ -54,7 +54,7 @@ export const AdminView: React.FC = () => {
   };
 
   const handleMigrateNamesAndLocality = async () => {
-    if (!window.confirm('¿Está seguro que desea migrar los nombres y apellidos de todos los efectivos a campos separados?')) {
+    if (!window.confirm('¿Está seguro que desea migrar los nombres y apellidos a campos separados, completar localidades vacías y pasar todas las jerarquías a mayúsculas para todos los efectivos?')) {
       return;
     }
     setMigratingNames(true);
@@ -67,6 +67,11 @@ export const AdminView: React.FC = () => {
         const data = docSnap.data();
         let nombre = data.nombre || '';
         let apellido = data.apellido || '';
+        let originalJerarquia = data.jerarquia || '';
+        let targetJerarquia = originalJerarquia.toUpperCase();
+        
+        let needsUpdate = false;
+        const updates: any = {};
         
         if (!nombre && !apellido && data.name) {
           const nameStr = data.name.trim();
@@ -84,17 +89,23 @@ export const AdminView: React.FC = () => {
               apellido = '';
             }
           }
-          
-          batch.update(docSnap.ref, {
-            nombre,
-            apellido,
-            localidad: data.localidad || ''
-          });
-          count++;
-        } else if (data.localidad === undefined) {
-          batch.update(docSnap.ref, {
-            localidad: ''
-          });
+          updates.nombre = nombre;
+          updates.apellido = apellido;
+          needsUpdate = true;
+        }
+        
+        if (data.localidad === undefined) {
+          updates.localidad = '';
+          needsUpdate = true;
+        }
+        
+        if (originalJerarquia !== targetJerarquia) {
+          updates.jerarquia = targetJerarquia;
+          needsUpdate = true;
+        }
+        
+        if (needsUpdate) {
+          batch.update(docSnap.ref, updates);
           count++;
         }
       });
@@ -103,7 +114,7 @@ export const AdminView: React.FC = () => {
         await batch.commit();
         alert(`Se migraron/actualizaron ${count} efectivos con éxito.`);
       } else {
-        alert('Todos los efectivos ya están migrados.');
+        alert('Todos los efectivos ya están migrados con nombres separados, localidades y jerarquías en mayúsculas.');
       }
     } catch (e) {
       console.error(e);
@@ -187,7 +198,7 @@ export const AdminView: React.FC = () => {
             className="bg-purple-600 hover:bg-purple-700 disabled:opacity-50 text-white px-3 py-2 rounded-lg flex items-center gap-2 text-sm font-medium transition-colors"
           >
             <RefreshCw className={migratingNames ? "animate-spin" : ""} size={16} />
-            {migratingNames ? 'Migrando...' : 'Migrar Nombres y Localidades'}
+            {migratingNames ? 'Migrando...' : 'Migrar Datos (Nombres/Localidades/Jerarquías)'}
           </button>
           <button 
             onClick={handleDownloadBackup} 
