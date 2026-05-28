@@ -179,7 +179,10 @@ function Dashboard() {
     if (confirmDialog.action) {
       confirmDialog.action();
     } else if (confirmDialog.role) {
-      const schedulesToRemove = state.schedules.filter(sch => sch.role === confirmDialog.role && sch.shift === currentShift);
+      const schedulesToRemove = state.schedules.filter(sch => 
+        (sch.role === confirmDialog.role || (confirmDialog.role === 'movil' && sch.role === 'ofl_control')) && 
+        sch.shift === currentShift
+      );
       setLastCleared({ role: confirmDialog.role, shift: currentShift, schedules: schedulesToRemove });
 
       clearRoleSchedules(confirmDialog.role, currentShift);
@@ -214,6 +217,7 @@ function Dashboard() {
   
   const currentShiftNum = Number(currentShift.replace('turno', ''));
   const filterByShift = (items: InfrastructureItem[] | undefined) => (items || []).filter(i => !i.turno || i.turno === currentShiftNum);
+  const isControlMovil = (m: InfrastructureItem) => m.name.toUpperCase().includes('CONTROL');
 
   const updateSearchHighlight = (agentId: string) => {
     document.querySelectorAll('.agent-card.search-highlight').forEach(el => {
@@ -289,7 +293,7 @@ function Dashboard() {
   const stats = {
     garita: currentSchedules.filter(s => s.role === 'garita').length,
     caminante: currentSchedules.filter(s => s.role === 'caminante').length,
-    movil: currentSchedules.filter(s => s.role === 'movil').length,
+    movil: currentSchedules.filter(s => s.role === 'movil' || s.role === 'ofl_control').length,
     motorizada: currentSchedules.filter(s => s.role === 'motorizada').length,
     correo: currentSchedules.filter(s => s.role === 'correo').length,
     orden_servicio: currentSchedules.filter(s => s.role === 'orden_servicio').length,
@@ -620,11 +624,17 @@ function Dashboard() {
 
     infraRoles.forEach(roleGroup => {
       if (reportSections[roleGroup.key as keyof typeof reportSections]) {
-        const schedulesForRole = currentSchedules.filter(s => s.role === roleGroup.id);
+        const schedulesForRole = currentSchedules.filter(s => 
+          s.role === roleGroup.id || 
+          (roleGroup.id === 'movil' && s.role === 'ofl_control')
+        );
         let sectionText = '';
 
         roleGroup.items.forEach(item => {
-          const occupants = schedulesForRole.filter(s => s.targetId === item.id);
+          const occupants = schedulesForRole.filter(s => 
+            s.targetId === item.id || 
+            (s.role === 'ofl_control' && isControlMovil(item))
+          );
           if (occupants.length > 0) {
             let itemName = item.name;
             if (roleGroup.id === 'orden_servicio') itemName = `OS ${(item as any).numero} - ${(item as any).ubicacion}`;
@@ -802,7 +812,10 @@ Ayte. de guardia: ${getAgentName('ayte_guardia')}` : ''}</div>
 
     rolesToInclude.forEach(roleGroup => {
       if (reportSections[roleGroup.key as keyof typeof reportSections]) {
-        const schedulesForRole = currentSchedules.filter(s => s.role === roleGroup.id);
+        const schedulesForRole = currentSchedules.filter(s => 
+          s.role === roleGroup.id || 
+          (roleGroup.id === 'movil' && s.role === 'ofl_control')
+        );
         if (schedulesForRole.length === 0) return;
 
         html += `<h2>${roleGroup.title}</h2>`;
@@ -813,7 +826,10 @@ Ayte. de guardia: ${getAgentName('ayte_guardia')}` : ''}</div>
         }
 
         roleGroup.items.forEach(item => {
-          const occupants = schedulesForRole.filter(s => s.targetId === item.id);
+          const occupants = schedulesForRole.filter(s => 
+            s.targetId === item.id || 
+            (s.role === 'ofl_control' && isControlMovil(item))
+          );
           if (occupants.length > 0) {
             let itemName = item.name;
             if (roleGroup.id === 'orden_servicio') itemName = `OS ${(item as any).numero} - ${(item as any).ubicacion}`;
@@ -1435,12 +1451,15 @@ Ayte. de guardia: ${getAgentName('ayte_guardia')}` : ''}</div>
                 </div>
                 <div className="board-section-content">
                   {[...filterByShift(state.infrastructure.moviles)].sort((a, b) => {
-                    const occA = currentSchedules.some(s => s.role === 'movil' && s.targetId === a.id);
-                    const occB = currentSchedules.some(s => s.role === 'movil' && s.targetId === b.id);
+                    const occA = currentSchedules.some(s => (s.role === 'movil' && s.targetId === a.id) || (s.role === 'ofl_control' && isControlMovil(a)));
+                    const occB = currentSchedules.some(s => (s.role === 'movil' && s.targetId === b.id) || (s.role === 'ofl_control' && isControlMovil(b)));
                     if (occA !== occB) return occA ? -1 : 1;
                     return a.name.localeCompare(b.name);
                   }).map(m => {
-                    const occupants = currentSchedules.filter(s => s.role === 'movil' && s.targetId === m.id);
+                    const occupants = currentSchedules.filter(s => 
+                      (s.role === 'movil' && s.targetId === m.id) ||
+                      (s.role === 'ofl_control' && isControlMovil(m))
+                    );
                     const isEmpty = occupants.length === 0;
                     return (
                       <div

@@ -185,7 +185,10 @@ export function useStore() {
 
   const clearRoleSchedules = (role: RoleType, shift: Shift) => {
     const batch = writeBatch(db);
-    const schedulesToRemove = state.schedules.filter(sch => sch.role === role && sch.shift === shift);
+    const schedulesToRemove = state.schedules.filter(sch => 
+      (sch.role === role || (role === 'movil' && sch.role === 'ofl_control')) && 
+      sch.shift === shift
+    );
     schedulesToRemove.forEach(sch => {
       batch.delete(doc(db, 'schedules', sch.id));
     });
