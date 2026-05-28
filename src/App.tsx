@@ -276,6 +276,9 @@ function Dashboard() {
     const query = searchQuery.toLowerCase();
     const matches = shiftAgents.filter(a => 
       a.name.toLowerCase().includes(query) ||
+      (a.nombre && a.nombre.toLowerCase().includes(query)) ||
+      (a.apellido && a.apellido.toLowerCase().includes(query)) ||
+      (a.localidad && a.localidad.toLowerCase().includes(query)) ||
       (a.jerarquia && a.jerarquia.toLowerCase().includes(query)) ||
       (a.escalafon && a.escalafon.toLowerCase().includes(query))
     ).map(a => a.id);
@@ -2363,7 +2366,9 @@ function MovilInfoModal({ movil, infraType, onClose, updateInfra, softRemoveInfr
 
 function AgentInfoModal({ agent, onClose, state, getInfraName, updateAgent, softRemoveAgent, userRole }: any) {
   const [isEditing, setIsEditing] = useState(false);
-  const [name, setName] = useState(agent.name || '');
+  const [nombre, setNombre] = useState(agent.nombre || '');
+  const [apellido, setApellido] = useState(agent.apellido || '');
+  const [localidad, setLocalidad] = useState(agent.localidad || '');
   const [jerarquia, setJerarquia] = useState(agent.jerarquia || '');
   const [jerarquiaError, setJerarquiaError] = useState<string | null>(null);
   const [escalafon, setEscalafon] = useState(agent.escalafon || '');
@@ -2388,7 +2393,9 @@ function AgentInfoModal({ agent, onClose, state, getInfraName, updateAgent, soft
   const [showMoreFields, setShowMoreFields] = useState(false);
 
   React.useEffect(() => {
-    setName(agent.name || '');
+    setNombre(agent.nombre || '');
+    setApellido(agent.apellido || '');
+    setLocalidad(agent.localidad || '');
     setJerarquia(agent.jerarquia || '');
     setJerarquiaError(null);
     setEscalafon(agent.escalafon || '');
@@ -2410,7 +2417,7 @@ function AgentInfoModal({ agent, onClose, state, getInfraName, updateAgent, soft
     setModeloArmamento(agent.modeloArmamento || '');
     setNroSerieArmamento(agent.nroSerieArmamento || '');
     
-    const hasAnyPopulated = !!(agent.domicilio || agent.marcaChaleco || agent.modeloChaleco || agent.nroSerieChaleco || agent.marcaArmamento || agent.modeloArmamento || agent.nroSerieArmamento);
+    const hasAnyPopulated = !!(agent.marcaChaleco || agent.modeloChaleco || agent.nroSerieChaleco || agent.marcaArmamento || agent.modeloArmamento || agent.nroSerieArmamento);
     setShowMoreFields(hasAnyPopulated);
   }, [agent, isEditing]);
 
@@ -2428,7 +2435,10 @@ function AgentInfoModal({ agent, onClose, state, getInfraName, updateAgent, soft
       return;
     }
     updateAgent(agent.id, {
-      name,
+      nombre: nombre.trim(),
+      apellido: apellido.trim(),
+      localidad: localidad.trim(),
+      name: `${apellido.trim()} ${nombre.trim()}`.trim(),
       jerarquia: trimmedJ || '',
       escalafon: trimmedE || '',
       telefono, legajo, turno,
@@ -2449,7 +2459,7 @@ function AgentInfoModal({ agent, onClose, state, getInfraName, updateAgent, soft
     <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-[9998] p-4">
       <div className="bg-slate-900 rounded-xl border border-slate-700 w-full max-w-md max-h-[85vh] flex flex-col shadow-2xl relative z-[9999] overflow-hidden">
         <div className="flex justify-between items-center p-4 border-b border-slate-800 bg-slate-950 relative z-10">
-          <h3 className="text-lg font-bold text-white flex items-center"><Users className="mr-2 text-yellow-500" /> {(agent.jerarquia ? agent.jerarquia + ' ' : '') + agent.name}</h3>
+          <h3 className="text-lg font-bold text-white flex items-center"><Users className="mr-2 text-yellow-500" /> {(agent.jerarquia ? agent.jerarquia + ' ' : '') + (agent.apellido || agent.nombre ? `${agent.apellido || ''} ${agent.nombre || ''}`.trim() : agent.name)}</h3>
           <button onClick={onClose} className="text-slate-400 hover:text-white"><X size={20} /></button>
         </div>
 
@@ -2466,85 +2476,106 @@ function AgentInfoModal({ agent, onClose, state, getInfraName, updateAgent, soft
 
             {isEditing ? (
               <div className="space-y-3">
-                <div>
-                  <label className="block text-xs text-slate-500 mb-1">Jerarquía</label>
-                  <input
-                    type="text"
-                    list="ranks-list"
-                    value={jerarquia}
-                    onChange={e => { setJerarquia(e.target.value); setJerarquiaError(null); }}
-                    onBlur={() => {
-                      const t = jerarquia.trim();
-                      if (t !== '' && !validRanks.includes(t)) {
-                        setJerarquia('');
-                        setJerarquiaError('La jerarquía ingresada no es válida. Debe elegir una de la lista.');
-                      } else {
-                        setJerarquiaError(null);
-                      }
-                    }}
-                    autocomplete="off"
-                    className={`w-full bg-slate-800 border ${jerarquiaError ? 'border-red-500 ring-1 ring-red-500' : 'border-slate-700'} rounded p-2 text-white text-sm`}
-                    placeholder="Escriba para buscar jerarquía..."
-                  />
-                  <datalist id="ranks-list">
-                    {validRanks.map(r => <option key={r} value={r} />)}
-                  </datalist>
-                  {jerarquiaError && <p className="text-red-500 text-[10px] mt-1 font-semibold">{jerarquiaError}</p>}
+                <div className="grid grid-cols-[120px_1fr] gap-2">
+                  <div>
+                    <label className="block text-xs text-slate-500 mb-1">Jerarquía</label>
+                    <input
+                      type="text"
+                      list="ranks-list"
+                      value={jerarquia}
+                      onChange={e => { setJerarquia(e.target.value); setJerarquiaError(null); }}
+                      onBlur={() => {
+                        const t = jerarquia.trim();
+                        if (t !== '' && !validRanks.includes(t)) {
+                          setJerarquia('');
+                          setJerarquiaError('La jerarquía ingresada no es válida. Debe elegir una de la lista.');
+                        } else {
+                          setJerarquiaError(null);
+                        }
+                      }}
+                      autocomplete="off"
+                      className={`w-full bg-slate-800 border ${jerarquiaError ? 'border-red-500 ring-1 ring-red-500' : 'border-slate-700'} rounded p-2 text-white text-sm`}
+                      placeholder="Jerarquía..."
+                    />
+                    <datalist id="ranks-list">
+                      {validRanks.map(r => <option key={r} value={r} />)}
+                    </datalist>
+                    {jerarquiaError && <p className="text-red-500 text-[10px] mt-1 font-semibold">{jerarquiaError}</p>}
+                  </div>
+                  <div>
+                    <label className="block text-xs text-slate-500 mb-1">Legajo</label>
+                    <input type="text" value={legajo} onChange={e => setLegajo(e.target.value.replace(/\D/g, ''))} className="w-full bg-slate-800 border border-slate-700 rounded p-2 text-white text-sm" placeholder="Ej: 123456" />
+                  </div>
+                </div>
+                <div className="grid grid-cols-2 gap-2">
+                  <div>
+                    <label className="block text-xs text-slate-500 mb-1">Escalafón</label>
+                    <input
+                      type="text"
+                      list="branches-list"
+                      value={escalafon}
+                      onChange={e => { setEscalafon(e.target.value); setEscalafonError(null); }}
+                      onBlur={() => {
+                        const t = escalafon.trim();
+                        if (t !== '' && !validEscalafones.includes(t)) {
+                          setEscalafon('');
+                          setEscalafonError('El escalafón ingresado no es válido. Debe elegir uno de la lista.');
+                        } else {
+                          setEscalafonError(null);
+                        }
+                      }}
+                      autocomplete="off"
+                      className={`w-full bg-slate-800 border ${escalafonError ? 'border-red-500 ring-1 ring-red-500' : 'border-slate-700'} rounded p-2 text-white text-sm`}
+                      placeholder="Escriba para buscar escalafón..."
+                    />
+                    <datalist id="branches-list">
+                      {validEscalafones.map(b => <option key={b} value={b} />)}
+                    </datalist>
+                    {escalafonError && <p className="text-red-500 text-[10px] mt-1 font-semibold">{escalafonError}</p>}
+                  </div>
+                  <div>
+                    <label className="block text-xs text-slate-500 mb-1 flex items-center justify-between">
+                      <span>Turno Asignado</span>
+                      {userRole !== 'admin' && <span className="text-[10px] text-yellow-500 font-bold bg-yellow-500/10 px-1.5 py-0.5 rounded">Solo Admin</span>}
+                    </label>
+                    <select
+                      disabled={userRole !== 'admin'}
+                      value={turno}
+                      onChange={e => setTurno(Number(e.target.value) as 1 | 2 | 3 | 4)}
+                      className="w-full bg-slate-800 border border-slate-700 rounded p-2 text-white text-sm disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                      <option value={1}>Turno 1</option>
+                      <option value={2}>Turno 2</option>
+                      <option value={3}>Turno 3</option>
+                      <option value={4}>Turno 4</option>
+                    </select>
+                  </div>
+                </div>
+                <div className="grid grid-cols-2 gap-2">
+                  <div>
+                    <label className="block text-xs text-slate-500 mb-1">Apellido/s</label>
+                    <input type="text" value={apellido} onChange={e => setApellido(e.target.value)} className="w-full bg-slate-800 border border-slate-700 rounded p-2 text-white text-sm" placeholder="Ej: PEREZ" required />
+                  </div>
+                  <div>
+                    <label className="block text-xs text-slate-500 mb-1">Nombre/s</label>
+                    <input type="text" value={nombre} onChange={e => setNombre(e.target.value)} className="w-full bg-slate-800 border border-slate-700 rounded p-2 text-white text-sm" placeholder="Ej: JUAN" required />
+                  </div>
                 </div>
                 <div>
-                  <label className="block text-xs text-slate-500 mb-1">Escalafón</label>
-                  <input
-                    type="text"
-                    list="branches-list"
-                    value={escalafon}
-                    onChange={e => { setEscalafon(e.target.value); setEscalafonError(null); }}
-                    onBlur={() => {
-                      const t = escalafon.trim();
-                      if (t !== '' && !validEscalafones.includes(t)) {
-                        setEscalafon('');
-                        setEscalafonError('El escalafón ingresado no es válido. Debe elegir uno de la lista.');
-                      } else {
-                        setEscalafonError(null);
-                      }
-                    }}
-                    autocomplete="off"
-                    className={`w-full bg-slate-800 border ${escalafonError ? 'border-red-500 ring-1 ring-red-500' : 'border-slate-700'} rounded p-2 text-white text-sm`}
-                    placeholder="Escriba para buscar escalafón..."
-                  />
-                  <datalist id="branches-list">
-                    {validEscalafones.map(b => <option key={b} value={b} />)}
-                  </datalist>
-                  {escalafonError && <p className="text-red-500 text-[10px] mt-1 font-semibold">{escalafonError}</p>}
+                  <label className="block text-xs text-slate-500 mb-1">Domicilio</label>
+                  <input type="text" value={domicilio} onChange={e => setDomicilio(e.target.value)} className="w-full bg-slate-800 border border-slate-700 rounded p-2 text-white text-sm" placeholder="Ej: Calle, Número" />
                 </div>
-                <div>
-                  <label className="block text-xs text-slate-500 mb-1">Nombre</label>
-                  <input type="text" value={name} onChange={e => setName(e.target.value)} className="w-full bg-slate-800 border border-slate-700 rounded p-2 text-white text-sm" placeholder="Ej: PEREZ JUAN" />
+                <div className="grid grid-cols-2 gap-2">
+                  <div>
+                    <label className="block text-xs text-slate-500 mb-1">Localidad</label>
+                    <input type="text" value={localidad} onChange={e => setLocalidad(e.target.value)} className="w-full bg-slate-800 border border-slate-700 rounded p-2 text-white text-sm" placeholder="Ej: Temperley" />
+                  </div>
+                  <div>
+                    <label className="block text-xs text-slate-500 mb-1">Teléfono</label>
+                    <input type="text" value={telefono} onChange={e => setTelefono(e.target.value.replace(/[^\d\s\-+]/g, ''))} className="w-full bg-slate-800 border border-slate-700 rounded p-2 text-white text-sm" placeholder="Ej: 11-1234-5678" />
+                  </div>
                 </div>
-                <div>
-                  <label className="block text-xs text-slate-500 mb-1">Legajo</label>
-                  <input type="text" value={legajo} onChange={e => setLegajo(e.target.value.replace(/\D/g, ''))} className="w-full bg-slate-800 border border-slate-700 rounded p-2 text-white text-sm" placeholder="Ej: 123456" />
-                </div>
-                <div>
-                  <label className="block text-xs text-slate-500 mb-1">Teléfono</label>
-                  <input type="text" value={telefono} onChange={e => setTelefono(e.target.value.replace(/[^\d\s\-+]/g, ''))} className="w-full bg-slate-800 border border-slate-700 rounded p-2 text-white text-sm" placeholder="Ej: 11-1234-5678" />
-                </div>
-                <div>
-                  <label className="block text-xs text-slate-500 mb-1 flex items-center justify-between">
-                    <span>Turno Asignado</span>
-                    {userRole !== 'admin' && <span className="text-[10px] text-yellow-500 font-bold bg-yellow-500/10 px-1.5 py-0.5 rounded">Solo Admin</span>}
-                  </label>
-                  <select
-                    disabled={userRole !== 'admin'}
-                    value={turno}
-                    onChange={e => setTurno(Number(e.target.value) as 1 | 2 | 3 | 4)}
-                    className="w-full bg-slate-800 border border-slate-700 rounded p-2 text-white text-sm disabled:opacity-50 disabled:cursor-not-allowed"
-                  >
-                    <option value={1}>Turno 1</option>
-                    <option value={2}>Turno 2</option>
-                    <option value={3}>Turno 3</option>
-                    <option value={4}>Turno 4</option>
-                  </select>
-                </div>
+
 
                 <div className="border-t border-slate-700 pt-3 mt-3">
                   <label className="flex items-center gap-2 text-xs text-slate-300 font-bold mb-2 cursor-pointer">
@@ -2605,16 +2636,6 @@ function AgentInfoModal({ agent, onClose, state, getInfraName, updateAgent, soft
 
                     {showMoreFields && (
                       <div className="space-y-3 pl-4 border-l-2 border-slate-700 ml-1 mt-3 mb-2">
-                        <div>
-                          <label className="block text-[10px] text-slate-500 mb-1">Domicilio</label>
-                          <input
-                            type="text"
-                            value={domicilio}
-                            onChange={e => setDomicilio(e.target.value)}
-                            placeholder="Calle, Número, Localidad"
-                            className="w-full bg-slate-800 border border-slate-700 rounded p-1.5 text-white text-xs"
-                          />
-                        </div>
                         <div className="grid grid-cols-2 gap-2">
                           <div>
                             <label className="block text-[10px] text-slate-500 mb-1">Marca Chaleco</label>
@@ -2691,16 +2712,26 @@ function AgentInfoModal({ agent, onClose, state, getInfraName, updateAgent, soft
                   <span className="text-sm text-slate-300 font-medium">{agent.jerarquia || <span className="text-slate-600 italic">Sin asignar</span>}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-sm text-slate-500">Escalafón:</span>
-                  <span className="text-sm text-slate-300 font-medium">{agent.escalafon || <span className="text-slate-600 italic">Sin asignar</span>}</span>
-                </div>
-                <div className="flex justify-between">
                   <span className="text-sm text-slate-500">Legajo:</span>
                   <span className="text-sm text-slate-300 font-medium">{agent.legajo || <span className="text-slate-600 italic">No registrado</span>}</span>
                 </div>
                 <div className="flex justify-between">
+                  <span className="text-sm text-slate-500">Escalafón:</span>
+                  <span className="text-sm text-slate-300 font-medium">{agent.escalafon || <span className="text-slate-600 italic">Sin asignar</span>}</span>
+                </div>
+                <div className="flex justify-between">
                   <span className="text-sm text-slate-500">Teléfono:</span>
                   <span className="text-sm text-slate-300 font-medium">{agent.telefono || <span className="text-slate-600 italic">No registrado</span>}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-sm text-slate-500">Domicilio:</span>
+                  <span className="text-sm text-slate-300 font-medium text-right max-w-[200px] break-words">
+                    {agent.domicilio || <span className="text-slate-600 italic">No registrado</span>}
+                  </span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-sm text-slate-500">Localidad:</span>
+                  <span className="text-sm text-slate-300 font-medium">{agent.localidad || <span className="text-slate-600 italic">No registrada</span>}</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-sm text-slate-500">Turno:</span>
@@ -2745,12 +2776,6 @@ function AgentInfoModal({ agent, onClose, state, getInfraName, updateAgent, soft
 
                   {showMoreFields && (
                     <div className="mt-2 space-y-2 pl-2 border-l border-slate-800 text-xs">
-                      <div className="flex justify-between">
-                        <span className="text-slate-500">Domicilio:</span>
-                        <span className="text-slate-300 font-medium text-right max-w-[200px] break-words">
-                          {agent.domicilio || <span className="text-slate-600 italic">No registrado</span>}
-                        </span>
-                      </div>
                       <div className="flex justify-between">
                         <span className="text-slate-500">Chaleco:</span>
                         <span className="text-slate-300 font-medium text-right">
@@ -3010,6 +3035,9 @@ function SettingsModal({ onClose, state, addAgent, removeAgent, addInfra, remove
   }, [userShiftNum, editingId]);
 
   const [newAgentName, setNewAgentName] = useState('');
+  const [newAgentNombre, setNewAgentNombre] = useState('');
+  const [newAgentApellido, setNewAgentApellido] = useState('');
+  const [newAgentLocalidad, setNewAgentLocalidad] = useState('');
   const [newAgentJerarquia, setNewAgentJerarquia] = useState('');
   const [newAgentJerarquiaError, setNewAgentJerarquiaError] = useState<string | null>(null);
   const [newAgentEscalafon, setNewAgentEscalafon] = useState('');
@@ -3044,6 +3072,9 @@ function SettingsModal({ onClose, state, addAgent, removeAgent, addInfra, remove
   const cancelEdit = () => {
     setEditingId(null);
     setNewAgentName('');
+    setNewAgentNombre('');
+    setNewAgentApellido('');
+    setNewAgentLocalidad('');
     setNewAgentJerarquia('');
     setNewAgentJerarquiaError(null);
     setNewAgentEscalafon('');
@@ -3078,6 +3109,9 @@ function SettingsModal({ onClose, state, addAgent, removeAgent, addInfra, remove
     cancelEdit();
     setEditingId(a.id);
     setNewAgentName(a.name);
+    setNewAgentNombre(a.nombre || '');
+    setNewAgentApellido(a.apellido || '');
+    setNewAgentLocalidad(a.localidad || '');
     setNewAgentJerarquia(a.jerarquia || '');
     setNewAgentJerarquiaError(null);
     setNewAgentEscalafon(a.escalafon || '');
@@ -3100,7 +3134,7 @@ function SettingsModal({ onClose, state, addAgent, removeAgent, addInfra, remove
     setNewAgentModeloArmamento(a.modeloArmamento || '');
     setNewAgentNroSerieArmamento(a.nroSerieArmamento || '');
     
-    if (a.domicilio || a.marcaChaleco || a.modeloChaleco || a.nroSerieChaleco || a.marcaArmamento || a.modeloArmamento || a.nroSerieArmamento) {
+    if (a.marcaChaleco || a.modeloChaleco || a.nroSerieChaleco || a.marcaArmamento || a.modeloArmamento || a.nroSerieArmamento) {
       setShowMoreFields(true);
     }
   };
@@ -3119,7 +3153,7 @@ function SettingsModal({ onClose, state, addAgent, removeAgent, addInfra, remove
 
   const handleAddAgent = (e: React.FormEvent) => {
     e.preventDefault();
-    if (newAgentName.trim()) {
+    if (newAgentNombre.trim() && newAgentApellido.trim()) {
       const trimmedJ = newAgentJerarquia.trim();
       if (trimmedJ !== '' && !validRanks.includes(trimmedJ)) {
         setNewAgentJerarquia('');
@@ -3133,10 +3167,15 @@ function SettingsModal({ onClose, state, addAgent, removeAgent, addInfra, remove
         return;
       }
 
+      const unifiedName = `${newAgentApellido.trim()} ${newAgentNombre.trim()}`.trim();
+
       if (editingId) {
-        if (window.confirm(`¿Está seguro que desea guardar los cambios para el efectivo ${newAgentName.trim()}?`)) {
+        if (window.confirm(`¿Está seguro que desea guardar los cambios para el efectivo ${unifiedName}?`)) {
           updateAgent(editingId, {
-            name: newAgentName.trim(), 
+            nombre: newAgentNombre.trim(),
+            apellido: newAgentApellido.trim(),
+            localidad: newAgentLocalidad.trim(),
+            name: unifiedName, 
             jerarquia: trimmedJ || '',
             escalafon: trimmedE || '',
             telefono: newAgentPhone.trim(), 
@@ -3160,7 +3199,9 @@ function SettingsModal({ onClose, state, addAgent, removeAgent, addInfra, remove
         }
       } else {
         addAgent(
-          newAgentName.trim(), 
+          newAgentNombre.trim(),
+          newAgentApellido.trim(),
+          newAgentLocalidad.trim(),
           newAgentPhone.trim(), 
           newAgentLegajo.trim(), 
           newAgentShift,
@@ -3259,6 +3300,8 @@ function SettingsModal({ onClose, state, addAgent, removeAgent, addInfra, remove
                     {newAgentJerarquiaError && <span className="text-red-500 text-[10px] mt-1 font-semibold">{newAgentJerarquiaError}</span>}
                   </div>
 
+                  <input type="text" value={newAgentLegajo} onChange={e => setNewAgentLegajo(e.target.value.replace(/\D/g, ''))} placeholder="Legajo (Opcional)" className="bg-slate-800 border border-slate-700 rounded p-2 text-white text-sm" />
+
                   <div className="flex flex-col">
                     <input
                       type="text"
@@ -3284,9 +3327,11 @@ function SettingsModal({ onClose, state, addAgent, removeAgent, addInfra, remove
                     {newAgentEscalafonError && <span className="text-red-500 text-[10px] mt-1 font-semibold">{newAgentEscalafonError}</span>}
                   </div>
 
-                  <input type="text" value={newAgentName} onChange={e => setNewAgentName(e.target.value)} placeholder="Nombre (Ej: Pérez Juan)" className="bg-slate-800 border border-slate-700 rounded p-2 text-white text-sm" required />
-                  <input type="text" value={newAgentLegajo} onChange={e => setNewAgentLegajo(e.target.value.replace(/\D/g, ''))} placeholder="Legajo (Opcional)" className="bg-slate-800 border border-slate-700 rounded p-2 text-white text-sm" />
+                  <input type="text" value={newAgentApellido} onChange={e => setNewAgentApellido(e.target.value)} placeholder="Apellido/s" className="bg-slate-800 border border-slate-700 rounded p-2 text-white text-sm" required />
+                  <input type="text" value={newAgentNombre} onChange={e => setNewAgentNombre(e.target.value)} placeholder="Nombre/s" className="bg-slate-800 border border-slate-700 rounded p-2 text-white text-sm" required />
                   <input type="text" value={newAgentPhone} onChange={e => setNewAgentPhone(e.target.value.replace(/[^\d\s\-+]/g, ''))} placeholder="Teléfono (Opcional)" className="bg-slate-800 border border-slate-700 rounded p-2 text-white text-sm" />
+                  <input type="text" value={newAgentDomicilio} onChange={e => setNewAgentDomicilio(e.target.value)} placeholder="Domicilio (Opcional)" className="bg-slate-800 border border-slate-700 rounded p-2 text-white text-sm" />
+                  <input type="text" value={newAgentLocalidad} onChange={e => setNewAgentLocalidad(e.target.value)} placeholder="Localidad (Opcional)" className="bg-slate-800 border border-slate-700 rounded p-2 text-white text-sm" />
                   <select value={newAgentShift} onChange={e => setNewAgentShift(Number(e.target.value) as 1 | 2 | 3 | 4)} className={`bg-slate-800 border border-slate-700 rounded p-2 text-white text-sm ${!isAdmin ? 'opacity-50 cursor-not-allowed' : ''}`} disabled={!isAdmin}>
                     <option value={1}>Turno 1</option>
                     <option value={2}>Turno 2</option>
@@ -3354,16 +3399,6 @@ function SettingsModal({ onClose, state, addAgent, removeAgent, addInfra, remove
 
                     {showMoreFields && (
                       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 pl-4 border-l-2 border-slate-700 ml-1 mt-3 mb-2">
-                        <div className="col-span-1 sm:col-span-2 md:col-span-3">
-                          <label className="block text-[10px] text-slate-500 mb-1">Domicilio</label>
-                          <input
-                            type="text"
-                            value={newAgentDomicilio}
-                            onChange={e => setNewAgentDomicilio(e.target.value)}
-                            placeholder="Calle, Número, Localidad"
-                            className="w-full bg-slate-800 border border-slate-700 rounded p-1.5 text-white text-xs"
-                          />
-                        </div>
                         <div>
                           <label className="block text-[10px] text-slate-500 mb-1">Marca Chaleco</label>
                           <input
@@ -3460,16 +3495,17 @@ function SettingsModal({ onClose, state, addAgent, removeAgent, addInfra, remove
                   (isAdmin || (a.turno || 1) === userShiftNum) &&
                   (resourceFilterShift === 'all' || (a.turno || 1) === resourceFilterShift) && 
                   (a.name.toLowerCase().includes(resourceSearchQuery.toLowerCase()) || 
-                   (a.jerarquia && a.jerarquia.toLowerCase().includes(resourceSearchQuery.toLowerCase())) ||
-                   (a.escalafon && a.escalafon.toLowerCase().includes(resourceSearchQuery.toLowerCase())) ||
+                   (a.nombre && a.nombre.toLowerCase().includes(resourceSearchQuery.toLowerCase())) ||
+                   (a.apellido && a.apellido.toLowerCase().includes(resourceSearchQuery.toLowerCase())) ||
                    (a.legajo || '').includes(resourceSearchQuery))
                 ).map((a: Agent) => (
                   <div key={a.id} className="bg-slate-800 p-3 rounded flex justify-between items-center border border-slate-700">
                     <div>
-                      <div className="text-slate-200 font-medium">{(a.jerarquia ? a.jerarquia + ' ' : '') + a.name}</div>
-                      <div className="text-xs text-slate-500 flex items-center gap-2 mt-1">
+                      <div className="text-slate-200 font-medium">{(a.jerarquia ? a.jerarquia + ' ' : '') + (a.apellido || a.nombre ? `${a.apellido || ''} ${a.nombre || ''}`.trim() : a.name)}</div>
+                      <div className="text-xs text-slate-500 flex flex-wrap items-center gap-2 mt-1">
                         {a.legajo && <span>L: {a.legajo}</span>}
                         {a.telefono && <span>Tel: {a.telefono}</span>}
+                        {a.localidad && <span>Loc: {a.localidad}</span>}
                         <span className="bg-slate-700 px-1.5 py-0.5 rounded text-yellow-500">
                           {`Turno ${a.turno || 1}`}
                         </span>
@@ -3480,7 +3516,7 @@ function SettingsModal({ onClose, state, addAgent, removeAgent, addInfra, remove
                         <>
                           <button onClick={() => handleEditAgent(a)} className="text-slate-500 hover:text-blue-500 p-2"><Edit2 size={16} /></button>
                           <button onClick={() => {
-                            const displayName = (a.jerarquia ? a.jerarquia + ' ' : '') + a.name;
+                            const displayName = (a.jerarquia ? a.jerarquia + ' ' : '') + (a.apellido || a.nombre ? `${a.apellido || ''} ${a.nombre || ''}`.trim() : a.name);
                             if (window.confirm(`¿Está seguro que desea eliminar al efectivo ${displayName}?`)) {
                               removeAgent(a.id);
                             }

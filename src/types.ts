@@ -4,7 +4,10 @@ export type RoleType = 'garita' | 'caminante' | 'movil' | 'motorizada' | 'correo
 
 export interface Agent {
   id: string;
-  name: string;
+  name?: string;
+  nombre?: string;
+  apellido?: string;
+  localidad?: string;
   legajo?: string;
   telefono?: string;
   turno: 1 | 2 | 3 | 4;

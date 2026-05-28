@@ -20,8 +20,44 @@ export function useStore() {
   useEffect(() => {
     const unsubAgents = onSnapshot(collection(db, 'agents'), (snapshot) => {
       const agents = snapshot.docs
-        .map(doc => ({ id: doc.id, ...doc.data() } as Agent))
-        .filter(agent => !agent.isDeleted);
+        .map(doc => {
+          const data = doc.data() as any;
+          const agentId = doc.id;
+          let nombre = data.nombre || '';
+          let apellido = data.apellido || '';
+          
+          if (!nombre && !apellido && data.name) {
+            const nameStr = data.name.trim();
+            const commaIdx = nameStr.indexOf(',');
+            if (commaIdx !== -1) {
+              apellido = nameStr.substring(0, commaIdx).trim();
+              nombre = nameStr.substring(commaIdx + 1).trim();
+            } else {
+              const parts = nameStr.split(/\s+/);
+              if (parts.length > 1) {
+                apellido = parts[0];
+                nombre = parts.slice(1).join(' ');
+              } else {
+                nombre = nameStr;
+                apellido = '';
+              }
+            }
+          }
+          
+          return {
+            id: agentId,
+            ...data,
+            nombre,
+            apellido,
+            localidad: data.localidad || ''
+          } as Agent;
+        })
+        .filter(agent => !agent.isDeleted)
+        .sort((a, b) => {
+          const fullNameA = `${a.apellido || ''} ${a.nombre || ''}`.trim().toLowerCase();
+          const fullNameB = `${b.apellido || ''} ${b.nombre || ''}`.trim().toLowerCase();
+          return fullNameA.localeCompare(fullNameB);
+        });
       setLocalState(s => ({ ...s, agents }));
     });
 
@@ -58,9 +94,11 @@ export function useStore() {
   }, []);
 
   const addAgent = (
-    name: string, 
-    telefono?: string, 
-    legajo?: string, 
+    nombre: string,
+    apellido: string,
+    localidad?: string,
+    telefono?: string,
+    legajo?: string,
     turno?: 1 | 2 | 3 | 4,
     hasLicense?: boolean,
     licenseType?: 'auto' | 'moto' | 'ambas',
@@ -80,7 +118,12 @@ export function useStore() {
   ) => {
     const id = Date.now().toString();
     const newAgent = { 
-      id, name, telefono, legajo, turno: turno || 1,
+      id, 
+      nombre, 
+      apellido, 
+      localidad: localidad || '',
+      name: `${apellido} ${nombre}`.trim(),
+      telefono, legajo, turno: turno || 1,
       hasLicense, licenseType, licenseCategory, licenseExpiration,
       hasDAEO, daeoExpiration,
       domicilio,
