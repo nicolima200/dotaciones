@@ -580,6 +580,8 @@ function Dashboard() {
     // 1. BASE SECTION
     if (reportSections.base) {
       const baseRoles = [
+        { id: 'jefe', label: 'Jefe' },
+        { id: 'segundo_jefe', label: '2da jefa' },
         { id: 'ofl_control', label: 'Ofl. de control' },
         { id: 'ofl_servicio', label: 'Ofl. de servicio' },
         { id: 'operaciones', label: 'Operaciones' },
@@ -756,6 +758,8 @@ Ayte. de guardia: ${getAgentName('ayte_guardia')}` : ''}</div>
     // 1. BASE SECTION
     if (reportSections.base) {
       const baseRoles = [
+        { id: 'jefe', label: 'Jefe' },
+        { id: 'segundo_jefe', label: '2da jefa' },
         { id: 'ofl_control', label: 'Ofl. de control' },
         { id: 'ofl_servicio', label: 'Ofl. de servicio' },
         { id: 'operaciones', label: 'Operaciones' },
@@ -1194,11 +1198,13 @@ Ayte. de guardia: ${getAgentName('ayte_guardia')}` : ''}</div>
               <div className="sidebar-header">
                 <h2 className="sidebar-title"><Shield size={20} /> Base</h2>
                 <span className="sidebar-badge">
-                  {currentSchedules.filter(s => ['ofl_control', 'ofl_servicio', 'operaciones', 'ayte_guardia', 'logistica', 'personal', 'judiciales'].includes(s.role)).length}
+                  {currentSchedules.filter(s => ['jefe', 'segundo_jefe', 'ofl_control', 'ofl_servicio', 'operaciones', 'ayte_guardia', 'logistica', 'personal', 'judiciales'].includes(s.role)).length}
                 </span>
               </div>
               <div className="flex flex-col gap-2 p-3 pb-4">
                 {[
+                  { id: 'jefe', label: 'Jefe' },
+                  { id: 'segundo_jefe', label: '2da jefa' },
                   { id: 'ofl_control', label: 'Ofl. de control' },
                   { id: 'ofl_servicio', label: 'Ofl. de servicio' },
                   { id: 'operaciones', label: 'Operaciones' },
