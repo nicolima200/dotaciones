@@ -74,7 +74,9 @@ export function useStore() {
     nroSerieChaleco?: string,
     marcaArmamento?: string,
     modeloArmamento?: string,
-    nroSerieArmamento?: string
+    nroSerieArmamento?: string,
+    jerarquia?: string,
+    escalafon?: string
   ) => {
     const id = Date.now().toString();
     const newAgent = { 
@@ -87,7 +89,9 @@ export function useStore() {
       nroSerieChaleco,
       marcaArmamento,
       modeloArmamento,
-      nroSerieArmamento
+      nroSerieArmamento,
+      jerarquia,
+      escalafon
     };
     setDoc(doc(db, 'agents', id), newAgent).catch(console.error);
   };
@@ -156,6 +160,13 @@ export function useStore() {
         return (sch.startTime === '09:00' && sch.endTime === '21:00') || (sch.startTime === '21:00' && sch.endTime === '09:00');
       });
       stdSchedules.forEach(sch => {
+        batch.delete(doc(db, 'schedules', sch.id));
+      });
+    }
+
+    if (role === 'jefe' || role === 'segundo_jefe') {
+      const existing = state.schedules.filter(sch => sch.role === role);
+      existing.forEach(sch => {
         batch.delete(doc(db, 'schedules', sch.id));
       });
     }

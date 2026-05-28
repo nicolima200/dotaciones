@@ -1,9 +1,47 @@
 import React, { useEffect, useState } from 'react';
-import { collection, getDocs, doc, updateDoc, setDoc } from 'firebase/firestore';
+import { collection, getDocs, doc, updateDoc, setDoc, writeBatch } from 'firebase/firestore';
 import { db } from '../firebase';
-import { ShieldCheck, Users, Database, ArrowLeft, Download } from 'lucide-react';
+import { ShieldCheck, Users, Database, ArrowLeft, Download, RefreshCw, Trash2 } from 'lucide-react';
 import { UserRole } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
+
+const parseJerarquia = (name: string): { rank: string; cleanName: string } | null => {
+  const mappings = [
+    { std: 'Crio. Gral.', pattern: /^(CRIO\.\s*GRAL\.|CRIO\s*GRAL\.|CRIO\s*GRAL|COMISARIO\s*GENERAL)/i },
+    { std: 'Crio. Mayor', pattern: /^(CRIO\.\s*MAYOR|CRIO\s*MAYOR|COMISARIO\s*MAYOR|CRIO\.\s*MY\.|CRIO\s*MY)/i },
+    { std: 'Crio. Insp.', pattern: /^(CRIO\.\s*INSP\.|CRIO\s*INSP|COMISARIO\s*INSPECTOR)/i },
+    { std: 'Crio.', pattern: /^(CRIO\.|CRIO|COMISARIO)/i },
+    { std: 'Subcrio.', pattern: /^(SUBCRIO\.|SUBCRIO|SUBCOMISARIO)/i },
+    { std: 'Ppal.', pattern: /^((OFL\.|OFL|OF\.|OF)[\.\s]+)?(PPAL\.|PPAL|OFICIAL\s*PRINCIPAL)/i },
+    { std: 'OI.', pattern: /^((OFL\.|OFL|OF\.|OF)[\.\s]+)?(OI\.|OI|OFICIAL\s*INSPECTOR|INSP\.|INSP\b|INSPECTOR\b)/i },
+    { std: 'OSI.', pattern: /^((OFL\.|OFL|OF\.|OF)[\.\s]+)?(OSI\.|OSI|OFICIAL\s*SUBINSPECTOR|SUBINSP\.|SUBINSP\b|SUBINSPECTOR\b)/i },
+    { std: 'OA.', pattern: /^((OFL\.|OFL|OF\.|OF)[\.\s]+)?(OA\.|OA|OFICIAL\s*AYUDANTE|AYTE\.|AYTE\b|AYUDANTE\b)/i },
+    { std: 'OSA.', pattern: /^((OFL\.|OFL|OF\.|OF)[\.\s]+)?(OSA\.|OSA|OFICIAL\s*SUBAYUDANTE|SUBAYTE\.|SUBAYTE\b|SUBAYUDANTE\b)/i },
+    { std: 'Mayor', pattern: /^(MAYOR|MY\.|MY)/i },
+    { std: 'Cap.', pattern: /^(CAPITAN|CAPITÁN|CAP\.|CAP)/i },
+    { std: 'Tte. 1ro.', pattern: /^(TTE\.\s*1RO\.|TTE\s*1RO\.|TTE\s*1RO|TTE\.\s*1°\.|TTE\s*1°|TTE\s*1RO)/i },
+    { std: 'Tte.', pattern: /^(TTE\.|TTE)/i },
+    { std: 'Subtte.', pattern: /^(SUBTTE\.|SUBTTE|SUB\.TTE)/i },
+    { std: 'Sgto.', pattern: /^(SGTO\.|SGTO|SARGENTO)/i },
+    { std: 'OFL.', pattern: /^(OFL\.|OFL|OF\.|OF\b|OFIC\.|OFIC|OFICIAL)/i },
+  ];
+
+  for (const m of mappings) {
+    const match = name.match(m.pattern);
+    if (match) {
+      const fullMatch = match[0];
+      const remaining = name.slice(fullMatch.length);
+      if (remaining.length === 0 || /^[\.\s]+/.test(remaining)) {
+        const cleanName = remaining.replace(/^[\.\s]+/, '').trim();
+        return {
+          rank: m.std,
+          cleanName
+        };
+      }
+    }
+  }
+  return null;
+};
 
 interface UserData {
   id: string;
@@ -17,6 +55,8 @@ export const AdminView: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [migrating, setMigrating] = useState(false);
+  const [parsing, setParsing] = useState(false);
+  const [removing, setRemoving] = useState(false);
   const navigate = useNavigate();
 
   const fetchUsers = async () => {
@@ -86,6 +126,94 @@ export const AdminView: React.FC = () => {
     }
   };
 
+  const handleParseRanks = async () => {
+    setParsing(true);
+    try {
+      const agentsSnap = await getDocs(collection(db, 'agents'));
+      let updatedCount = 0;
+      
+      let batch = writeBatch(db);
+      let batchSize = 0;
+      
+      for (const d of agentsSnap.docs) {
+        const data = d.data();
+        const name = data.name || '';
+        
+        const parsed = parseJerarquia(name);
+        if (parsed && (!data.jerarquia || data.jerarquia !== parsed.rank)) {
+          batch.update(doc(db, 'agents', d.id), {
+            jerarquia: parsed.rank
+          });
+          updatedCount++;
+          batchSize++;
+          
+          if (batchSize >= 400) {
+            await batch.commit();
+            batch = writeBatch(db);
+            batchSize = 0;
+          }
+        }
+      }
+      
+      if (batchSize > 0) {
+        await batch.commit();
+      }
+      
+      alert(`Se parsearon y guardaron las jerarquías de ${updatedCount} efectivos con éxito.`);
+    } catch (e: any) {
+      console.error(e);
+      alert("Error al parsear jerarquías: " + e.message);
+    } finally {
+      setParsing(false);
+    }
+  };
+
+  const handleRemoveRanksFromName = async () => {
+    if (!window.confirm("¿Está seguro de que desea eliminar la abreviación de jerarquía del campo de nombre de todos los efectivos? Esta acción modificará los nombres en la base de datos.")) {
+      return;
+    }
+    setRemoving(true);
+    try {
+      const agentsSnap = await getDocs(collection(db, 'agents'));
+      let updatedCount = 0;
+      
+      let batch = writeBatch(db);
+      let batchSize = 0;
+      
+      for (const d of agentsSnap.docs) {
+        const data = d.data();
+        const name = data.name || '';
+        
+        const parsed = parseJerarquia(name);
+        if (parsed) {
+          batch.update(doc(db, 'agents', d.id), {
+            name: parsed.cleanName,
+            jerarquia: parsed.rank
+          });
+          updatedCount++;
+          batchSize++;
+          
+          if (batchSize >= 400) {
+            await batch.commit();
+            batch = writeBatch(db);
+            batchSize = 0;
+          }
+        }
+      }
+      
+      if (batchSize > 0) {
+        await batch.commit();
+      }
+      
+      alert(`Se eliminó la jerarquía del nombre de ${updatedCount} efectivos con éxito.`);
+    } catch (e: any) {
+      console.error(e);
+      alert("Error al eliminar jerarquías del nombre: " + e.message);
+    } finally {
+      setRemoving(false);
+    }
+  };
+
   if (loading) {
     return <div className="p-8 text-white">Cargando usuarios...</div>;
   }
@@ -121,9 +249,25 @@ export const AdminView: React.FC = () => {
         </div>
         <div className="flex flex-wrap items-center gap-2">
           <button 
+            onClick={handleParseRanks} 
+            disabled={parsing || removing}
+            className="bg-purple-600 hover:bg-purple-700 disabled:opacity-50 text-white px-3 py-2 rounded-lg flex items-center gap-2 text-sm font-medium transition-colors"
+          >
+            <RefreshCw size={16} className={parsing ? 'animate-spin' : ''} />
+            {parsing ? 'Parseando...' : 'Parsear Jerarquías'}
+          </button>
+          <button 
+            onClick={handleRemoveRanksFromName} 
+            disabled={parsing || removing}
+            className="bg-red-600 hover:bg-red-700 disabled:opacity-50 text-white px-3 py-2 rounded-lg flex items-center gap-2 text-sm font-medium transition-colors"
+          >
+            <Trash2 size={16} />
+            {removing ? 'Eliminando...' : 'Eliminar Jerarquía de Nombres'}
+          </button>
+          <button 
             onClick={handleDownloadBackup} 
             disabled={migrating}
-            className="bg-emerald-600 hover:bg-emerald-700 disabled:opacity-50 text-white px-3 py-2 rounded-lg flex items-center gap-2 text-sm"
+            className="bg-emerald-600 hover:bg-emerald-700 disabled:opacity-50 text-white px-3 py-2 rounded-lg flex items-center gap-2 text-sm font-medium transition-colors"
           >
             <Download size={16} />
             {migrating ? 'Descargando...' : 'Descargar Backup'}

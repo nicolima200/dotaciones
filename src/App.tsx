@@ -14,6 +14,35 @@ import { auth } from './firebase';
 import { signOut } from 'firebase/auth';
 import logoMinisterio from './assets/logo_ministerio.png';
 import logoProvincia from './assets/logo_provincia.png';
+const validRanks = [
+  'Crio. Gral.',
+  'Crio. Mayor',
+  'Crio. Insp.',
+  'Crio.',
+  'Subcrio.',
+  'Ppal.',
+  'OI.',
+  'OSI.',
+  'OA.',
+  'OSA.',
+  'Mayor',
+  'Cap.',
+  'Tte. 1ro.',
+  'Tte.',
+  'Subtte.',
+  'Sgto.',
+  'OFL.'
+];
+
+const validEscalafones = [
+  'COMANDO',
+  'GENERAL',
+  'PROFESIONAL',
+  'TÉCNICO',
+  'ADMINISTRATIVO',
+  'SCIOS. GENERALES',
+  'EMERGENCIAS TELEFONICAS'
+];
 
 function Dashboard() {
   const { state, addAgent, updateAgent, removeAgent, softRemoveAgent, softRemoveInfra, addInfra, removeInfra, updateInfra, assignAgent, removeSchedule, clearRoleSchedules, restoreSchedules, loadState } = useStore();
@@ -210,7 +239,10 @@ function Dashboard() {
   };
 
   // Derived State
-  const currentSchedules = state.schedules.filter(s => s.shift === currentShift);
+  const currentSchedules = [
+    ...state.schedules.filter(s => s.shift === currentShift && s.role !== 'jefe' && s.role !== 'segundo_jefe'),
+    ...state.schedules.filter(s => s.role === 'jefe' || s.role === 'segundo_jefe')
+  ];
   const assignedAgentIds = currentSchedules.map(s => s.agentId);
 
   const shiftAgents = state.agents.filter(a => ('turno' + (a.turno || 1)) === currentShift);
@@ -242,7 +274,11 @@ function Dashboard() {
     }
 
     const query = searchQuery.toLowerCase();
-    const matches = shiftAgents.filter(a => a.name.toLowerCase().includes(query)).map(a => a.id);
+    const matches = shiftAgents.filter(a => 
+      a.name.toLowerCase().includes(query) ||
+      (a.jerarquia && a.jerarquia.toLowerCase().includes(query)) ||
+      (a.escalafon && a.escalafon.toLowerCase().includes(query))
+    ).map(a => a.id);
 
     setSearchResults(matches);
     setSearchIndex(0);
@@ -561,7 +597,7 @@ function Dashboard() {
       const sch = currentSchedules.find(s => s.role === role);
       if (!sch) return '';
       const a = state.agents.find(a => a.id === sch.agentId);
-      return a ? a.name : '';
+      return a ? (a.jerarquia ? `${a.jerarquia} ${a.name}` : a.name) : '';
     };
 
     let text = '';
@@ -602,7 +638,7 @@ function Dashboard() {
           occupants.forEach(occ => {
             const agent = state.agents.find(a => a.id === occ.agentId);
             if (agent) {
-              baseText += `  - ${roleInfo.label}: ${agent.name}\n`;
+              baseText += `  - ${roleInfo.label}: ${(agent.jerarquia ? agent.jerarquia + ' ' : '') + agent.name}\n`;
             }
           });
         }
@@ -646,7 +682,7 @@ function Dashboard() {
               if (agent) {
                 const isHabitual = (occ.startTime === '09:00' && occ.endTime === '21:00') || (occ.startTime === '21:00' && occ.endTime === '09:00');
                 const scheduleText = isHabitual ? '' : ` (${occ.startTime} - ${occ.endTime})`;
-                sectionText += `      * ${agent.name}${scheduleText}\n`;
+                sectionText += `      * ${(agent.jerarquia ? agent.jerarquia + ' ' : '') + agent.name}${scheduleText}\n`;
               }
             });
           }
@@ -663,7 +699,7 @@ function Dashboard() {
       if (availableAgents.length > 0) {
         text += `EFECTIVOS DISPONIBLES:\n`;
         availableAgents.forEach(agent => {
-          text += `  - ${agent.name}\n`;
+          text += `  - ${(agent.jerarquia ? agent.jerarquia + ' ' : '') + agent.name}\n`;
         });
         text += `\n`;
       }
@@ -673,7 +709,7 @@ function Dashboard() {
       if (ausenteAgents.length > 0) {
         text += `EFECTIVOS AUSENTES:\n`;
         ausenteAgents.forEach(agent => {
-          text += `  - ${agent.name}\n`;
+          text += `  - ${(agent.jerarquia ? agent.jerarquia + ' ' : '') + agent.name}\n`;
         });
         text += `\n`;
       }
@@ -683,7 +719,7 @@ function Dashboard() {
       if (noDisponibleAgents.length > 0) {
         text += `EFECTIVOS NO DISPONIBLES:\n`;
         noDisponibleAgents.forEach(agent => {
-          text += `  - ${agent.name}\n`;
+          text += `  - ${(agent.jerarquia ? agent.jerarquia + ' ' : '') + agent.name}\n`;
         });
         text += `\n`;
       }
@@ -693,7 +729,7 @@ function Dashboard() {
       if (vacacionesAgents.length > 0) {
         text += `EFECTIVOS EN VACACIONES:\n`;
         vacacionesAgents.forEach(agent => {
-          text += `  - ${agent.name}\n`;
+          text += `  - ${(agent.jerarquia ? agent.jerarquia + ' ' : '') + agent.name}\n`;
         });
         text += `\n`;
       }
@@ -721,7 +757,7 @@ function Dashboard() {
       const sch = currentSchedules.find(s => s.role === role);
       if (!sch) return '';
       const a = state.agents.find(a => a.id === sch.agentId);
-      return a ? a.name : '';
+      return a ? (a.jerarquia ? `${a.jerarquia} ${a.name}` : a.name) : '';
     };
 
     let html = `
@@ -786,7 +822,7 @@ Ayte. de guardia: ${getAgentName('ayte_guardia')}` : ''}</div>
           occupants.forEach(occ => {
             const agent = state.agents.find(a => a.id === occ.agentId);
             if (agent) {
-              baseHtml += `<li class="flat-item"><strong>${roleInfo.label}:</strong> ${agent.name}</li>`;
+              baseHtml += `<li class="flat-item"><strong>${roleInfo.label}:</strong> ${(agent.jerarquia ? agent.jerarquia + ' ' : '') + agent.name}</li>`;
             }
           });
         }
@@ -843,7 +879,7 @@ Ayte. de guardia: ${getAgentName('ayte_guardia')}` : ''}</div>
               if (agent) {
                 const isHabitual = (occ.startTime === '09:00' && occ.endTime === '21:00') || (occ.startTime === '21:00' && occ.endTime === '09:00');
                 const scheduleText = isHabitual ? '' : ` (${occ.startTime} - ${occ.endTime})`;
-                html += `<li class="agent-item">${agent.name}${scheduleText}</li>`;
+                html += `<li class="agent-item">${(agent.jerarquia ? agent.jerarquia + ' ' : '') + agent.name}${scheduleText}</li>`;
               }
             });
             html += `  </ul>
@@ -870,7 +906,7 @@ Ayte. de guardia: ${getAgentName('ayte_guardia')}` : ''}</div>
         html += `<h2>${grp.title}</h2>
                  <ul class="flat-list">`;
         grp.agents.forEach(agent => {
-          html += `<li class="flat-item">${agent.name}</li>`;
+          html += `<li class="flat-item">${(agent.jerarquia ? agent.jerarquia + ' ' : '') + agent.name}</li>`;
         });
         html += `</ul>`;
       }
@@ -1293,7 +1329,7 @@ Ayte. de guardia: ${getAgentName('ayte_guardia')}` : ''}</div>
                       const agent = state.agents.find(a => a.id === agentId);
                       return (
                         <div key={agentId} className="alert-item">
-                          <span className="alert-item-header">{agent?.name}</span>
+                          <span className="alert-item-header">{(agent?.jerarquia ? agent.jerarquia + ' ' : '') + agent?.name}</span>
                           <div className="flex flex-col gap-1.5">
                             {schedules.map(sch => (
                               <div key={sch.id} className="alert-item-row">
@@ -2328,6 +2364,10 @@ function MovilInfoModal({ movil, infraType, onClose, updateInfra, softRemoveInfr
 function AgentInfoModal({ agent, onClose, state, getInfraName, updateAgent, softRemoveAgent, userRole }: any) {
   const [isEditing, setIsEditing] = useState(false);
   const [name, setName] = useState(agent.name || '');
+  const [jerarquia, setJerarquia] = useState(agent.jerarquia || '');
+  const [jerarquiaError, setJerarquiaError] = useState<string | null>(null);
+  const [escalafon, setEscalafon] = useState(agent.escalafon || '');
+  const [escalafonError, setEscalafonError] = useState<string | null>(null);
   const [telefono, setTelefono] = useState(agent.telefono || '');
   const [legajo, setLegajo] = useState(agent.legajo || '');
   const [turno, setTurno] = useState<1 | 2 | 3 | 4>(agent.turno || 1);
@@ -2349,6 +2389,10 @@ function AgentInfoModal({ agent, onClose, state, getInfraName, updateAgent, soft
 
   React.useEffect(() => {
     setName(agent.name || '');
+    setJerarquia(agent.jerarquia || '');
+    setJerarquiaError(null);
+    setEscalafon(agent.escalafon || '');
+    setEscalafonError(null);
     setTelefono(agent.telefono || '');
     setLegajo(agent.legajo || '');
     setTurno(agent.turno || 1);
@@ -2371,8 +2415,23 @@ function AgentInfoModal({ agent, onClose, state, getInfraName, updateAgent, soft
   }, [agent, isEditing]);
 
   const handleSave = () => {
+    const trimmedJ = jerarquia.trim();
+    if (trimmedJ !== '' && !validRanks.includes(trimmedJ)) {
+      setJerarquia('');
+      setJerarquiaError('La jerarquía ingresada no es válida. Debe elegir una de la lista.');
+      return;
+    }
+    const trimmedE = escalafon.trim();
+    if (trimmedE !== '' && !validEscalafones.includes(trimmedE)) {
+      setEscalafon('');
+      setEscalafonError('El escalafón ingresado no es válido. Debe elegir uno de la lista.');
+      return;
+    }
     updateAgent(agent.id, {
-      name, telefono, legajo, turno,
+      name,
+      jerarquia: trimmedJ || '',
+      escalafon: trimmedE || '',
+      telefono, legajo, turno,
       hasLicense, licenseType, licenseCategory, licenseExpiration,
       hasDAEO, daeoExpiration,
       domicilio: domicilio.trim(),
@@ -2390,7 +2449,7 @@ function AgentInfoModal({ agent, onClose, state, getInfraName, updateAgent, soft
     <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-[9998] p-4">
       <div className="bg-slate-900 rounded-xl border border-slate-700 w-full max-w-md max-h-[85vh] flex flex-col shadow-2xl relative z-[9999] overflow-hidden">
         <div className="flex justify-between items-center p-4 border-b border-slate-800 bg-slate-950 relative z-10">
-          <h3 className="text-lg font-bold text-white flex items-center"><Users className="mr-2 text-yellow-500" /> {agent.name}</h3>
+          <h3 className="text-lg font-bold text-white flex items-center"><Users className="mr-2 text-yellow-500" /> {(agent.jerarquia ? agent.jerarquia + ' ' : '') + agent.name}</h3>
           <button onClick={onClose} className="text-slate-400 hover:text-white"><X size={20} /></button>
         </div>
 
@@ -2408,8 +2467,58 @@ function AgentInfoModal({ agent, onClose, state, getInfraName, updateAgent, soft
             {isEditing ? (
               <div className="space-y-3">
                 <div>
+                  <label className="block text-xs text-slate-500 mb-1">Jerarquía</label>
+                  <input
+                    type="text"
+                    list="ranks-list"
+                    value={jerarquia}
+                    onChange={e => { setJerarquia(e.target.value); setJerarquiaError(null); }}
+                    onBlur={() => {
+                      const t = jerarquia.trim();
+                      if (t !== '' && !validRanks.includes(t)) {
+                        setJerarquia('');
+                        setJerarquiaError('La jerarquía ingresada no es válida. Debe elegir una de la lista.');
+                      } else {
+                        setJerarquiaError(null);
+                      }
+                    }}
+                    autocomplete="off"
+                    className={`w-full bg-slate-800 border ${jerarquiaError ? 'border-red-500 ring-1 ring-red-500' : 'border-slate-700'} rounded p-2 text-white text-sm`}
+                    placeholder="Escriba para buscar jerarquía..."
+                  />
+                  <datalist id="ranks-list">
+                    {validRanks.map(r => <option key={r} value={r} />)}
+                  </datalist>
+                  {jerarquiaError && <p className="text-red-500 text-[10px] mt-1 font-semibold">{jerarquiaError}</p>}
+                </div>
+                <div>
+                  <label className="block text-xs text-slate-500 mb-1">Escalafón</label>
+                  <input
+                    type="text"
+                    list="branches-list"
+                    value={escalafon}
+                    onChange={e => { setEscalafon(e.target.value); setEscalafonError(null); }}
+                    onBlur={() => {
+                      const t = escalafon.trim();
+                      if (t !== '' && !validEscalafones.includes(t)) {
+                        setEscalafon('');
+                        setEscalafonError('El escalafón ingresado no es válido. Debe elegir uno de la lista.');
+                      } else {
+                        setEscalafonError(null);
+                      }
+                    }}
+                    autocomplete="off"
+                    className={`w-full bg-slate-800 border ${escalafonError ? 'border-red-500 ring-1 ring-red-500' : 'border-slate-700'} rounded p-2 text-white text-sm`}
+                    placeholder="Escriba para buscar escalafón..."
+                  />
+                  <datalist id="branches-list">
+                    {validEscalafones.map(b => <option key={b} value={b} />)}
+                  </datalist>
+                  {escalafonError && <p className="text-red-500 text-[10px] mt-1 font-semibold">{escalafonError}</p>}
+                </div>
+                <div>
                   <label className="block text-xs text-slate-500 mb-1">Nombre</label>
-                  <input type="text" value={name} onChange={e => setName(e.target.value)} className="w-full bg-slate-800 border border-slate-700 rounded p-2 text-white text-sm" placeholder="Ej: SGTO. PEREZ JUAN" />
+                  <input type="text" value={name} onChange={e => setName(e.target.value)} className="w-full bg-slate-800 border border-slate-700 rounded p-2 text-white text-sm" placeholder="Ej: PEREZ JUAN" />
                 </div>
                 <div>
                   <label className="block text-xs text-slate-500 mb-1">Legajo</label>
@@ -2577,6 +2686,14 @@ function AgentInfoModal({ agent, onClose, state, getInfraName, updateAgent, soft
               </div>
             ) : (
               <div className="space-y-2">
+                <div className="flex justify-between">
+                  <span className="text-sm text-slate-500">Jerarquía:</span>
+                  <span className="text-sm text-slate-300 font-medium">{agent.jerarquia || <span className="text-slate-600 italic">Sin asignar</span>}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-sm text-slate-500">Escalafón:</span>
+                  <span className="text-sm text-slate-300 font-medium">{agent.escalafon || <span className="text-slate-600 italic">Sin asignar</span>}</span>
+                </div>
                 <div className="flex justify-between">
                   <span className="text-sm text-slate-500">Legajo:</span>
                   <span className="text-sm text-slate-300 font-medium">{agent.legajo || <span className="text-slate-600 italic">No registrado</span>}</span>
@@ -2785,7 +2902,7 @@ function ScheduleModal({ onClose, state, assignAgent, removeSchedule, getInfraNa
               <div>
                 <label className="block text-xs text-slate-500 mb-1">Agente</label>
                 <select value={agentId} onChange={e => setAgentId(e.target.value)} className="w-full bg-slate-800 border border-slate-700 rounded p-2 text-white text-sm">
-                  {state.agents.filter((a: Agent) => ('turno' + (a.turno || 1)) === shift).map((a: Agent) => <option key={a.id} value={a.id}>{a.name}</option>)}
+                  {state.agents.filter((a: Agent) => ('turno' + (a.turno || 1)) === shift).map((a: Agent) => <option key={a.id} value={a.id}>{(a.jerarquia ? a.jerarquia + ' ' : '') + a.name}</option>)}
                 </select>
               </div>
 
@@ -2848,7 +2965,7 @@ function ScheduleModal({ onClose, state, assignAgent, removeSchedule, getInfraNa
                           <div className="text-xs text-slate-500">{sch.endTime}</div>
                         </div>
                         <div className="border-l border-slate-700 pl-4">
-                          <div className="font-bold text-white">{agent?.name}</div>
+                          <div className="font-bold text-white">{agent ? (agent.jerarquia ? `${agent.jerarquia} ${agent.name}` : agent.name) : ''}</div>
                           <div className="text-sm text-slate-400 capitalize">{sch.role} - {getInfraName(sch.role, sch.targetId)}</div>
                         </div>
                       </div>
@@ -2893,6 +3010,10 @@ function SettingsModal({ onClose, state, addAgent, removeAgent, addInfra, remove
   }, [userShiftNum, editingId]);
 
   const [newAgentName, setNewAgentName] = useState('');
+  const [newAgentJerarquia, setNewAgentJerarquia] = useState('');
+  const [newAgentJerarquiaError, setNewAgentJerarquiaError] = useState<string | null>(null);
+  const [newAgentEscalafon, setNewAgentEscalafon] = useState('');
+  const [newAgentEscalafonError, setNewAgentEscalafonError] = useState<string | null>(null);
   const [newAgentPhone, setNewAgentPhone] = useState('');
   const [newAgentLegajo, setNewAgentLegajo] = useState('');
   const [newInfraName, setNewInfraName] = useState('');
@@ -2923,6 +3044,10 @@ function SettingsModal({ onClose, state, addAgent, removeAgent, addInfra, remove
   const cancelEdit = () => {
     setEditingId(null);
     setNewAgentName('');
+    setNewAgentJerarquia('');
+    setNewAgentJerarquiaError(null);
+    setNewAgentEscalafon('');
+    setNewAgentEscalafonError(null);
     setNewAgentPhone('');
     setNewAgentLegajo('');
     setNewAgentHasLicense(false);
@@ -2953,6 +3078,10 @@ function SettingsModal({ onClose, state, addAgent, removeAgent, addInfra, remove
     cancelEdit();
     setEditingId(a.id);
     setNewAgentName(a.name);
+    setNewAgentJerarquia(a.jerarquia || '');
+    setNewAgentJerarquiaError(null);
+    setNewAgentEscalafon(a.escalafon || '');
+    setNewAgentEscalafonError(null);
     setNewAgentPhone(a.telefono || '');
     setNewAgentLegajo(a.legajo || '');
     setNewAgentShift(a.turno || 1);
@@ -2991,10 +3120,25 @@ function SettingsModal({ onClose, state, addAgent, removeAgent, addInfra, remove
   const handleAddAgent = (e: React.FormEvent) => {
     e.preventDefault();
     if (newAgentName.trim()) {
+      const trimmedJ = newAgentJerarquia.trim();
+      if (trimmedJ !== '' && !validRanks.includes(trimmedJ)) {
+        setNewAgentJerarquia('');
+        setNewAgentJerarquiaError('La jerarquía ingresada no es válida. Debe elegir una de la lista.');
+        return;
+      }
+      const trimmedE = newAgentEscalafon.trim();
+      if (trimmedE !== '' && !validEscalafones.includes(trimmedE)) {
+        setNewAgentEscalafon('');
+        setNewAgentEscalafonError('El escalafón ingresado no es válido. Debe elegir uno de la lista.');
+        return;
+      }
+
       if (editingId) {
         if (window.confirm(`¿Está seguro que desea guardar los cambios para el efectivo ${newAgentName.trim()}?`)) {
           updateAgent(editingId, {
             name: newAgentName.trim(), 
+            jerarquia: trimmedJ || '',
+            escalafon: trimmedE || '',
             telefono: newAgentPhone.trim(), 
             legajo: newAgentLegajo.trim(), 
             turno: newAgentShift,
@@ -3032,7 +3176,9 @@ function SettingsModal({ onClose, state, addAgent, removeAgent, addInfra, remove
           newAgentNroSerieChaleco.trim(),
           newAgentMarcaArmamento.trim(),
           newAgentModeloArmamento.trim(),
-          newAgentNroSerieArmamento.trim()
+          newAgentNroSerieArmamento.trim(),
+          trimmedJ || '',
+          trimmedE || ''
         );
         cancelEdit();
       }
@@ -3087,8 +3233,58 @@ function SettingsModal({ onClose, state, addAgent, removeAgent, addInfra, remove
             <div>
               <form onSubmit={handleAddAgent} className="flex flex-col gap-3 mb-6 bg-slate-800/50 p-4 rounded-lg border border-slate-700">
                 <h4 className="text-sm font-bold text-slate-300">{editingId ? 'Editar Efectivo' : 'Agregar Nuevo Efectivo'}</h4>
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3">
-                  <input type="text" value={newAgentName} onChange={e => setNewAgentName(e.target.value)} placeholder="Nombre (Ej: Oficial Pérez)" className="bg-slate-800 border border-slate-700 rounded p-2 text-white text-sm" required />
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
+                  <div className="flex flex-col">
+                    <input
+                      type="text"
+                      list="ranks-list-settings"
+                      value={newAgentJerarquia}
+                      onChange={e => { setNewAgentJerarquia(e.target.value); setNewAgentJerarquiaError(null); }}
+                      onBlur={() => {
+                        const t = newAgentJerarquia.trim();
+                        if (t !== '' && !validRanks.includes(t)) {
+                          setNewAgentJerarquia('');
+                          setNewAgentJerarquiaError('La jerarquía ingresada no es válida. Debe elegir una de la lista.');
+                        } else {
+                          setNewAgentJerarquiaError(null);
+                        }
+                      }}
+                      autocomplete="off"
+                      placeholder="Jerarquía (ej: Sgto., OFL., etc.)"
+                      className={`bg-slate-800 border ${newAgentJerarquiaError ? 'border-red-500 ring-1 ring-red-500' : 'border-slate-700'} rounded p-2 text-white text-sm`}
+                    />
+                    <datalist id="ranks-list-settings">
+                      {validRanks.map(r => <option key={r} value={r} />)}
+                    </datalist>
+                    {newAgentJerarquiaError && <span className="text-red-500 text-[10px] mt-1 font-semibold">{newAgentJerarquiaError}</span>}
+                  </div>
+
+                  <div className="flex flex-col">
+                    <input
+                      type="text"
+                      list="branches-list-settings"
+                      value={newAgentEscalafon}
+                      onChange={e => { setNewAgentEscalafon(e.target.value); setNewAgentEscalafonError(null); }}
+                      onBlur={() => {
+                        const t = newAgentEscalafon.trim();
+                        if (t !== '' && !validEscalafones.includes(t)) {
+                          setNewAgentEscalafon('');
+                          setNewAgentEscalafonError('El escalafón ingresado no es válido. Debe elegir uno de la lista.');
+                        } else {
+                          setNewAgentEscalafonError(null);
+                        }
+                      }}
+                      autocomplete="off"
+                      placeholder="Escalafón (ej: COMANDO, etc.)"
+                      className={`bg-slate-800 border ${newAgentEscalafonError ? 'border-red-500 ring-1 ring-red-500' : 'border-slate-700'} rounded p-2 text-white text-sm`}
+                    />
+                    <datalist id="branches-list-settings">
+                      {validEscalafones.map(b => <option key={b} value={b} />)}
+                    </datalist>
+                    {newAgentEscalafonError && <span className="text-red-500 text-[10px] mt-1 font-semibold">{newAgentEscalafonError}</span>}
+                  </div>
+
+                  <input type="text" value={newAgentName} onChange={e => setNewAgentName(e.target.value)} placeholder="Nombre (Ej: Pérez Juan)" className="bg-slate-800 border border-slate-700 rounded p-2 text-white text-sm" required />
                   <input type="text" value={newAgentLegajo} onChange={e => setNewAgentLegajo(e.target.value.replace(/\D/g, ''))} placeholder="Legajo (Opcional)" className="bg-slate-800 border border-slate-700 rounded p-2 text-white text-sm" />
                   <input type="text" value={newAgentPhone} onChange={e => setNewAgentPhone(e.target.value.replace(/[^\d\s\-+]/g, ''))} placeholder="Teléfono (Opcional)" className="bg-slate-800 border border-slate-700 rounded p-2 text-white text-sm" />
                   <select value={newAgentShift} onChange={e => setNewAgentShift(Number(e.target.value) as 1 | 2 | 3 | 4)} className={`bg-slate-800 border border-slate-700 rounded p-2 text-white text-sm ${!isAdmin ? 'opacity-50 cursor-not-allowed' : ''}`} disabled={!isAdmin}>
@@ -3263,11 +3459,14 @@ function SettingsModal({ onClose, state, addAgent, removeAgent, addInfra, remove
                 {state.agents.filter((a: Agent) => 
                   (isAdmin || (a.turno || 1) === userShiftNum) &&
                   (resourceFilterShift === 'all' || (a.turno || 1) === resourceFilterShift) && 
-                  (a.name.toLowerCase().includes(resourceSearchQuery.toLowerCase()) || (a.legajo || '').includes(resourceSearchQuery))
+                  (a.name.toLowerCase().includes(resourceSearchQuery.toLowerCase()) || 
+                   (a.jerarquia && a.jerarquia.toLowerCase().includes(resourceSearchQuery.toLowerCase())) ||
+                   (a.escalafon && a.escalafon.toLowerCase().includes(resourceSearchQuery.toLowerCase())) ||
+                   (a.legajo || '').includes(resourceSearchQuery))
                 ).map((a: Agent) => (
                   <div key={a.id} className="bg-slate-800 p-3 rounded flex justify-between items-center border border-slate-700">
                     <div>
-                      <div className="text-slate-200 font-medium">{a.name}</div>
+                      <div className="text-slate-200 font-medium">{(a.jerarquia ? a.jerarquia + ' ' : '') + a.name}</div>
                       <div className="text-xs text-slate-500 flex items-center gap-2 mt-1">
                         {a.legajo && <span>L: {a.legajo}</span>}
                         {a.telefono && <span>Tel: {a.telefono}</span>}
@@ -3281,7 +3480,8 @@ function SettingsModal({ onClose, state, addAgent, removeAgent, addInfra, remove
                         <>
                           <button onClick={() => handleEditAgent(a)} className="text-slate-500 hover:text-blue-500 p-2"><Edit2 size={16} /></button>
                           <button onClick={() => {
-                            if (window.confirm(`¿Está seguro que desea eliminar al efectivo ${a.name}?`)) {
+                            const displayName = (a.jerarquia ? a.jerarquia + ' ' : '') + a.name;
+                            if (window.confirm(`¿Está seguro que desea eliminar al efectivo ${displayName}?`)) {
                               removeAgent(a.id);
                             }
                           }} className="text-slate-500 hover:text-red-500 p-2"><Trash2 size={16} /></button>

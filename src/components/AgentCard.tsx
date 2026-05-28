@@ -28,7 +28,7 @@ export function AgentCard({ agent, schedule, onClick, onDragStart, className = '
       className={cardClasses}
     >
       <div className="agent-card-header">
-        <span className="agent-name font-bold text-sm tracking-wide">{agent.name}</span>
+        <span className="agent-name font-bold text-sm tracking-wide">{(agent.jerarquia ? agent.jerarquia + ' ' : '') + agent.name}</span>
         
         <div className="flex flex-wrap gap-1 mt-1">
           {agent.hasLicense && agent.licenseCategory && (

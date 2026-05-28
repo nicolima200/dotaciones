@@ -22,6 +22,8 @@ export interface Agent {
   marcaArmamento?: string;
   modeloArmamento?: string;
   nroSerieArmamento?: string;
+  jerarquia?: string;
+  escalafon?: string;
 }
 
 export interface InfrastructureItem {
