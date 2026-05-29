@@ -53,22 +53,28 @@ service cloud.firestore {
       // Permitir crear solo si es admin o si el agente pertenece al mismo turno del usuario
       allow create: if isAuthenticated() && hasValidRole() && (
         isAdmin() || 
-        ('turno' + string(request.resource.data.turno)) == getUserRole()
+        (getUserRole() == 'turno1' && request.resource.data.turno == 1) ||
+        (getUserRole() == 'turno2' && request.resource.data.turno == 2) ||
+        (getUserRole() == 'turno3' && request.resource.data.turno == 3) ||
+        (getUserRole() == 'turno4' && request.resource.data.turno == 4)
       );
       
-      // Permitir actualizar solo si es admin o si el agente original y el nuevo dato pertenecen al mismo turno del usuario
+      // Permitir actualizar solo si es admin o si el agente original pertenece al mismo turno del usuario
       allow update: if isAuthenticated() && hasValidRole() && (
         isAdmin() || 
-        (
-          ('turno' + string(resource.data.turno)) == getUserRole() && 
-          ('turno' + string(request.resource.data.turno)) == getUserRole()
-        )
+        (getUserRole() == 'turno1' && resource.data.turno == 1) ||
+        (getUserRole() == 'turno2' && resource.data.turno == 2) ||
+        (getUserRole() == 'turno3' && resource.data.turno == 3) ||
+        (getUserRole() == 'turno4' && resource.data.turno == 4)
       );
       
       // Permitir eliminar solo si es admin o si el agente pertenece al mismo turno del usuario
       allow delete: if isAuthenticated() && hasValidRole() && (
         isAdmin() || 
-        ('turno' + string(resource.data.turno)) == getUserRole()
+        (getUserRole() == 'turno1' && resource.data.turno == 1) ||
+        (getUserRole() == 'turno2' && resource.data.turno == 2) ||
+        (getUserRole() == 'turno3' && resource.data.turno == 3) ||
+        (getUserRole() == 'turno4' && resource.data.turno == 4)
       );
     }
 
@@ -82,22 +88,34 @@ service cloud.firestore {
       // Permitir crear solo si es admin o si la infra pertenece al mismo turno del usuario
       allow create: if isAuthenticated() && hasValidRole() && (
         isAdmin() || 
-        ('turno' + string(request.resource.data.turno)) == getUserRole()
+        (getUserRole() == 'turno1' && request.resource.data.turno == 1) ||
+        (getUserRole() == 'turno2' && request.resource.data.turno == 2) ||
+        (getUserRole() == 'turno3' && request.resource.data.turno == 3) ||
+        (getUserRole() == 'turno4' && request.resource.data.turno == 4)
       );
       
       // Permitir actualizar solo si es admin o si la infra original y el nuevo dato pertenecen al mismo turno del usuario
       allow update: if isAuthenticated() && hasValidRole() && (
         isAdmin() || 
         (
-          ('turno' + string(resource.data.turno)) == getUserRole() && 
-          ('turno' + string(request.resource.data.turno)) == getUserRole()
+          ((getUserRole() == 'turno1' && resource.data.turno == 1) ||
+           (getUserRole() == 'turno2' && resource.data.turno == 2) ||
+           (getUserRole() == 'turno3' && resource.data.turno == 3) ||
+           (getUserRole() == 'turno4' && resource.data.turno == 4)) &&
+          ((getUserRole() == 'turno1' && request.resource.data.turno == 1) ||
+           (getUserRole() == 'turno2' && request.resource.data.turno == 2) ||
+           (getUserRole() == 'turno3' && request.resource.data.turno == 3) ||
+           (getUserRole() == 'turno4' && request.resource.data.turno == 4))
         )
       );
       
       // Permitir eliminar solo si es admin o si la infra pertenece al mismo turno del usuario
       allow delete: if isAuthenticated() && hasValidRole() && (
         isAdmin() || 
-        ('turno' + string(resource.data.turno)) == getUserRole()
+        (getUserRole() == 'turno1' && resource.data.turno == 1) ||
+        (getUserRole() == 'turno2' && resource.data.turno == 2) ||
+        (getUserRole() == 'turno3' && resource.data.turno == 3) ||
+        (getUserRole() == 'turno4' && resource.data.turno == 4)
       );
     }
   }

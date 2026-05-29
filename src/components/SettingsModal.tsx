@@ -56,6 +56,7 @@ export function SettingsModal({
   const [newAgentEscalafonError, setNewAgentEscalafonError] = useState<string | null>(null);
   const [newAgentPhone, setNewAgentPhone] = useState('');
   const [newAgentLegajo, setNewAgentLegajo] = useState('');
+  const [newAgentLegajoError, setNewAgentLegajoError] = useState<string | null>(null);
   const [newInfraName, setNewInfraName] = useState('');
   const [newInfraRO, setNewInfraRO] = useState('');
   const [newInfraDescription, setNewInfraDescription] = useState('');
@@ -93,6 +94,7 @@ export function SettingsModal({
     setNewAgentEscalafonError(null);
     setNewAgentPhone('');
     setNewAgentLegajo('');
+    setNewAgentLegajoError(null);
     setNewAgentHasLicense(false);
     setNewAgentLicenseType('auto');
     setNewAgentLicenseCategory('comun');
@@ -173,6 +175,12 @@ export function SettingsModal({
   const handleAddAgent = (e: React.FormEvent) => {
     e.preventDefault();
     if (newAgentNombre.trim() && newAgentApellido.trim()) {
+      const trimmedLegajo = newAgentLegajo.trim();
+      if (!trimmedLegajo) {
+        setNewAgentLegajoError('El legajo es obligatorio.');
+        return;
+      }
+
       const trimmedJ = newAgentJerarquia.trim().toUpperCase();
       if (trimmedJ !== '' && !validRanks.includes(trimmedJ)) {
         setNewAgentJerarquia('');
@@ -188,7 +196,32 @@ export function SettingsModal({
 
       const unifiedName = `${newAgentApellido.trim()} ${newAgentNombre.trim()}`.trim();
 
+      // Check if duplicate legajo exists
+      if (!editingId || (state.agents.find(a => a.id === editingId)?.legajo !== trimmedLegajo)) {
+        const existing = state.agents.find(a => a.legajo === trimmedLegajo && !a.isDeleted);
+        if (existing) {
+          if (isAdmin || (existing.turno === userShiftNum)) {
+            const confirmText = `El legajo ${trimmedLegajo} ya está registrado para el efectivo: ${existing.jerarquia || ''} ${existing.apellido || ''} ${existing.nombre || ''}.\n\n¿Desea precargar sus datos para modificarlos?`;
+            if (window.confirm(confirmText)) {
+              handleEditAgent(existing);
+            } else {
+              setNewAgentLegajo('');
+            }
+          } else {
+            const alertText = `El efectivo: ${existing.jerarquia || ''} ${existing.apellido || ''} ${existing.nombre || ''} con legajo ${trimmedLegajo} cumple funciones en el Turno ${existing.turno}.\n\nPara utilizarlo, debe solicitar a un operador de ese turno que lo transfiera a tu turno, o bien a un administrador.`;
+            window.alert(alertText);
+            setNewAgentLegajo('');
+          }
+          return;
+        }
+      }
+
       if (editingId) {
+        if (!isAdmin && newAgentShift !== userShiftNum) {
+          const confirmTransfer = window.confirm(`¡Atención! Al mover a este efectivo al Turno ${newAgentShift}, dejará de estar visible y editable en tu turno. ¿Desea confirmar la transferencia?`);
+          if (!confirmTransfer) return;
+        }
+
         if (window.confirm(`¿Está seguro que desea guardar los cambios para el efectivo ${unifiedName}?`)) {
           updateAgent(editingId, {
             nombre: newAgentNombre.trim(),
@@ -198,7 +231,7 @@ export function SettingsModal({
             jerarquia: trimmedJ || '',
             escalafon: trimmedE || '',
             telefono: newAgentPhone.trim(),
-            legajo: newAgentLegajo.trim(),
+            legajo: trimmedLegajo,
             turno: newAgentShift,
             hasLicense: newAgentHasLicense,
             licenseType: newAgentLicenseType,
@@ -217,12 +250,17 @@ export function SettingsModal({
           cancelEdit();
         }
       } else {
+        if (!isAdmin && newAgentShift !== userShiftNum) {
+          const confirmTransfer = window.confirm(`¡Atención! Al mover a este efectivo al Turno ${newAgentShift}, dejará de estar visible y editable en tu turno. ¿Desea confirmar la transferencia?`);
+          if (!confirmTransfer) return;
+        }
+
         addAgent(
           newAgentNombre.trim(),
           newAgentApellido.trim(),
           newAgentLocalidad.trim(),
           newAgentPhone.trim(),
-          newAgentLegajo.trim(),
+          trimmedLegajo,
           newAgentShift,
           newAgentHasLicense,
           newAgentLicenseType,
@@ -446,13 +484,51 @@ export function SettingsModal({
                     )}
                   </div>
 
-                  <input
-                    type="text"
-                    value={newAgentLegajo}
-                    onChange={(e) => setNewAgentLegajo(e.target.value.replace(/\D/g, ''))}
-                    placeholder="Legajo (Opcional)"
-                    className="bg-slate-800 border border-slate-700 rounded p-2 text-white text-sm"
-                  />
+                  <div className="flex flex-col">
+                    <input
+                      type="text"
+                      value={newAgentLegajo}
+                      onChange={(e) => {
+                        setNewAgentLegajo(e.target.value.replace(/\D/g, ''));
+                        setNewAgentLegajoError(null);
+                      }}
+                      onBlur={() => {
+                        const trimmedLegajo = newAgentLegajo.trim();
+                        if (!trimmedLegajo) {
+                          setNewAgentLegajoError('El legajo es obligatorio.');
+                          return;
+                        }
+                        
+                        if (!editingId || (state.agents.find(a => a.id === editingId)?.legajo !== trimmedLegajo)) {
+                          const existing = state.agents.find(a => a.legajo === trimmedLegajo && !a.isDeleted);
+                          if (existing) {
+                            if (isAdmin || (existing.turno === userShiftNum)) {
+                              const confirmText = `El legajo ${trimmedLegajo} ya está registrado para el efectivo: ${existing.jerarquia || ''} ${existing.apellido || ''} ${existing.nombre || ''}.\n\n¿Desea precargar sus datos para modificarlos?`;
+                              if (window.confirm(confirmText)) {
+                                handleEditAgent(existing);
+                              } else {
+                                setNewAgentLegajo('');
+                              }
+                            } else {
+                              const alertText = `El efectivo: ${existing.jerarquia || ''} ${existing.apellido || ''} ${existing.nombre || ''} con legajo ${trimmedLegajo} cumple funciones en el Turno ${existing.turno}.\n\nPara utilizarlo, debe solicitar a un operador de ese turno que lo transfiera a tu turno, o bien a un administrador.`;
+                              window.alert(alertText);
+                              setNewAgentLegajo('');
+                            }
+                          }
+                        }
+                      }}
+                      placeholder="Legajo"
+                      className={`bg-slate-800 border ${
+                        newAgentLegajoError ? 'border-red-500 ring-1 ring-red-500' : 'border-slate-700'
+                      } rounded p-2 text-white text-sm`}
+                      required
+                    />
+                    {newAgentLegajoError && (
+                      <span className="text-red-500 text-[10px] mt-1 font-semibold">
+                        {newAgentLegajoError}
+                      </span>
+                    )}
+                  </div>
 
                   <div className="flex flex-col">
                     <input
@@ -534,10 +610,7 @@ export function SettingsModal({
                   <select
                     value={newAgentShift}
                     onChange={(e) => setNewAgentShift(Number(e.target.value) as 1 | 2 | 3 | 4)}
-                    className={`bg-slate-800 border border-slate-700 rounded p-2 text-white text-sm ${
-                      !isAdmin ? 'opacity-50 cursor-not-allowed' : ''
-                    }`}
-                    disabled={!isAdmin}
+                    className="bg-slate-800 border border-slate-700 rounded p-2 text-white text-sm"
                   >
                     <option value={1}>Turno 1</option>
                     <option value={2}>Turno 2</option>

@@ -140,12 +140,32 @@ export function useStore() {
     setDoc(doc(db, 'agents', id), newAgent).catch(console.error);
   };
 
-  const updateAgent = (id: string, updates: Partial<Agent>) => {
+  const updateAgent = async (id: string, updates: Partial<Agent>) => {
     const finalUpdates = { ...updates };
     if (finalUpdates.jerarquia !== undefined) {
       finalUpdates.jerarquia = finalUpdates.jerarquia.toUpperCase();
     }
-    updateDoc(doc(db, 'agents', id), finalUpdates).catch(console.error);
+
+    const currentAgent = state.agents.find(a => a.id === id);
+    const shiftChanged = finalUpdates.turno !== undefined && currentAgent && currentAgent.turno !== finalUpdates.turno;
+
+    if (shiftChanged) {
+      try {
+        const batch = writeBatch(db);
+        batch.update(doc(db, 'agents', id), finalUpdates);
+
+        const schedulesToDelete = state.schedules.filter(sch => sch.agentId === id);
+        schedulesToDelete.forEach(sch => {
+          batch.delete(doc(db, 'schedules', sch.id));
+        });
+
+        await batch.commit();
+      } catch (error) {
+        console.error("Error transferring agent and clearing schedules:", error);
+      }
+    } else {
+      updateDoc(doc(db, 'agents', id), finalUpdates).catch(console.error);
+    }
   };
 
   const removeAgent = async (id: string) => {

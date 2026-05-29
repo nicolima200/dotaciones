@@ -71,6 +71,19 @@ export function AgentInfoModal({ agent, onClose, state, getInfraName, updateAgen
   }, [agent, isEditing]);
 
   const handleSave = () => {
+    const trimmedLegajo = legajo.trim();
+    if (!trimmedLegajo) {
+      alert('El legajo es obligatorio.');
+      return;
+    }
+
+    // Check duplicate legajo in other agents
+    const existing = state.agents.find(a => a.legajo === trimmedLegajo && a.id !== agent.id && !a.isDeleted);
+    if (existing) {
+      alert(`El legajo ${trimmedLegajo} ya pertenece a: ${existing.jerarquia || ''} ${existing.apellido || ''} ${existing.nombre || ''} en el Turno ${existing.turno}.`);
+      return;
+    }
+
     const trimmedJ = jerarquia.trim().toUpperCase();
     if (trimmedJ !== '' && !validRanks.includes(trimmedJ)) {
       setJerarquia('');
@@ -83,6 +96,14 @@ export function AgentInfoModal({ agent, onClose, state, getInfraName, updateAgen
       setEscalafonError('El escalafón ingresado no es válido. Debe elegir uno de la lista.');
       return;
     }
+
+    const isAdmin = userRole === 'admin';
+    const userShiftNum = !isAdmin && userRole ? Number(userRole.replace('turno', '')) : null;
+    if (!isAdmin && turno !== agent.turno) {
+      const confirmTransfer = window.confirm(`¡Atención! Al mover a este efectivo al Turno ${turno}, dejará de estar visible y editable en tu turno. ¿Desea confirmar la transferencia?`);
+      if (!confirmTransfer) return;
+    }
+
     updateAgent(agent.id, {
       nombre: nombre.trim(),
       apellido: apellido.trim(),
@@ -90,7 +111,9 @@ export function AgentInfoModal({ agent, onClose, state, getInfraName, updateAgen
       name: `${apellido.trim()} ${nombre.trim()}`.trim(),
       jerarquia: trimmedJ || '',
       escalafon: trimmedE || '',
-      telefono, legajo, turno,
+      telefono,
+      legajo: trimmedLegajo,
+      turno,
       hasLicense, licenseType, licenseCategory, licenseExpiration,
       hasDAEO, daeoExpiration,
       domicilio: domicilio.trim(),
@@ -183,15 +206,13 @@ export function AgentInfoModal({ agent, onClose, state, getInfraName, updateAgen
                     {escalafonError && <p className="text-red-500 text-[10px] mt-1 font-semibold">{escalafonError}</p>}
                   </div>
                   <div>
-                    <label className="block text-xs text-slate-500 mb-1 flex items-center justify-between">
-                      <span>Turno Asignado</span>
-                      {userRole !== 'admin' && <span className="text-[10px] text-yellow-500 font-bold bg-yellow-500/10 px-1.5 py-0.5 rounded">Solo Admin</span>}
+                    <label className="block text-xs text-slate-500 mb-1">
+                      Turno Asignado
                     </label>
                     <select
-                      disabled={userRole !== 'admin'}
                       value={turno}
                       onChange={e => setTurno(Number(e.target.value) as 1 | 2 | 3 | 4)}
-                      className="w-full bg-slate-800 border border-slate-700 rounded p-2 text-white text-sm disabled:opacity-50 disabled:cursor-not-allowed"
+                      className="w-full bg-slate-800 border border-slate-700 rounded p-2 text-white text-sm"
                     >
                       <option value={1}>Turno 1</option>
                       <option value={2}>Turno 2</option>
