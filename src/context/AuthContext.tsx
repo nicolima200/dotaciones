@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { User, onAuthStateChanged } from 'firebase/auth';
+import { User, onAuthStateChanged, signOut } from 'firebase/auth';
 import { auth, db } from '../firebase';
 import { doc, onSnapshot } from 'firebase/firestore';
 
@@ -70,6 +70,46 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       if (unsubscribeDoc) unsubscribeDoc();
     };
   }, []);
+
+  useEffect(() => {
+    if (!currentUser) return;
+
+    const INACTIVITY_TIMEOUT = 30 * 60 * 1000; // 30 minutes
+    let timeoutId: number;
+
+    const logoutUser = async () => {
+      try {
+        sessionStorage.setItem('inactivityLogout', 'true');
+        await signOut(auth);
+      } catch (error) {
+        console.error("Error signing out due to inactivity:", error);
+      }
+    };
+
+    const resetTimer = () => {
+      if (timeoutId) {
+        window.clearTimeout(timeoutId);
+      }
+      timeoutId = window.setTimeout(logoutUser, INACTIVITY_TIMEOUT);
+    };
+
+    const events = ['mousemove', 'keydown', 'click', 'scroll', 'touchstart'];
+
+    resetTimer();
+
+    events.forEach((event) => {
+      window.addEventListener(event, resetTimer);
+    });
+
+    return () => {
+      if (timeoutId) {
+        window.clearTimeout(timeoutId);
+      }
+      events.forEach((event) => {
+        window.removeEventListener(event, resetTimer);
+      });
+    };
+  }, [currentUser]);
 
   return (
     <AuthContext.Provider value={{ currentUser, userRole, loading }}>

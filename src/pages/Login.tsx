@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../firebase';
 import { useNavigate, Link } from 'react-router-dom';
@@ -11,6 +11,14 @@ export const Login: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [logoError, setLogoError] = useState(false);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const isExpired = sessionStorage.getItem('inactivityLogout');
+    if (isExpired === 'true') {
+      setError('Tu sesión ha expirado por inactividad.');
+      sessionStorage.removeItem('inactivityLogout');
+    }
+  }, []);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
