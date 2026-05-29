@@ -833,14 +833,14 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .auth-link {
-  color: var(--color-primary-light);
-  font-weight: 500;
+  color: #fbbf24; /* Contrasting gold/amber color */
+  font-weight: 600;
   text-decoration: none;
   transition: color 0.2s ease;
 }
 
 .auth-link:hover {
-  color: #60a5fa;
+  color: #fef08a; /* Light gold/yellow on hover */
   text-decoration: underline;
 }
 

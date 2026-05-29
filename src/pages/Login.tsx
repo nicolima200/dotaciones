@@ -33,7 +33,7 @@ export const Login: React.FC = () => {
         err.code === 'auth/wrong-password' ||
         err.code === 'auth/invalid-credential'
       ) {
-        setError('El email no está registrado o la contraseña es incorrecta.');
+        setError('El email no está registrado o la contraseña es incorrecta. ¿Te has registrado?');
       } else if (err.code === 'auth/too-many-requests') {
         setError('Demasiados intentos fallidos. Intenta más tarde.');
       } else {
