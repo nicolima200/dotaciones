@@ -19,6 +19,17 @@ const getShiftRelativeMinutes = (time: string, shiftStart: string): number => {
   return (tMin - sMin + 1440) % 1440;
 };
 
+const escapeHtml = (unsafe: string): string => {
+  if (!unsafe) return '';
+  return unsafe
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+};
+
+
 export function useDashboardState() {
   const {
     state,
@@ -683,16 +694,40 @@ export function useDashboardState() {
       return false;
     }
     
+    // Prohibir caracteres HTML para evitar XSS persistente en todo el documento
+    const htmlCharRegex = /[<>]/;
+
     // Validate agents
     if (!Array.isArray(json.agents)) {
       console.warn("isValidBackup failed: json.agents no es un array.");
       return false;
     }
     for (const agent of json.agents) {
-      if (!agent || typeof agent !== 'object' || !agent.name) {
-        console.warn("isValidBackup failed: Efectivo inválido encontrado (debe tener name):", agent);
+      if (!agent || typeof agent !== 'object') return false;
+      if (typeof agent.id !== 'string' || !agent.id) {
+        console.warn("isValidBackup failed: agente sin ID o ID no es string:", agent);
         return false;
       }
+      if (typeof agent.name !== 'string' || !agent.name) {
+        console.warn("isValidBackup failed: agente sin name o name no es string:", agent);
+        return false;
+      }
+      if (agent.nombre !== undefined && typeof agent.nombre !== 'string') return false;
+      if (agent.apellido !== undefined && typeof agent.apellido !== 'string') return false;
+      if (agent.turno === undefined || ![1, 2, 3, 4].includes(Number(agent.turno))) {
+        console.warn("isValidBackup failed: turno inválido en agente:", agent);
+        return false;
+      }
+      if (htmlCharRegex.test(agent.name) || 
+          (agent.nombre && htmlCharRegex.test(agent.nombre)) || 
+          (agent.apellido && htmlCharRegex.test(agent.apellido))) {
+        console.warn("isValidBackup failed: caracteres prohibidos (<, >) en el nombre del agente:", agent);
+        return false;
+      }
+      if (agent.legajo !== undefined && typeof agent.legajo !== 'string') return false;
+      if (agent.localidad !== undefined && typeof agent.localidad !== 'string') return false;
+      if (agent.jerarquia !== undefined && typeof agent.jerarquia !== 'string') return false;
+      if (agent.escalafon !== undefined && typeof agent.escalafon !== 'string') return false;
     }
     
     // Validate infrastructure
@@ -703,15 +738,20 @@ export function useDashboardState() {
 
     const validTypes = ['garitas', 'moviles', 'motos', 'qths', 'ordenes', 'comisiones', 'garita', 'movil', 'moto', 'qth', 'orden', 'comision', 'orden_servicio'];
 
+    const validateInfraItem = (item: any): boolean => {
+      if (!item || typeof item !== 'object') return false;
+      if (typeof item.id !== 'string' || !item.id) return false;
+      if (typeof item.name !== 'string' || !item.name) return false;
+      if (item.turno !== undefined && ![1, 2, 3, 4].includes(Number(item.turno))) return false;
+      if (htmlCharRegex.test(item.name)) return false; // Evitar XSS en nombres de infraestructura
+      return true;
+    };
+
     if (Array.isArray(json.infrastructure)) {
       // Formato: Array plano de ítems de infraestructura
       for (const item of json.infrastructure) {
-        if (!item || typeof item !== 'object' || !item.name || !item.type) {
-          console.warn("isValidBackup failed: Ítem de infraestructura plano inválido (debe tener name y type):", item);
-          return false;
-        }
-        if (!validTypes.includes(item.type)) {
-          console.warn("isValidBackup failed: Tipo de infraestructura desconocido:", item.type);
+        if (!validateInfraItem(item) || !item.type || !validTypes.includes(item.type)) {
+          console.warn("isValidBackup failed: Ítem de infraestructura plano inválido o tipo desconocido:", item);
           return false;
         }
       }
@@ -724,8 +764,8 @@ export function useDashboardState() {
           return false;
         }
         for (const item of json.infrastructure[key]) {
-          if (!item || typeof item !== 'object' || !item.name) {
-            console.warn(`isValidBackup failed: Infraestructura inválida en ${key} (debe tener name):`, item);
+          if (!validateInfraItem(item)) {
+            console.warn(`isValidBackup failed: Infraestructura inválida en ${key}:`, item);
             return false;
           }
         }
@@ -740,15 +780,36 @@ export function useDashboardState() {
       console.warn("isValidBackup failed: json.schedules no es un array.");
       return false;
     }
+    const validRoles = ['garita', 'caminante', 'movil', 'motorizada', 'correo', 'orden_servicio', 'comision', 'disponible', 'no_disponible', 'ausente', 'vacaciones', 'ofl_control', 'ofl_servicio', 'operaciones', 'ayte_guardia', 'logistica', 'personal', 'judiciales', 'montada', 'jefe', 'segundo_jefe'];
+    const timeRegex = /^([01]\d|2[0-3]):[0-5]\d$/;
     for (const sch of json.schedules) {
-      if (!sch || typeof sch !== 'object' || !sch.agentId || !sch.role || !sch.shift) {
-        console.warn("isValidBackup failed: Asignación/horario inválido (debe tener agentId, role y shift):", sch);
+      if (!sch || typeof sch !== 'object') {
+        console.warn("isValidBackup failed: schedule no es un objeto:", sch);
+        return false;
+      }
+      if (typeof sch.id !== 'string' || !sch.id) return false;
+      if (typeof sch.agentId !== 'string' || !sch.agentId) return false;
+      if (!validRoles.includes(sch.role)) {
+        console.warn("isValidBackup failed: rol inválido en schedule:", sch);
+        return false;
+      }
+      if (!['turno1', 'turno2', 'turno3', 'turno4'].includes(sch.shift)) {
+        console.warn("isValidBackup failed: turno inválido en schedule:", sch);
+        return false;
+      }
+      if (sch.startTime && !timeRegex.test(sch.startTime)) {
+        console.warn("isValidBackup failed: hora de inicio inválida en schedule:", sch);
+        return false;
+      }
+      if (sch.endTime && !timeRegex.test(sch.endTime)) {
+        console.warn("isValidBackup failed: hora de fin inválida en schedule:", sch);
         return false;
       }
     }
     
     return true;
   };
+
 
   const handleImport = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -991,7 +1052,8 @@ export function useDashboardState() {
       const sch = currentSchedules.find(s => s.role === role);
       if (!sch) return '';
       const a = state.agents.find(a => a.id === sch.agentId);
-      return a ? (a.jerarquia ? `${a.jerarquia} ${a.name}` : a.name) : '';
+      const name = a ? (a.jerarquia ? `${a.jerarquia} ${a.name}` : a.name) : '';
+      return escapeHtml(name);
     };
 
     let html = `
@@ -1056,7 +1118,8 @@ Ayte. de guardia: ${getAgentName('ayte_guardia')}` : ''}</div>
           occupants.forEach(occ => {
             const agent = state.agents.find(a => a.id === occ.agentId);
             if (agent) {
-              baseHtml += `<li class="flat-item"><strong>${roleInfo.label}:</strong> ${(agent.jerarquia ? agent.jerarquia + ' ' : '') + agent.name}</li>`;
+              const fullName = (agent.jerarquia ? agent.jerarquia + ' ' : '') + agent.name;
+              baseHtml += `<li class="flat-item"><strong>${roleInfo.label}:</strong> ${escapeHtml(fullName)}</li>`;
             }
           });
         }
@@ -1106,14 +1169,15 @@ Ayte. de guardia: ${getAgentName('ayte_guardia')}` : ''}</div>
             else if ((item as any).ro) itemName += ` (${(item as any).ro})`;
 
             html += `<div class="item-container">
-                       <div class="item-title">${itemName}</div>
+                       <div class="item-title">${escapeHtml(itemName)}</div>
                        <ul class="agent-list">`;
             occupants.forEach(occ => {
               const agent = state.agents.find(a => a.id === occ.agentId);
               if (agent) {
+                const fullName = (agent.jerarquia ? agent.jerarquia + ' ' : '') + agent.name;
                 const isHabitual = (occ.startTime === '09:00' && occ.endTime === '21:00') || (occ.startTime === '21:00' && occ.endTime === '09:00');
                 const scheduleText = isHabitual ? '' : ` (${occ.startTime} - ${occ.endTime})`;
-                html += `<li class="agent-item">${(agent.jerarquia ? agent.jerarquia + ' ' : '') + agent.name}${scheduleText}</li>`;
+                html += `<li class="agent-item">${escapeHtml(fullName)}${escapeHtml(scheduleText)}</li>`;
               }
             });
             html += `  </ul>
@@ -1140,7 +1204,8 @@ Ayte. de guardia: ${getAgentName('ayte_guardia')}` : ''}</div>
         html += `<h2>${grp.title}</h2>
                  <ul class="flat-list">`;
         grp.agents.forEach(agent => {
-          html += `<li class="flat-item">${(agent.jerarquia ? agent.jerarquia + ' ' : '') + agent.name}</li>`;
+          const fullName = (agent.jerarquia ? agent.jerarquia + ' ' : '') + agent.name;
+          html += `<li class="flat-item">${escapeHtml(fullName)}</li>`;
         });
         html += `</ul>`;
       }
