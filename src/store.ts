@@ -316,6 +316,14 @@ export function useStore() {
 
   const loadState = async (newState: any, targetTurns: number[]) => {
     try {
+      // Validar que el backup contenga efectivos para cada uno de los turnos destino seleccionados
+      for (const turn of targetTurns) {
+        const hasAgentsForTurn = newState.agents && Array.isArray(newState.agents) && newState.agents.some((a: any) => a.turno === turn);
+        if (!hasAgentsForTurn) {
+          throw new Error(`El archivo de backup no contiene efectivos para el Turno ${turn}.`);
+        }
+      }
+
       const agentsSnapshot = await getDocs(collection(db, 'agents'));
       const infraSnapshot = await getDocs(collection(db, 'infrastructure'));
       const schedSnapshot = await getDocs(collection(db, 'schedules'));

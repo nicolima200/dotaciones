@@ -605,7 +605,7 @@ import { SettingsModal } from '../components/SettingsModal';
                 alert(`Importación exitosa. Los datos del Turno ${shiftNum} se han restaurado correctamente.`);
               } catch (err) {
                 console.error("Error writing imported state to Firestore:", err);
-                alert("Ocurrió un error al escribir los datos importados en la base de datos.");
+                alert("Ocurrió un error al importar los datos: " + (err as Error).message);
               }
             }
           } else {
@@ -2267,7 +2267,7 @@ Ayte. de guardia: ${getAgentName('ayte_guardia')}` : ''}</div>
                         alert("Importación exitosa. Los turnos seleccionados han sido restaurados.");
                       } catch (err) {
                         console.error("Error writing imported state to Firestore:", err);
-                        alert("Ocurrió un error al escribir los datos importados en la base de datos.");
+                        alert("Ocurrió un error al importar los datos: " + (err as Error).message);
                       }
                     }
                   }}
