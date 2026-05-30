@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useMemo } from 'react';
 import JSZip from 'jszip';
 import { useStore } from '../store';
 import { useAuth } from '../context/AuthContext';
@@ -10,6 +10,14 @@ import { Shift, RoleType, Agent, Schedule, InfrastructureItem, Infrastructure } 
 import { validEscalafones } from '../constants';
 import logoMinisterio from '../assets/logo_ministerio.png';
 import logoProvincia from '../assets/logo_provincia.png';
+
+const getShiftRelativeMinutes = (time: string, shiftStart: string): number => {
+  const [h, m] = time.split(':').map(Number);
+  const [sh, sm] = shiftStart.split(':').map(Number);
+  const tMin = h * 60 + m;
+  const sMin = sh * 60 + sm;
+  return (tMin - sMin + 1440) % 1440;
+};
 
 export function useDashboardState() {
   const {
@@ -374,12 +382,62 @@ export function useDashboardState() {
     setDragOverTarget(null);
   };
 
-  // Derived State
-  const currentSchedules = [
-    ...state.schedules.filter(s => s.shift === currentShift && s.role !== 'jefe' && s.role !== 'segundo_jefe'),
-    ...state.schedules.filter(s => s.role === 'jefe' || s.role === 'segundo_jefe')
-  ];
-  const assignedAgentIds = currentSchedules.map(s => s.agentId);
+  // Helper to determine if a time is between start and end hours (cross-midnight support)
+  const isTimeBetween = (time: string, start: string, end: string) => {
+    if (start === end) return true;
+    if (start < end) {
+      return time >= start && time < end;
+    } else {
+      return time >= start || time < end;
+    }
+  };
+
+  // Format current time to HH:MM reactively
+  const currentHM = useMemo(() => {
+    const hh = String(currentTime.getHours()).padStart(2, '0');
+    const mm = String(currentTime.getMinutes()).padStart(2, '0');
+    return `${hh}:${mm}`;
+  }, [currentTime]);
+
+  // Derived State - All schedules planned for the current shift
+  const shiftSchedules = useMemo(() => {
+    return [
+      ...state.schedules.filter(s => s.shift === currentShift && s.role !== 'jefe' && s.role !== 'segundo_jefe'),
+      ...state.schedules.filter(s => s.role === 'jefe' || s.role === 'segundo_jefe')
+    ];
+  }, [state.schedules, currentShift]);
+
+  // Derived State - Currently active schedules for each agent at current time
+  const currentSchedules = useMemo(() => {
+    // Group shift schedules by agentId
+    const schedulesByAgent = shiftSchedules.reduce((acc, sch) => {
+      if (!acc[sch.agentId]) acc[sch.agentId] = [];
+      acc[sch.agentId].push(sch);
+      return acc;
+    }, {} as Record<string, Schedule[]>);
+
+    // For each agent, choose the single active schedule at the current hour
+    return (Object.values(schedulesByAgent) as Schedule[][]).map(agentSchs => {
+      const activeSchs = agentSchs.filter(s => isTimeBetween(currentHM, s.startTime, s.endTime));
+      if (activeSchs.length === 0) return null;
+
+      // Prioritize special (non-standard) active schedules
+      const specialActive = activeSchs.find(s => {
+        const isStandard = (s.startTime === '09:00' && s.endTime === '21:00') ||
+                           (s.startTime === '21:00' && s.endTime === '09:00');
+        return !isStandard;
+      });
+
+      if (specialActive) return specialActive;
+
+      // Otherwise fall back to the standard active schedule
+      return activeSchs[0];
+    }).filter((s): s is Schedule => s !== null);
+  }, [shiftSchedules, currentHM]);
+
+  const assignedAgentIds = useMemo(() => {
+    return currentSchedules.map(s => s.agentId);
+  }, [currentSchedules]);
 
   const shiftAgents = state.agents.filter(a => ('turno' + (a.turno || 1)) === currentShift);
   
@@ -487,19 +545,53 @@ export function useDashboardState() {
     return h * 60 + m;
   };
 
-  const upcomingReliefs = currentSchedules.filter(sch => {
-    const isStandard = (sch.startTime === '09:00' && sch.endTime === '21:00') ||
-      (sch.startTime === '21:00' && sch.endTime === '09:00');
-    return !isStandard;
-  });
+  const upcomingReliefs = useMemo(() => {
+    const shiftStart = (currentShift === 'turno1' || currentShift === 'turno3') ? '09:00' : '21:00';
+    const currentRel = getShiftRelativeMinutes(currentHM, shiftStart);
 
-  const groupedReliefs = upcomingReliefs.reduce((acc, sch) => {
-    if (!acc[sch.agentId]) {
-      acc[sch.agentId] = [];
-    }
-    acc[sch.agentId].push(sch);
-    return acc;
-  }, {} as Record<string, Schedule[]>);
+    return shiftSchedules
+      .filter(sch => {
+        const isStandard = (sch.startTime === '09:00' && sch.endTime === '21:00') ||
+          (sch.startTime === '21:00' && sch.endTime === '09:00');
+        if (isStandard) return false;
+
+        const endRel = getShiftRelativeMinutes(sch.endTime, shiftStart);
+        const diff = currentRel - endRel;
+
+        if (diff >= 0) {
+          // Relief has ended. Persist/Keep only if it's within the 3 minutes grace period
+          return diff <= 3;
+        }
+        // Not ended yet (either pending or active), always keep
+        return true;
+      })
+      .map(sch => {
+        const startRel = getShiftRelativeMinutes(sch.startTime, shiftStart);
+        const endRel = getShiftRelativeMinutes(sch.endTime, shiftStart);
+
+        let status: 'pending' | 'active' | 'ended' = 'pending';
+        if (currentRel >= startRel && currentRel < endRel) {
+          status = 'active';
+        } else if (currentRel >= endRel) {
+          status = 'ended';
+        }
+
+        return {
+          ...sch,
+          status
+        };
+      });
+  }, [shiftSchedules, currentHM, currentShift]);
+
+  const groupedReliefs = useMemo(() => {
+    return upcomingReliefs.reduce((acc, sch) => {
+      if (!acc[sch.agentId]) {
+        acc[sch.agentId] = [];
+      }
+      acc[sch.agentId].push(sch);
+      return acc;
+    }, {} as Record<string, typeof upcomingReliefs>);
+  }, [upcomingReliefs]);
 
   // Export/Import
   const handleExport = (targetTurns: number[]) => {

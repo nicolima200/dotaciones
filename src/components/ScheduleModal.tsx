@@ -1,6 +1,47 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Calendar, X, Plus, Trash2 } from 'lucide-react';
 import { Shift, RoleType, Agent, Schedule, InfrastructureItem } from '../types';
+
+const EMPTY_ARRAY: any[] = [];
+
+const ROLE_LABELS: Record<RoleType, string> = {
+  garita: 'Módulo',
+  caminante: 'Caminante',
+  movil: 'Móvil',
+  motorizada: 'Motorizada',
+  montada: 'Montada',
+  correo: 'Correo',
+  orden_servicio: 'Orden de Servicio',
+  comision: 'Comisión de Servicio',
+  ofl_control: 'Oficial de Control',
+  ofl_servicio: 'Oficial de Servicio',
+  operaciones: 'Operaciones',
+  ayte_guardia: 'Ayudante de Guardia',
+  logistica: 'Logística',
+  personal: 'Personal',
+  judiciales: 'Judiciales',
+  jefe: 'Jefe de Turno',
+  segundo_jefe: 'Segundo Jefe de Turno',
+  disponible: 'Disponible',
+  no_disponible: 'No Disponible',
+  ausente: 'Ausente',
+  vacaciones: 'Vacaciones'
+};
+
+// Helper to format agent display string
+const getAgentDisplayString = (a: Agent) => {
+  const jer = a.jerarquia ? `${a.jerarquia} ` : '';
+  const nameStr = a.apellido && a.nombre ? `${a.apellido} ${a.nombre}` : (a.name || '');
+  const leg = a.legajo ? ` (Leg: ${a.legajo})` : '';
+  return `${jer}${nameStr}${leg}`.trim();
+};
+
+// Helper to format target display string
+const getTargetDisplayString = (t: any) => {
+  const roStr = t.ro ? ` (${t.ro})` : '';
+  const nameStr = t.name || `OS ${t.numero}`;
+  return `${nameStr}${roStr}`.trim();
+};
 
 interface ScheduleModalProps {
   onClose: () => void;
@@ -8,13 +49,20 @@ interface ScheduleModalProps {
   assignAgent: (agentId: string, shift: Shift, role: RoleType, targetId?: string, startTime?: string, endTime?: string) => void;
   removeSchedule: (id: string) => void;
   getInfraName: (role: string, targetId?: string) => string;
+  currentShift: Shift;
+  userRole: string;
 }
 
-export function ScheduleModal({ onClose, state, assignAgent, removeSchedule, getInfraName }: ScheduleModalProps) {
-  const [agentId, setAgentId] = useState(state.agents[0]?.id || '');
+export function ScheduleModal({ onClose, state, assignAgent, removeSchedule, getInfraName, currentShift, userRole }: ScheduleModalProps) {
+  const isShiftUser = userRole !== 'admin' && userRole.startsWith('turno');
+  const allowedShift = isShiftUser ? (userRole as Shift) : null;
+
+  const [agentId, setAgentId] = useState('');
+  const [agentInputText, setAgentInputText] = useState('');
   const [role, setRole] = useState<RoleType>('garita');
   const [targetId, setTargetId] = useState('');
-  const [shift, setShift] = useState<Shift>('turno3');
+  const [targetInputText, setTargetInputText] = useState('');
+  const [shift, setShift] = useState<Shift>(allowedShift || currentShift);
   const [startTime, setStartTime] = useState('09:00');
   const [endTime, setEndTime] = useState('21:00');
 
@@ -29,33 +77,94 @@ export function ScheduleModal({ onClose, state, assignAgent, removeSchedule, get
     }
   }, [shift]);
 
+  // Reset/Clear inputs when shift or role changes so they appear empty
+  useEffect(() => {
+    setAgentId('');
+    setAgentInputText('');
+  }, [shift]);
+
+  useEffect(() => {
+    setTargetId('');
+    setTargetInputText('');
+  }, [role, shift]);
+
   const handleSave = () => {
     if (!agentId) return;
     assignAgent(agentId, shift, role, targetId || undefined, startTime, endTime);
-    // Don't close immediately to allow adding multiple
+    // Clear inputs after saving a schedule
+    setAgentId('');
+    setAgentInputText('');
+    setTargetId('');
+    setTargetInputText('');
   };
 
   const targets = role === 'garita' ? state.infrastructure.garitas :
     role === 'caminante' ? state.infrastructure.qths :
       role === 'movil' ? state.infrastructure.moviles :
         role === 'motorizada' ? state.infrastructure.motos :
-          role === 'orden_servicio' ? (state.infrastructure.ordenes || []) : [];
+          role === 'orden_servicio' ? (state.infrastructure.ordenes || EMPTY_ARRAY) :
+            role === 'comision' ? (state.infrastructure.comisiones || EMPTY_ARRAY) : EMPTY_ARRAY;
 
-  // Auto-select first target when role changes
-  useEffect(() => {
-    if (targets.length > 0) setTargetId(targets[0].id);
-    else setTargetId('');
-  }, [role]);
+  const selectedShiftNum = Number(shift.replace('turno', ''));
+  
+  // Filter targets by selected shift and sort alphabetically by display string
+  const filteredTargets = useMemo(() => {
+    const raw = targets.filter((i: any) => !i.turno || i.turno === selectedShiftNum);
+    return [...raw].sort((a, b) => {
+      const nameA = getTargetDisplayString(a).toLowerCase();
+      const nameB = getTargetDisplayString(b).toLowerCase();
+      return nameA.localeCompare(nameB);
+    });
+  }, [targets, selectedShiftNum]);
 
-  // Ensure selected agent belongs to the selected shift
+  // Filter agents by shift and sort alphabetically by display string
+  const filteredAgents = useMemo(() => {
+    const raw = state.agents.filter((a: Agent) => ('turno' + (a.turno || 1)) === shift);
+    return [...raw].sort((a, b) => {
+      const nameA = getAgentDisplayString(a).toLowerCase();
+      const nameB = getAgentDisplayString(b).toLowerCase();
+      return nameA.localeCompare(nameB);
+    });
+  }, [shift, state.agents]);
+
+  // Handle agent selection via input text changes
   useEffect(() => {
-    const validAgents = state.agents.filter((a: Agent) => ('turno' + (a.turno || 1)) === shift);
-    if (validAgents.length > 0 && !validAgents.find((a: Agent) => a.id === agentId)) {
-      setAgentId(validAgents[0].id);
-    } else if (validAgents.length === 0) {
+    const matchedAgent = filteredAgents.find(a => getAgentDisplayString(a) === agentInputText);
+    if (matchedAgent) {
+      setAgentId(matchedAgent.id);
+    } else {
       setAgentId('');
     }
-  }, [shift, state.agents]);
+  }, [agentInputText, filteredAgents]);
+
+  // Handle target selection via input text changes
+  useEffect(() => {
+    const matchedTarget = filteredTargets.find(t => getTargetDisplayString(t) === targetInputText);
+    if (matchedTarget) {
+      setTargetId(matchedTarget.id);
+    } else {
+      setTargetId('');
+    }
+  }, [targetInputText, filteredTargets]);
+
+  const needsTarget = ['garita', 'caminante', 'movil', 'motorizada', 'orden_servicio', 'comision'].includes(role);
+  const isSaveDisabled = !agentId || (needsTarget && !targetId);
+
+
+  // Filter and display only special schedules (exclude 09:00-21:00 and 21:00-09:00)
+  const displayedSchedules = useMemo(() => {
+    return state.schedules.filter((sch: Schedule) => {
+      // 1. Shift user restriction
+      if (isShiftUser && sch.shift !== allowedShift) return false;
+      
+      // 2. Filter out common schedules
+      const isCommon = (sch.startTime === '09:00' && sch.endTime === '21:00') || 
+                       (sch.startTime === '21:00' && sch.endTime === '09:00');
+      if (isCommon) return false;
+      
+      return true;
+    });
+  }, [state.schedules, isShiftUser, allowedShift]);
 
   return (
     <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-[9998] p-4">
@@ -73,7 +182,12 @@ export function ScheduleModal({ onClose, state, assignAgent, removeSchedule, get
             <div className="space-y-4">
               <div>
                 <label className="block text-xs text-slate-500 mb-1">Turno Principal</label>
-                <select value={shift} onChange={e => setShift(e.target.value as Shift)} className="w-full bg-slate-800 border border-slate-700 rounded p-2 text-white text-sm mb-4">
+                <select 
+                  value={shift} 
+                  onChange={e => setShift(e.target.value as Shift)} 
+                  disabled={isShiftUser}
+                  className="w-full bg-slate-800 border border-slate-700 rounded p-2 text-white text-sm mb-4 disabled:opacity-50"
+                >
                   <option value="turno1">Turno 1 (09:00 - 21:00)</option>
                   <option value="turno2">Turno 2 (21:00 - 09:00)</option>
                   <option value="turno3">Turno 3 (09:00 - 21:00)</option>
@@ -82,10 +196,21 @@ export function ScheduleModal({ onClose, state, assignAgent, removeSchedule, get
               </div>
 
               <div>
-                <label className="block text-xs text-slate-500 mb-1">Agente</label>
-                <select value={agentId} onChange={e => setAgentId(e.target.value)} className="w-full bg-slate-800 border border-slate-700 rounded p-2 text-white text-sm">
-                  {state.agents.filter((a: Agent) => ('turno' + (a.turno || 1)) === shift).map((a: Agent) => <option key={a.id} value={a.id}>{(a.jerarquia ? a.jerarquia + ' ' : '') + a.name}</option>)}
-                </select>
+                <label className="block text-xs text-slate-500 mb-1">Agente (Escriba para buscar)</label>
+                <input
+                  type="text"
+                  list="schedule-agents-list"
+                  value={agentInputText}
+                  onChange={e => setAgentInputText(e.target.value)}
+                  placeholder="Buscar por nombre o legajo..."
+                  className="w-full bg-slate-800 border border-slate-700 rounded p-2 text-white text-sm"
+                  autoComplete="off"
+                />
+                <datalist id="schedule-agents-list">
+                  {filteredAgents.map((a: Agent) => (
+                    <option key={a.id} value={getAgentDisplayString(a)} />
+                  ))}
+                </datalist>
               </div>
 
               <div className="flex gap-2">
@@ -101,30 +226,62 @@ export function ScheduleModal({ onClose, state, assignAgent, removeSchedule, get
 
               <div>
                 <label className="block text-xs text-slate-500 mb-1">Función</label>
-                <select value={role} onChange={e => setRole(e.target.value as RoleType)} className="w-full bg-slate-800 border border-slate-700 rounded p-2 text-white text-sm">
-                  <option value="garita">Módulo</option>
-                  <option value="caminante">Caminante</option>
-                  <option value="movil">Móvil</option>
-                  <option value="motorizada">Motorizada</option>
-                  <option value="correo">Correo</option>
-                  <option value="orden_servicio">Orden de Servicio</option>
-                  <option value="disponible">Disponible</option>
-                  <option value="no_disponible">No Disponible (Licencia)</option>
-                  <option value="ausente">Ausente</option>
-                  <option value="vacaciones">Vacaciones</option>
+                <select value={role} onChange={e => setRole(e.target.value as RoleType)} className="w-full bg-slate-800 border border-slate-700 rounded p-2 text-white text-sm scrollbar-hide">
+                  <optgroup label="Servicio Externo" className="bg-slate-900 text-slate-300">
+                    <option value="garita">Módulo</option>
+                    <option value="caminante">Caminante</option>
+                    <option value="movil">Móvil</option>
+                    <option value="motorizada">Motorizada</option>
+                    <option value="montada">Montada</option>
+                    <option value="correo">Correo</option>
+                    <option value="orden_servicio">Orden de Servicio</option>
+                    <option value="comision">Comisión de Servicio</option>
+                  </optgroup>
+                  <optgroup label="Base y Oficinas" className="bg-slate-900 text-slate-300">
+                    <option value="jefe">Jefe de Turno</option>
+                    <option value="segundo_jefe">Segundo Jefe de Turno</option>
+                    <option value="ofl_control">Oficial de Control</option>
+                    <option value="ofl_servicio">Oficial de Servicio</option>
+                    <option value="operaciones">Operaciones</option>
+                    <option value="ayte_guardia">Ayudante de Guardia</option>
+                    <option value="logistica">Logística</option>
+                    <option value="personal">Personal</option>
+                    <option value="judiciales">Judiciales</option>
+                  </optgroup>
+                  <optgroup label="Novedades" className="bg-slate-900 text-slate-300">
+                    <option value="disponible">Disponible</option>
+                    <option value="no_disponible">No Disponible (Licencia)</option>
+                    <option value="ausente">Ausente</option>
+                    <option value="vacaciones">Vacaciones</option>
+                  </optgroup>
                 </select>
               </div>
 
-              {role !== 'correo' && role !== 'disponible' && role !== 'no_disponible' && role !== 'ausente' && role !== 'vacaciones' && (
+              {(role === 'garita' || role === 'caminante' || role === 'movil' || role === 'motorizada' || role === 'orden_servicio' || role === 'comision') && (
                 <div>
-                  <label className="block text-xs text-slate-500 mb-1">Destino</label>
-                  <select value={targetId} onChange={e => setTargetId(e.target.value)} className="w-full bg-slate-800 border border-slate-700 rounded p-2 text-white text-sm">
-                    {targets.map((t: InfrastructureItem) => <option key={t.id} value={t.id}>{t.name || `OS ${t.numero}`} {t.ro ? `(${t.ro})` : ''}</option>)}
-                  </select>
+                  <label className="block text-xs text-slate-500 mb-1">Destino (Escriba para buscar)</label>
+                  <input
+                    type="text"
+                    list="schedule-targets-list"
+                    value={targetInputText}
+                    onChange={e => setTargetInputText(e.target.value)}
+                    placeholder="Buscar destino..."
+                    className="w-full bg-slate-800 border border-slate-700 rounded p-2 text-white text-sm"
+                    autoComplete="off"
+                  />
+                  <datalist id="schedule-targets-list">
+                    {filteredTargets.map((t: InfrastructureItem) => (
+                      <option key={t.id} value={getTargetDisplayString(t)} />
+                    ))}
+                  </datalist>
                 </div>
               )}
 
-              <button onClick={handleSave} className="w-full bg-yellow-600 hover:bg-yellow-500 text-slate-900 font-bold py-2 rounded transition-colors flex justify-center items-center">
+              <button 
+                onClick={handleSave} 
+                disabled={isSaveDisabled}
+                className="w-full bg-yellow-600 hover:bg-yellow-500 text-slate-900 font-bold py-2 rounded transition-colors flex justify-center items-center disabled:opacity-50 disabled:cursor-not-allowed"
+              >
                 <Plus size={18} className="mr-2" /> Agregar Programación
               </button>
             </div>
@@ -134,10 +291,10 @@ export function ScheduleModal({ onClose, state, assignAgent, removeSchedule, get
           <div className="w-full md:w-2/3 p-4 overflow-y-auto">
             <h4 className="text-sm font-bold text-slate-400 mb-4 uppercase tracking-wider">Programaciones Activas</h4>
             <div className="space-y-2">
-              {state.schedules.length === 0 ? (
-                <div className="text-slate-500 italic text-center py-8">No hay programaciones activas</div>
+              {displayedSchedules.length === 0 ? (
+                <div className="text-slate-500 italic text-center py-8">No hay programaciones especiales activas</div>
               ) : (
-                state.schedules.sort((a: Schedule, b: Schedule) => a.startTime.localeCompare(b.startTime)).map((sch: Schedule) => {
+                displayedSchedules.sort((a: Schedule, b: Schedule) => a.startTime.localeCompare(b.startTime)).map((sch: Schedule) => {
                   const agent = state.agents.find((a: Agent) => a.id === sch.agentId);
                   return (
                     <div key={sch.id} className="bg-slate-800 p-3 rounded-lg border border-slate-700 flex justify-between items-center group">
@@ -148,7 +305,10 @@ export function ScheduleModal({ onClose, state, assignAgent, removeSchedule, get
                         </div>
                         <div className="border-l border-slate-700 pl-4">
                           <div className="font-bold text-white">{agent ? (agent.jerarquia ? `${agent.jerarquia} ${agent.name}` : agent.name) : ''}</div>
-                          <div className="text-sm text-slate-400 capitalize">{sch.role} - {getInfraName(sch.role, sch.targetId)}</div>
+                          <div className="text-sm text-slate-400">
+                            {ROLE_LABELS[sch.role] || sch.role}
+                            {sch.targetId && ` - ${getInfraName(sch.role, sch.targetId)}`}
+                          </div>
                         </div>
                       </div>
                       <div className="flex items-center gap-3">

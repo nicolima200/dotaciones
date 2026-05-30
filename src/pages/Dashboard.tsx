@@ -61,7 +61,8 @@ function DashboardInner() {
     importState,
     toastMessage,
     showScrollTop,
-    handleScroll
+    handleScroll,
+    currentShift
   } = useDashboard();
 
   return (
@@ -151,6 +152,8 @@ function DashboardInner() {
           assignAgent={assignAgent}
           removeSchedule={removeSchedule}
           getInfraName={getInfraName}
+          currentShift={currentShift}
+          userRole={userRole}
         />
       )}
 

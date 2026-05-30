@@ -83,10 +83,23 @@ export const InfrastructureSections: React.FC = () => {
             </h3>
             <div className="alert-grid">
               {Object.entries(groupedReliefs).map(([agentId, schs]) => {
-                const schedules = schs as Schedule[];
+                const schedules = schs as any[];
                 const agent = state.agents.find(a => a.id === agentId);
+                
+                // Card status hierarchy:
+                // If all schedules are 'ended', cardStatus is 'ended' (red)
+                // Else if at least one is 'active', cardStatus is 'active' (green)
+                // Else, cardStatus is 'pending' (yellow)
+                let cardStatus: 'pending' | 'active' | 'ended' = 'pending';
+                const allEnded = schedules.length > 0 && schedules.every(s => s.status === 'ended');
+                if (allEnded) {
+                  cardStatus = 'ended';
+                } else if (schedules.some(s => s.status === 'active')) {
+                  cardStatus = 'active';
+                }
+
                 return (
-                  <div key={agentId} className="alert-item">
+                  <div key={agentId} className={`alert-item ${cardStatus}`}>
                     <span className="alert-item-header">
                       {(agent?.jerarquia ? agent.jerarquia + ' ' : '') + agent?.name}
                     </span>
@@ -96,7 +109,7 @@ export const InfrastructureSections: React.FC = () => {
                           <span className="alert-item-target" title={getInfraName(sch.role, sch.targetId)}>
                             {getInfraName(sch.role, sch.targetId)}
                           </span>
-                          <span className="alert-item-time">{sch.startTime} - {sch.endTime}</span>
+                          <span className={`alert-item-time ${sch.status}`}>{sch.startTime} - {sch.endTime}</span>
                         </div>
                       ))}
                     </div>
