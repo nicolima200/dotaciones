@@ -99,8 +99,11 @@ export function AgentInfoModal({ agent, onClose, state, getInfraName, updateAgen
 
     const isAdmin = userRole === 'admin';
     const userShiftNum = !isAdmin && userRole ? Number(userRole.replace('turno', '')) : null;
-    if (!isAdmin && turno !== agent.turno) {
-      const confirmTransfer = window.confirm(`¡Atención! Al mover a este efectivo al Turno ${turno}, dejará de estar visible y editable en tu turno. ¿Desea confirmar la transferencia?`);
+    if (turno !== agent.turno) {
+      const confirmMessage = isAdmin
+        ? `¿Está seguro de que desea transferir este efectivo al Turno ${turno}?`
+        : `¡Atención! Al mover a este efectivo al Turno ${turno}, dejará de estar visible y editable en tu turno. ¿Desea confirmar la transferencia?`;
+      const confirmTransfer = window.confirm(confirmMessage);
       if (!confirmTransfer) return;
     }
 

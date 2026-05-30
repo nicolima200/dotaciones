@@ -9,6 +9,7 @@
   /* Police Institution Palette */
   --color-primary-dark: #070e20; /* Deep Navy darker */
   --color-primary: #0f1c3f; /* Deep Navy */
+  --color-primary-main: var(--color-primary); /* Primary main color */
   --color-primary-light: #1e3a8a; /* Blue 800 */
   --color-accent-gold: #eab308; /* Yellow 500 */
   --color-accent-gold-light: #fef08a; /* Yellow 200 */
@@ -928,5 +929,15 @@ h1, h2, h3, h4, h5, h6 {
 .agent-card:active {
   cursor: grabbing;
 }
+
+/* Highlight styling for search matches */
+.agent-card.search-highlight {
+  border-color: #fbbf24 !important;
+  box-shadow: 0 0 0 2px #fbbf24, 0 0 15px rgba(251, 191, 36, 0.5) !important;
+  transform: scale(1.02) !important;
+  z-index: 10 !important;
+  background: rgba(251, 191, 36, 0.15) !important;
+}
+
 
 
