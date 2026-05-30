@@ -27,3 +27,10 @@ export const validEscalafones = [
   'SCIOS. GENERALES',
   'EMERGENCIAS TELEFONICAS'
 ];
+
+export const validVestBrands = [
+  'Tecnología Antibalas',
+  'Delta V',
+  'Fabricaciones Militares'
+];
+

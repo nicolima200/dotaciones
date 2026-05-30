@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Users, X, Trash2, ChevronUp, ChevronDown } from 'lucide-react';
-import { validRanks, validEscalafones } from '../constants';
+import { validRanks, validEscalafones, validVestBrands } from '../constants';
 import { Agent } from '../types';
 
 interface AgentInfoModalProps {
@@ -312,13 +312,19 @@ export function AgentInfoModal({ agent, onClose, state, getInfraName, updateAgen
                         <div className="grid grid-cols-2 gap-2">
                           <div>
                             <label className="block text-[10px] text-slate-500 mb-1">Marca Chaleco</label>
-                            <input
-                              type="text"
+                            <select
                               value={marcaChaleco}
                               onChange={e => setMarcaChaleco(e.target.value)}
-                              placeholder="Ej: RB3"
                               className="w-full bg-slate-800 border border-slate-700 rounded p-1.5 text-white text-xs"
-                            />
+                            >
+                              <option value="">Seleccionar marca...</option>
+                              {validVestBrands.map(b => (
+                                <option key={b} value={b}>{b}</option>
+                              ))}
+                              {marcaChaleco && !validVestBrands.includes(marcaChaleco) && (
+                                <option value={marcaChaleco}>{marcaChaleco}</option>
+                              )}
+                            </select>
                           </div>
                           <div>
                             <label className="block text-[10px] text-slate-500 mb-1">Modelo Chaleco</label>

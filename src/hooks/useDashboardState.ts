@@ -102,6 +102,8 @@ export function useDashboardState() {
     }
   }, [isMenuOpen]);
 
+
+
   const [isScheduleModalOpen, setIsScheduleModalOpen] = useState(false);
   const [isReportModalOpen, setIsReportModalOpen] = useState(false);
   const [reportDate, setReportDate] = useState('');
@@ -398,6 +400,28 @@ export function useDashboardState() {
     const mm = String(currentTime.getMinutes()).padStart(2, '0');
     return `${hh}:${mm}`;
   }, [currentTime]);
+
+  // Automatically clean up/delete expired special schedules from Firestore after 3 minutes
+  useEffect(() => {
+    if (!currentHM || !currentShift) return;
+    const shiftStart = (currentShift === 'turno1' || currentShift === 'turno3') ? '09:00' : '21:00';
+    const currentRel = getShiftRelativeMinutes(currentHM, shiftStart);
+
+    state.schedules.forEach(sch => {
+      if (sch.shift !== currentShift) return;
+      
+      const isStandard = (sch.startTime === '09:00' && sch.endTime === '21:00') ||
+        (sch.startTime === '21:00' && sch.endTime === '09:00');
+      if (isStandard) return;
+
+      const endRel = getShiftRelativeMinutes(sch.endTime, shiftStart);
+      const diff = currentRel - endRel;
+
+      if (diff > 3) {
+        removeSchedule(sch.id);
+      }
+    });
+  }, [state.schedules, currentHM, currentShift]);
 
   // Derived State - All schedules planned for the current shift
   const shiftSchedules = useMemo(() => {
