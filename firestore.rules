@@ -41,9 +41,11 @@ service cloud.firestore {
       allow update, delete: if isAdmin(); 
     }
 
-    // 2. Reglas para el estado global (Mantenido temporalmente para la migración)
-    match /state/{document=**} {
-      allow read, write: if isAuthenticated() && hasValidRole();
+    // 2. Reglas para la colección 'audit_logs' (Auditoría de Acciones)
+    match /audit_logs/{logId} {
+      allow create: if isAuthenticated() && hasValidRole();
+      allow read: if isAdmin();
+      allow update, delete: if false;
     }
 
     // 3. Reglas para las nuevas colecciones
@@ -78,8 +80,42 @@ service cloud.firestore {
       );
     }
 
-    match /schedules/{document=**} {
-      allow read, write: if isAuthenticated() && hasValidRole();
+    // 4. Reglas para la colección 'schedules'
+    match /schedules/{scheduleId} {
+      allow read: if isAuthenticated() && hasValidRole();
+      
+      // Permitir crear solo si es admin o si el schedule creado pertenece al mismo turno del usuario
+      allow create: if isAuthenticated() && hasValidRole() && (
+        isAdmin() || 
+        (getUserRole() == 'turno1' && request.resource.data.shift == 'turno1') ||
+        (getUserRole() == 'turno2' && request.resource.data.shift == 'turno2') ||
+        (getUserRole() == 'turno3' && request.resource.data.shift == 'turno3') ||
+        (getUserRole() == 'turno4' && request.resource.data.shift == 'turno4')
+      );
+      
+      // Permitir actualizar solo si es admin o si el original y el nuevo dato pertenecen al mismo turno del usuario
+      allow update: if isAuthenticated() && hasValidRole() && (
+        isAdmin() || 
+        (
+          ((getUserRole() == 'turno1' && resource.data.shift == 'turno1') ||
+           (getUserRole() == 'turno2' && resource.data.shift == 'turno2') ||
+           (getUserRole() == 'turno3' && resource.data.shift == 'turno3') ||
+           (getUserRole() == 'turno4' && resource.data.shift == 'turno4')) &&
+          ((getUserRole() == 'turno1' && request.resource.data.shift == 'turno1') ||
+           (getUserRole() == 'turno2' && request.resource.data.shift == 'turno2') ||
+           (getUserRole() == 'turno3' && request.resource.data.shift == 'turno3') ||
+           (getUserRole() == 'turno4' && request.resource.data.shift == 'turno4'))
+        )
+      );
+      
+      // Permitir eliminar solo si es admin o si el schedule pertenece al mismo turno del usuario
+      allow delete: if isAuthenticated() && hasValidRole() && (
+        isAdmin() || 
+        (getUserRole() == 'turno1' && resource.data.shift == 'turno1') ||
+        (getUserRole() == 'turno2' && resource.data.shift == 'turno2') ||
+        (getUserRole() == 'turno3' && resource.data.shift == 'turno3') ||
+        (getUserRole() == 'turno4' && resource.data.shift == 'turno4')
+      );
     }
 
     match /infrastructure/{document=**} {

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { doc, onSnapshot, setDoc, collection, updateDoc, deleteDoc, writeBatch, getDocs } from 'firebase/firestore';
-import { db } from './firebase';
+import { db, auth } from './firebase';
 import { AppState, Agent, Infrastructure, Schedule, Shift, RoleType, InfrastructureItem } from './types';
 
 export function useStore() {
@@ -94,6 +94,25 @@ export function useStore() {
     };
   }, []);
 
+  const writeAuditLog = async (action: string, details: any) => {
+    try {
+      const user = auth.currentUser;
+      if (!user) return;
+      
+      const logId = `${Date.now()}_${Math.random().toString(36).substring(2, 9)}`;
+      await setDoc(doc(db, 'audit_logs', logId), {
+        userId: user.uid,
+        userEmail: user.email,
+        action,
+        details,
+        timestamp: new Date().toISOString()
+      });
+    } catch (e) {
+      console.error("Error writing audit log:", e);
+    }
+  };
+
+
   const addAgent = (
     nombre: string,
     apellido: string,
@@ -138,6 +157,7 @@ export function useStore() {
       escalafon
     };
     setDoc(doc(db, 'agents', id), newAgent).catch(console.error);
+    writeAuditLog('ADD_AGENT', { id, name: newAgent.name, legajo, turno: newAgent.turno });
   };
 
   const updateAgent = async (id: string, updates: Partial<Agent>) => {
@@ -160,11 +180,13 @@ export function useStore() {
         });
 
         await batch.commit();
+        writeAuditLog('TRANSFER_AGENT_SHIFT', { id, newTurno: finalUpdates.turno, updates: finalUpdates });
       } catch (error) {
         console.error("Error transferring agent and clearing schedules:", error);
       }
     } else {
       updateDoc(doc(db, 'agents', id), finalUpdates).catch(console.error);
+      writeAuditLog('UPDATE_AGENT', { id, updates: finalUpdates });
     }
   };
 
@@ -179,6 +201,7 @@ export function useStore() {
       });
       
       await batch.commit();
+      writeAuditLog('PERMANENT_DELETE_AGENT', { id });
     } catch (e) {
       console.error(e);
     }
@@ -187,6 +210,7 @@ export function useStore() {
   const addInfra = (type: keyof Infrastructure, item: Omit<InfrastructureItem, 'id'>) => {
     const id = Date.now().toString();
     setDoc(doc(db, 'infrastructure', id), { ...item, type, id }).catch(console.error);
+    writeAuditLog('ADD_INFRA', { id, type, name: item.name });
   };
   
   const removeInfra = async (type: keyof Infrastructure, id: string) => {
@@ -200,6 +224,7 @@ export function useStore() {
       });
       
       await batch.commit();
+      writeAuditLog('PERMANENT_DELETE_INFRA', { id, type });
     } catch (e) {
       console.error(e);
     }
@@ -207,6 +232,7 @@ export function useStore() {
 
   const updateInfra = (type: keyof Infrastructure, id: string, updates: Partial<InfrastructureItem>) => {
     updateDoc(doc(db, 'infrastructure', id), updates).catch(console.error);
+    writeAuditLog('UPDATE_INFRA', { id, type, updates });
   };
 
   const assignAgent = (agentId: string, shift: Shift, role: RoleType, targetId?: string, startTime?: string, endTime?: string, scheduleIdToMove?: string) => {
@@ -256,10 +282,12 @@ export function useStore() {
     }
     
     batch.commit().catch(console.error);
+    writeAuditLog('ASSIGN_AGENT', { agentId, shift, role, targetId, startTime, endTime, scheduleIdToMove });
   };
 
   const removeSchedule = (id: string) => {
     deleteDoc(doc(db, 'schedules', id)).catch(console.error);
+    writeAuditLog('REMOVE_SCHEDULE', { id });
   };
 
   const clearRoleSchedules = (role: RoleType, shift: Shift) => {
@@ -272,6 +300,7 @@ export function useStore() {
       batch.delete(doc(db, 'schedules', sch.id));
     });
     batch.commit().catch(console.error);
+    writeAuditLog('CLEAR_ROLE_SCHEDULES', { role, shift, count: schedulesToRemove.length });
   };
 
   const restoreSchedules = (schedules: Schedule[]) => {
@@ -280,6 +309,7 @@ export function useStore() {
       batch.set(doc(db, 'schedules', sch.id), sch);
     });
     batch.commit().catch(console.error);
+    writeAuditLog('RESTORE_SCHEDULES', { count: schedules.length });
   };
 
   const softRemoveAgent = async (id: string) => {
@@ -293,6 +323,7 @@ export function useStore() {
       });
       
       await batch.commit();
+      writeAuditLog('DELETE_AGENT', { id });
     } catch (e) {
       console.error(e);
     }
@@ -309,6 +340,7 @@ export function useStore() {
       });
       
       await batch.commit();
+      writeAuditLog('DELETE_INFRA', { id, type });
     } catch (e) {
       console.error(e);
     }
@@ -421,7 +453,7 @@ export function useStore() {
       if (count > 0) {
         await batch.commit();
       }
-      
+      writeAuditLog('IMPORT_BACKUP', { targetTurns });
       return true;
     } catch (e) {
       console.error("Error loading imported state:", e);
