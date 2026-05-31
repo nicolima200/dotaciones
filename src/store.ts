@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react';
-import { doc, onSnapshot, setDoc, collection, updateDoc, deleteDoc, writeBatch, getDocs } from 'firebase/firestore';
+import { doc, onSnapshot, setDoc, collection, updateDoc, deleteDoc, writeBatch, getDocs, query, where } from 'firebase/firestore';
 import { db, auth } from './firebase';
+import { useAuth } from './context/AuthContext';
 import { AppState, Agent, Infrastructure, Schedule, Shift, RoleType, InfrastructureItem } from './types';
 
 export function useStore() {
+  const { userRole } = useAuth();
   const [state, setLocalState] = useState<AppState>({
     agents: [],
     infrastructure: {
@@ -18,7 +20,32 @@ export function useStore() {
   });
 
   useEffect(() => {
-    const unsubAgents = onSnapshot(collection(db, 'agents'), (snapshot) => {
+    if (!userRole || userRole === 'pending') {
+      setLocalState({
+        agents: [],
+        infrastructure: {
+          garitas: [],
+          moviles: [],
+          motos: [],
+          qths: [],
+          ordenes: [],
+          comisiones: []
+        },
+        schedules: []
+      });
+      return;
+    }
+
+    const isAdmin = userRole === 'admin';
+    const shiftNum = isAdmin ? null : Number(userRole.replace('turno', ''));
+    const shiftStr = userRole;
+
+    const agentsCol = collection(db, 'agents');
+    const agentsQuery = isAdmin 
+      ? agentsCol 
+      : query(agentsCol, where('turno', '==', shiftNum));
+
+    const unsubAgents = onSnapshot(agentsQuery, (snapshot) => {
       const agents = snapshot.docs
         .map(doc => {
           const data = doc.data() as any;
@@ -62,7 +89,12 @@ export function useStore() {
       setLocalState(s => ({ ...s, agents }));
     });
 
-    const unsubInfra = onSnapshot(collection(db, 'infrastructure'), (snapshot) => {
+    const infraCol = collection(db, 'infrastructure');
+    const infraQuery = isAdmin
+      ? infraCol
+      : query(infraCol, where('turno', '==', shiftNum));
+
+    const unsubInfra = onSnapshot(infraQuery, (snapshot) => {
       const newInfra: Infrastructure = {
         garitas: [],
         moviles: [],
@@ -82,7 +114,12 @@ export function useStore() {
       setLocalState(s => ({ ...s, infrastructure: newInfra }));
     });
 
-    const unsubSchedules = onSnapshot(collection(db, 'schedules'), (snapshot) => {
+    const schedulesCol = collection(db, 'schedules');
+    const schedulesQuery = isAdmin
+      ? schedulesCol
+      : query(schedulesCol, where('shift', '==', shiftStr));
+
+    const unsubSchedules = onSnapshot(schedulesQuery, (snapshot) => {
       const schedules = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Schedule));
       setLocalState(s => ({ ...s, schedules }));
     });
@@ -92,7 +129,7 @@ export function useStore() {
       unsubInfra();
       unsubSchedules();
     };
-  }, []);
+  }, [userRole]);
 
   const writeAuditLog = async (action: string, details: any) => {
     try {

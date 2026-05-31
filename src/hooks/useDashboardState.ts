@@ -29,6 +29,15 @@ const escapeHtml = (unsafe: string): string => {
     .replace(/'/g, "&#039;");
 };
 
+const escapeXml = (unsafe: string): string => {
+  if (!unsafe) return '';
+  return unsafe
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&apos;");
+};
 
 export function useDashboardState() {
   const {
@@ -274,15 +283,15 @@ export function useDashboardState() {
       const finalFechaSubrayado = `${today.getDate()} de ${months[today.getMonth()]} de ${today.getFullYear()}`;
       const finalAnio = today.getFullYear().toString();
 
-      xmlText = xmlText.replace(/\[JERARQUIA\]/g, finalJerarquia);
-      xmlText = xmlText.replace(/\[ESCALAFON\]/g, finalEscalafon);
-      xmlText = xmlText.replace(/\[LEGAJO\]/g, finalLegajo);
-      xmlText = xmlText.replace(/\[APELLIDO\]/g, finalApellido);
-      xmlText = xmlText.replace(/\[NOMBRES\]/g, finalNombre);
-      xmlText = xmlText.replace(/\[DOMICILIO\]/g, finalDomicilio);
-      xmlText = xmlText.replace(/\[LOCALIDAD\]/g, finalLocalidad);
-      xmlText = xmlText.replace(/\[FECHA_SUBRAYADO\]/g, finalFechaSubrayado);
-      xmlText = xmlText.replace(/\[ANIO\]/g, finalAnio);
+      xmlText = xmlText.replace(/\[JERARQUIA\]/g, escapeXml(finalJerarquia));
+      xmlText = xmlText.replace(/\[ESCALAFON\]/g, escapeXml(finalEscalafon));
+      xmlText = xmlText.replace(/\[LEGAJO\]/g, escapeXml(finalLegajo));
+      xmlText = xmlText.replace(/\[APELLIDO\]/g, escapeXml(finalApellido));
+      xmlText = xmlText.replace(/\[NOMBRES\]/g, escapeXml(finalNombre));
+      xmlText = xmlText.replace(/\[DOMICILIO\]/g, escapeXml(finalDomicilio));
+      xmlText = xmlText.replace(/\[LOCALIDAD\]/g, escapeXml(finalLocalidad));
+      xmlText = xmlText.replace(/\[FECHA_SUBRAYADO\]/g, escapeXml(finalFechaSubrayado));
+      xmlText = xmlText.replace(/\[ANIO\]/g, escapeXml(finalAnio));
 
       zip.file("word/document.xml", xmlText);
       const blob = await zip.generateAsync({ type: 'blob' });

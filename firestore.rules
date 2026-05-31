@@ -50,7 +50,13 @@ service cloud.firestore {
 
     // 3. Reglas para las nuevas colecciones
     match /agents/{agentId} {
-      allow read: if isAuthenticated() && hasValidRole();
+      allow read: if isAuthenticated() && hasValidRole() && (
+        isAdmin() || 
+        (getUserRole() == 'turno1' && resource.data.turno == 1) ||
+        (getUserRole() == 'turno2' && resource.data.turno == 2) ||
+        (getUserRole() == 'turno3' && resource.data.turno == 3) ||
+        (getUserRole() == 'turno4' && resource.data.turno == 4)
+      );
       
       // Permitir crear solo si es admin o si el agente pertenece al mismo turno del usuario
       allow create: if isAuthenticated() && hasValidRole() && (
@@ -82,7 +88,13 @@ service cloud.firestore {
 
     // 4. Reglas para la colección 'schedules'
     match /schedules/{scheduleId} {
-      allow read: if isAuthenticated() && hasValidRole();
+      allow read: if isAuthenticated() && hasValidRole() && (
+        isAdmin() || 
+        (getUserRole() == 'turno1' && resource.data.shift == 'turno1') ||
+        (getUserRole() == 'turno2' && resource.data.shift == 'turno2') ||
+        (getUserRole() == 'turno3' && resource.data.shift == 'turno3') ||
+        (getUserRole() == 'turno4' && resource.data.shift == 'turno4')
+      );
       
       // Permitir crear solo si es admin o si el schedule creado pertenece al mismo turno del usuario
       allow create: if isAuthenticated() && hasValidRole() && (
@@ -118,8 +130,14 @@ service cloud.firestore {
       );
     }
 
-    match /infrastructure/{document=**} {
-      allow read: if isAuthenticated() && hasValidRole();
+    match /infrastructure/{infraId} {
+      allow read: if isAuthenticated() && hasValidRole() && (
+        isAdmin() || 
+        (getUserRole() == 'turno1' && resource.data.turno == 1) ||
+        (getUserRole() == 'turno2' && resource.data.turno == 2) ||
+        (getUserRole() == 'turno3' && resource.data.turno == 3) ||
+        (getUserRole() == 'turno4' && resource.data.turno == 4)
+      );
       
       // Permitir crear solo si es admin o si la infra pertenece al mismo turno del usuario
       allow create: if isAuthenticated() && hasValidRole() && (
