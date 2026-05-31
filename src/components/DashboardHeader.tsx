@@ -10,6 +10,7 @@ import {
 import { Shift } from '../types';
 import logoMinisterio from '../assets/logo_ministerio.png';
 import logoProvincia from '../assets/logo_provincia.png';
+import logoEscudo from '../assets/escudo_uppl.png';
 
 export const DashboardHeader: React.FC = () => {
   const {
@@ -62,7 +63,11 @@ export const DashboardHeader: React.FC = () => {
     <header className="app-header">
       <div className="header-brand">
         {logoError ? (
-          <Shield className="text-yellow-500" size={40} />
+          <img
+            src={logoEscudo}
+            alt="Logo Fallback"
+            className="header-logo"
+          />
         ) : (
           <img
             src={logo}

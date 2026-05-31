@@ -4,10 +4,12 @@ import { auth, db } from '../firebase';
 import { doc, setDoc } from 'firebase/firestore';
 import { useNavigate, Link } from 'react-router-dom';
 import { Shield } from 'lucide-react';
+import logoEscudo from '../assets/escudo_uppl.png';
 
 export const Register: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -15,6 +17,12 @@ export const Register: React.FC = () => {
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
+
+    if (password !== confirmPassword) {
+      setError('Las contraseñas no coinciden.');
+      return;
+    }
+
     setLoading(true);
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
@@ -55,8 +63,12 @@ export const Register: React.FC = () => {
   return (
     <div className="auth-container register">
       <div className="auth-card register">
-        <div className="auth-logo register">
-          <Shield className="w-8 h-8 text-blue-400" />
+        <div className="flex justify-center mb-4">
+          <img
+            src={logoEscudo}
+            alt="Logo Policía PBA"
+            className="w-[120px] h-[120px] sm:w-[150px] sm:h-[150px] object-contain drop-shadow-2xl"
+          />
         </div>
         <h2 className="auth-title">Crear Cuenta</h2>
         <p className="auth-subtitle">Registrate y espera aprobación del Administrador</p>
@@ -89,6 +101,17 @@ export const Register: React.FC = () => {
               minLength={6}
             />
           </div>
+          <div className="auth-form-group">
+            <label className="auth-label">Repetir Contraseña</label>
+            <input 
+              type="password" 
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              className="auth-input register"
+              required
+              minLength={6}
+            />
+          </div>
           <button 
             type="submit" 
             disabled={loading}
@@ -98,9 +121,9 @@ export const Register: React.FC = () => {
           </button>
         </form>
         
-        <div className="auth-link-text">
-          ¿Ya tenés cuenta? <Link to="/login" className="auth-link register">Iniciar Sesión</Link>
-        </div>
+        <Link to="/login" className="btn-auth-secondary register">
+          Volver al Inicio de Sesión
+        </Link>
       </div>
     </div>
   );

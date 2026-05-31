@@ -3,13 +3,13 @@ import { signInWithEmailAndPassword, sendEmailVerification } from 'firebase/auth
 import { auth } from '../firebase';
 import { useNavigate, Link } from 'react-router-dom';
 import { Shield } from 'lucide-react';
+import logoEscudo from '../assets/escudo_uppl.png';
 
 export const Login: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-  const [logoError, setLogoError] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -72,18 +72,11 @@ export const Login: React.FC = () => {
     <div className="auth-container">
       <div className="auth-card">
         <div className="flex justify-center mb-4">
-          {logoError ? (
-            <div className="auth-logo">
-              <Shield className="w-12 h-12 text-blue-400" />
-            </div>
-          ) : (
-            <img
-              src="https://upload.wikimedia.org/wikipedia/commons/8/81/Policia_bonaer_emblem.png"
-              alt="Logo Policía PBA"
-              className="w-[120px] h-[120px] sm:w-[150px] sm:h-[150px] object-contain drop-shadow-2xl"
-              onError={() => setLogoError(true)}
-            />
-          )}
+          <img
+            src={logoEscudo}
+            alt="Logo Policía PBA"
+            className="w-[120px] h-[120px] sm:w-[150px] sm:h-[150px] object-contain drop-shadow-2xl"
+          />
         </div>
         <h1 className="auth-title">DOTACIONES UPPL</h1>
         <h2 className="auth-title">Almirante Brown</h2>

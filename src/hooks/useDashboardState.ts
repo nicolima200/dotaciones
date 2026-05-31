@@ -10,6 +10,7 @@ import { Shift, RoleType, Agent, Schedule, InfrastructureItem, Infrastructure } 
 import { validEscalafones } from '../constants';
 import logoMinisterio from '../assets/logo_ministerio.png';
 import logoProvincia from '../assets/logo_provincia.png';
+import logoEscudo from '../assets/escudo_uppl.png';
 
 const getShiftRelativeMinutes = (time: string, shiftStart: string): number => {
   const [h, m] = time.split(':').map(Number);
@@ -161,7 +162,7 @@ export function useDashboardState() {
   const [isExportModalOpen, setIsExportModalOpen] = useState(false);
   const [exportSelectedTurns, setExportSelectedTurns] = useState<number[]>([1, 2, 3, 4]);
 
-  const [logo, setLogo] = useState('https://upload.wikimedia.org/wikipedia/commons/8/81/Policia_bonaer_emblem.png');
+  const [logo, setLogo] = useState(logoEscudo);
   const [logoError, setLogoError] = useState(false);
 
   const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {

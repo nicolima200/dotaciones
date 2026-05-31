@@ -967,5 +967,46 @@ h1, h2, h3, h4, h5, h6 {
   background: rgba(251, 191, 36, 0.15) !important;
 }
 
+/* Secondary auth button (used for Back/Cancel) */
+.btn-auth-secondary {
+  display: block;
+  text-align: center;
+  width: 100%;
+  padding: 0.75rem 1rem;
+  margin-top: 1rem;
+  background: transparent;
+  color: var(--color-text-muted);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  font-weight: 600;
+  font-size: 1rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  box-sizing: border-box;
+}
+
+.btn-auth-secondary:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--color-text-main);
+  border-color: rgba(255, 255, 255, 0.25);
+  transform: translateY(-2px);
+}
+
+.btn-auth-secondary:active {
+  transform: translateY(0);
+}
+
+.btn-auth-secondary.register {
+  color: #a7f3d0;
+  border-color: rgba(52, 211, 153, 0.2);
+}
+
+.btn-auth-secondary.register:hover {
+  background: rgba(52, 211, 153, 0.05);
+  color: #34d399;
+  border-color: rgba(52, 211, 153, 0.4);
+}
+
 
 
