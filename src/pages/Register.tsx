@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { createUserWithEmailAndPassword, sendEmailVerification } from 'firebase/auth';
 import { auth, db } from '../firebase';
 import { doc, setDoc } from 'firebase/firestore';
 import { useNavigate, Link } from 'react-router-dom';
@@ -27,7 +27,15 @@ export const Register: React.FC = () => {
         createdAt: new Date().toISOString()
       });
       
-      navigate('/');
+      const isDev = import.meta.env.DEV;
+      if (!isDev) {
+        await sendEmailVerification(user);
+        await auth.signOut();
+        alert("Registro exitoso. Se ha enviado un correo de verificación a tu casilla. Por favor verificalo antes de iniciar sesión.");
+        navigate('/login');
+      } else {
+        navigate('/');
+      }
     } catch (err: any) {
       if (err.code === 'auth/email-already-in-use') {
         setError('Este email ya está registrado. Por favor, iniciá sesión.');

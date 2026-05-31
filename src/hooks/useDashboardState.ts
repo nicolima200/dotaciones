@@ -702,6 +702,32 @@ export function useDashboardState() {
       console.warn("isValidBackup failed: El JSON es nulo o no es un objeto.");
       return false;
     }
+
+    // Limitar cantidad máxima de elementos para evitar abusos de almacenamiento/costos
+    if (Array.isArray(json.agents) && json.agents.length > 1000) {
+      console.warn("isValidBackup failed: Demasiados agentes en el JSON (máx. 1000):", json.agents.length);
+      return false;
+    }
+    if (Array.isArray(json.schedules) && json.schedules.length > 1000) {
+      console.warn("isValidBackup failed: Demasiadas programaciones en el JSON (máx. 1000):", json.schedules.length);
+      return false;
+    }
+
+    let infraCount = 0;
+    if (Array.isArray(json.infrastructure)) {
+      infraCount = json.infrastructure.length;
+    } else if (json.infrastructure && typeof json.infrastructure === 'object') {
+      const expectedInfraKeys = ['garitas', 'moviles', 'motos', 'qths', 'ordenes', 'comisiones'];
+      for (const key of expectedInfraKeys) {
+        if (Array.isArray(json.infrastructure[key])) {
+          infraCount += json.infrastructure[key].length;
+        }
+      }
+    }
+    if (infraCount > 500) {
+      console.warn("isValidBackup failed: Demasiados elementos de infraestructura en el JSON (máx. 500):", infraCount);
+      return false;
+    }
     
     // Prohibir caracteres HTML para evitar XSS persistente en todo el documento
     const htmlCharRegex = /[<>]/;
@@ -823,6 +849,12 @@ export function useDashboardState() {
   const handleImport = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
+      // Validar tamaño máximo del archivo (2MB) para prevenir ataques de denegación de servicio/costo
+      if (file.size > 2 * 1024 * 1024) {
+        alert("Error: El archivo de copia de seguridad es demasiado grande (máximo 2MB).");
+        event.target.value = '';
+        return;
+      }
       console.log("handleImport: Archivo seleccionado:", file.name, file.size, "bytes");
       const reader = new FileReader();
       reader.onload = async (e) => {
@@ -842,25 +874,15 @@ export function useDashboardState() {
           
           const isAdmin = userRole === 'admin';
           if (!isAdmin) {
-            // Rol de Turno X: Deducir turno y procesar directamente
-            const shiftNum = userRole ? Number(userRole.replace('turno', '')) : 1;
-            if (window.confirm(`¿Está seguro de que desea importar este archivo para el Turno ${shiftNum}?\n\n¡ATENCIÓN! Esta acción borrará de manera irreversible todos los efectivos, infraestructuras y asignaciones del Turno ${shiftNum} actuales en la base de datos y los reemplazará con los de este archivo.`)) {
-              console.log(`handleImport: Procesando importación directa para el Turno ${shiftNum}...`);
-              try {
-                await loadState(json, [shiftNum]);
-                console.log("handleImport: loadState finalizado con éxito.");
-                alert(`Importación exitosa. Los datos del Turno ${shiftNum} se han restaurado correctamente.`);
-              } catch (err) {
-                console.error("Error writing imported state to Firestore:", err);
-                alert("Ocurrió un error al importar los datos: " + (err as Error).message);
-              }
-            }
-          } else {
-            // Rol Admin: Guardar estado y abrir modal de selección
-            setImportState(json);
-            setImportSelectedTurns([1, 2, 3, 4]); // Reset default selection
-            setIsImportModalOpen(true);
+            alert("Acceso denegado: Solo los administradores pueden importar datos.");
+            event.target.value = '';
+            return;
           }
+
+          // Rol Admin: Guardar estado y abrir modal de selección
+          setImportState(json);
+          setImportSelectedTurns([1, 2, 3, 4]); // Reset default selection
+          setIsImportModalOpen(true);
         } catch (err) {
           console.error("handleImport: Error al procesar el archivo:", err);
           alert("Error al procesar el archivo JSON. Asegúrese de que sea un archivo de texto JSON válido.");

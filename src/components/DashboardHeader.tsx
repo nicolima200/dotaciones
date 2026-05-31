@@ -260,9 +260,11 @@ export const DashboardHeader: React.FC = () => {
               <button onClick={handleExportClick} className="flex items-center gap-3 px-4 py-3 hover:bg-slate-700 text-slate-200 transition-colors text-sm text-left">
                 <Download size={18} className="text-slate-400" /> Exportar Datos
               </button>
-              <button onClick={() => { setIsMenuOpen(false); fileInputRef.current?.click(); }} className="flex items-center gap-3 px-4 py-3 hover:bg-slate-700 text-slate-200 transition-colors text-sm text-left">
-                <Upload size={18} className="text-slate-400" /> Importar Datos
-              </button>
+              {userRole === 'admin' && (
+                <button onClick={() => { setIsMenuOpen(false); fileInputRef.current?.click(); }} className="flex items-center gap-3 px-4 py-3 hover:bg-slate-700 text-slate-200 transition-colors text-sm text-left">
+                  <Upload size={18} className="text-slate-400" /> Importar Datos
+                </button>
+              )}
               
               <div className="h-px bg-slate-700 my-1"></div>
               

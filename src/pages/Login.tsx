@@ -25,7 +25,15 @@ export const Login: React.FC = () => {
     setError('');
     setLoading(true);
     try {
-      await signInWithEmailAndPassword(auth, email, password);
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
+      
+      const isDev = import.meta.env.DEV;
+      if (!isDev && !user.emailVerified) {
+        await auth.signOut();
+        setError('Debes verificar tu email antes de iniciar sesión. Por favor, revisá tu casilla de correo.');
+        return;
+      }
       navigate('/');
     } catch (err: any) {
       if (

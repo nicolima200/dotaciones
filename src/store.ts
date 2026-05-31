@@ -384,6 +384,9 @@ export function useStore() {
   };
 
   const loadState = async (newState: any, targetTurns: number[]) => {
+    if (userRole !== 'admin') {
+      throw new Error("Permiso denegado: Solo el administrador puede importar datos.");
+    }
     try {
       // Validar que el backup contenga efectivos para cada uno de los turnos destino seleccionados
       for (const turn of targetTurns) {
