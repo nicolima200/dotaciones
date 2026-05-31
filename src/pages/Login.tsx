@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { signInWithEmailAndPassword } from 'firebase/auth';
+import { signInWithEmailAndPassword, sendEmailVerification } from 'firebase/auth';
 import { auth } from '../firebase';
 import { useNavigate, Link } from 'react-router-dom';
 import { Shield } from 'lucide-react';
@@ -18,6 +18,15 @@ export const Login: React.FC = () => {
       setError('Tu sesión ha expirado por inactividad.');
       sessionStorage.removeItem('inactivityLogout');
     }
+
+    const emailSent = sessionStorage.getItem('verificationEmailSent');
+    if (emailSent === 'true') {
+      setError('Debes verificar tu email antes de iniciar sesión. Hemos enviado un nuevo correo de verificación a tu casilla (revisá también la carpeta de spam o correo no deseado).');
+      sessionStorage.removeItem('verificationEmailSent');
+    } else if (emailSent === 'error') {
+      setError('Debes verificar tu email antes de iniciar sesión. No se pudo enviar el correo de verificación automático, reintenta más tarde.');
+      sessionStorage.removeItem('verificationEmailSent');
+    }
   }, []);
 
   const handleLogin = async (e: React.FormEvent) => {
@@ -30,12 +39,19 @@ export const Login: React.FC = () => {
       
       const isDev = import.meta.env.DEV;
       if (!isDev && !user.emailVerified) {
+        try {
+          await sendEmailVerification(user);
+          sessionStorage.setItem('verificationEmailSent', 'true');
+        } catch (sendErr: any) {
+          console.error("Error sending verification email on login:", sendErr);
+          sessionStorage.setItem('verificationEmailSent', 'error');
+        }
         await auth.signOut();
-        setError('Debes verificar tu email antes de iniciar sesión. Por favor, revisá tu casilla de correo.');
         return;
       }
       navigate('/');
     } catch (err: any) {
+      console.error("Login error:", err);
       if (
         err.code === 'auth/user-not-found' ||
         err.code === 'auth/wrong-password' ||

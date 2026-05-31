@@ -37,6 +37,7 @@ export const Register: React.FC = () => {
         navigate('/');
       }
     } catch (err: any) {
+      console.error("Registration error:", err);
       if (err.code === 'auth/email-already-in-use') {
         setError('Este email ya está registrado. Por favor, iniciá sesión.');
       } else if (err.code === 'auth/weak-password') {

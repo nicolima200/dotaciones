@@ -21,6 +21,12 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children, allowe
     return <Navigate to="/login" replace />;
   }
 
+  const isVerified = currentUser.emailVerified || import.meta.env.DEV;
+  if (!isVerified) {
+    signOut(auth);
+    return <Navigate to="/login" replace />;
+  }
+
   if (userRole === 'pending') {
     return (
       <div className="min-h-screen bg-slate-900 flex flex-col items-center justify-center text-white p-4 text-center">

@@ -34,14 +34,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       }
 
       if (user) {
-        const isVerified = user.emailVerified || import.meta.env.DEV;
-        if (!isVerified) {
-          signOut(auth);
-          setCurrentUser(null);
-          setUserRole(null);
-          setLoading(false);
-          return;
-        }
         setLoading(true);
         // Escuchar el rol del usuario en tiempo real
         unsubscribeDoc = onSnapshot(doc(db, 'users', user.uid), (userDoc) => {

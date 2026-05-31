@@ -9,7 +9,8 @@ service cloud.firestore {
 
     // Función auxiliar para obtener el rol del usuario actual
     function getUserRole() {
-      return get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role;
+      let path = /databases/$(database)/documents/users/$(request.auth.uid);
+      return exists(path) ? get(path).data.role : 'pending';
     }
 
     // Función auxiliar para verificar si es admin
